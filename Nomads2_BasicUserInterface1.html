@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+// starting canvas design idea for 5-chan user GUI (see Collab site for images)
+
+<html lang="en">
+ <head>
+  <meta charset="UTF-8" />
+  <title>CeilingFloatsAway_NOMADSInterface1_basic</title>
+  <script>
+
+    function init() {
+
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+
+      draw(ctx);
+    }
+
+    function draw(ctx) {
+
+      var alpha = ctx.globalAlpha;
+
+      // nomads2/Path
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(394.1, 197.8);
+      ctx.bezierCurveTo(394.1, 306.2, 306.2, 394.1, 197.8, 394.1);
+      ctx.bezierCurveTo(89.4, 394.1, 1.5, 306.2, 1.5, 197.8);
+      ctx.bezierCurveTo(1.5, 89.4, 89.4, 1.5, 197.8, 1.5);
+      ctx.bezierCurveTo(306.2, 1.5, 394.1, 89.4, 394.1, 197.8);
+      ctx.closePath();
+      ctx.fillStyle = "rgb(127, 98, 38)";
+      ctx.fill();
+      ctx.lineWidth = 3.0;
+      ctx.stroke();
+
+      // nomads2/Path
+      ctx.beginPath();
+      ctx.moveTo(379.5, 197.1);
+      ctx.bezierCurveTo(379.5, 297.3, 298.3, 378.5, 198.1, 378.5);
+      ctx.bezierCurveTo(97.9, 378.5, 16.6, 297.3, 16.6, 197.1);
+      ctx.bezierCurveTo(16.6, 96.9, 97.9, 15.6, 198.1, 15.6);
+      ctx.bezierCurveTo(298.3, 15.6, 379.5, 96.9, 379.5, 197.1);
+      ctx.closePath();
+      ctx.fillStyle = "rgb(254, 194, 47)";
+      ctx.fill();
+      ctx.lineWidth = 1.0;
+      ctx.stroke();
+
+      // nomads2/Path
+      ctx.globalAlpha = alpha * 0.35;
+      ctx.beginPath();
+      ctx.moveTo(232.4, 272.9);
+      ctx.bezierCurveTo(232.4, 321.8, 192.7, 361.5, 143.8, 361.5);
+      ctx.bezierCurveTo(94.8, 361.5, 55.2, 321.8, 55.2, 272.9);
+      ctx.bezierCurveTo(55.2, 223.9, 94.8, 184.2, 143.8, 184.2);
+      ctx.bezierCurveTo(192.7, 184.2, 232.4, 223.9, 232.4, 272.9);
+      ctx.closePath();
+      ctx.fillStyle = "rgb(127, 98, 38)";
+      ctx.fill();
+
+      // nomads2/Path
+      ctx.beginPath();
+      ctx.moveTo(342.3, 272.2);
+      ctx.bezierCurveTo(342.3, 321.2, 302.7, 360.8, 253.7, 360.8);
+      ctx.bezierCurveTo(204.8, 360.8, 165.1, 321.2, 165.1, 272.2);
+      ctx.bezierCurveTo(165.1, 223.3, 204.8, 183.6, 253.7, 183.6);
+      ctx.bezierCurveTo(302.7, 183.6, 342.3, 223.3, 342.3, 272.2);
+      ctx.closePath();
+      ctx.fill();
+
+      // nomads2/Path
+      ctx.beginPath();
+      ctx.moveTo(376.1, 170.0);
+      ctx.bezierCurveTo(376.1, 218.9, 336.4, 258.6, 287.5, 258.6);
+      ctx.bezierCurveTo(238.5, 258.6, 198.9, 218.9, 198.9, 170.0);
+      ctx.bezierCurveTo(198.9, 121.1, 238.5, 81.4, 287.5, 81.4);
+      ctx.bezierCurveTo(336.4, 81.4, 376.1, 121.1, 376.1, 170.0);
+      ctx.closePath();
+      ctx.fill();
+
+      // nomads2/Path
+      ctx.beginPath();
+      ctx.moveTo(288.1, 104.0);
+      ctx.bezierCurveTo(288.1, 152.9, 248.4, 192.6, 199.5, 192.6);
+      ctx.bezierCurveTo(150.5, 192.6, 110.9, 152.9, 110.9, 104.0);
+      ctx.bezierCurveTo(110.9, 55.1, 150.5, 15.4, 199.5, 15.4);
+      ctx.bezierCurveTo(248.4, 15.4, 288.1, 55.1, 288.1, 104.0);
+      ctx.closePath();
+      ctx.fill();
+
+      // nomads2/Path
+      ctx.beginPath();
+      ctx.moveTo(198.3, 169.9);
+      ctx.bezierCurveTo(198.3, 218.8, 158.7, 258.5, 109.7, 258.5);
+      ctx.bezierCurveTo(60.8, 258.5, 21.1, 218.8, 21.1, 169.9);
+      ctx.bezierCurveTo(21.1, 120.9, 60.8, 81.3, 109.7, 81.3);
+      ctx.bezierCurveTo(158.7, 81.3, 198.3, 120.9, 198.3, 169.9);
+      ctx.closePath();
+      ctx.fill();
+
+      // nomads2/Path
+      ctx.globalAlpha = alpha * 1.00;
+      ctx.beginPath();
+      ctx.moveTo(216.9, 34.6);
+      ctx.bezierCurveTo(216.9, 44.4, 209.0, 52.3, 199.2, 52.3);
+      ctx.bezierCurveTo(189.4, 52.3, 181.4, 44.4, 181.4, 34.6);
+      ctx.bezierCurveTo(181.4, 24.8, 189.4, 16.8, 199.2, 16.8);
+      ctx.bezierCurveTo(209.0, 16.8, 216.9, 24.8, 216.9, 34.6);
+      ctx.closePath();
+      ctx.fillStyle = "rgb(0, 0, 0)";
+      ctx.fill();
+      ctx.stroke();
+
+      // nomads2/Path
+      ctx.beginPath();
+      ctx.moveTo(372.4, 147.7);
+      ctx.bezierCurveTo(372.4, 157.5, 364.4, 165.4, 354.6, 165.4);
+      ctx.bezierCurveTo(344.8, 165.4, 336.9, 157.5, 336.9, 147.7);
+      ctx.bezierCurveTo(336.9, 137.9, 344.8, 129.9, 354.6, 129.9);
+      ctx.bezierCurveTo(364.4, 129.9, 372.4, 137.9, 372.4, 147.7);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // nomads2/Path
+      ctx.beginPath();
+      ctx.moveTo(60.9, 147.8);
+      ctx.bezierCurveTo(60.9, 157.6, 53.0, 165.5, 43.2, 165.5);
+      ctx.bezierCurveTo(33.4, 165.5, 25.4, 157.6, 25.4, 147.8);
+      ctx.bezierCurveTo(25.4, 138.0, 33.4, 130.0, 43.2, 130.0);
+      ctx.bezierCurveTo(53.0, 130.0, 60.9, 138.0, 60.9, 147.8);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // nomads2/Path
+      ctx.beginPath();
+      ctx.moveTo(120.1, 328.9);
+      ctx.bezierCurveTo(120.1, 338.7, 112.1, 346.6, 102.3, 346.6);
+      ctx.bezierCurveTo(92.5, 346.6, 84.6, 338.7, 84.6, 328.9);
+      ctx.bezierCurveTo(84.6, 319.1, 92.5, 311.1, 102.3, 311.1);
+      ctx.bezierCurveTo(112.1, 311.1, 120.1, 319.1, 120.1, 328.9);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // nomads2/Path
+      ctx.beginPath();
+      ctx.moveTo(310.7, 329.5);
+      ctx.bezierCurveTo(310.7, 339.3, 302.8, 347.2, 293.0, 347.2);
+      ctx.bezierCurveTo(283.2, 347.2, 275.2, 339.3, 275.2, 329.5);
+      ctx.bezierCurveTo(275.2, 319.7, 283.2, 311.7, 293.0, 311.7);
+      ctx.bezierCurveTo(302.8, 311.7, 310.7, 319.7, 310.7, 329.5);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // nomads2/Type
+      ctx.restore();
+    }
+  </script>
+ </head>
+ <body onload="init()">
+   <canvas id="canvas" width="396" height="396"></canvas>
+ </body>
+</html>
