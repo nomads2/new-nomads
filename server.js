@@ -72,7 +72,7 @@ server.get('/nomads_display', function(req,res){
   res.render('nomads_display.jade', {
     locals : { 
               title : 'Nomads'
-             ,description: 'Your Page Description'
+             ,description: 'Nomads pages blah blah blah'
              ,author: 'Your Name'
              ,analyticssiteid: 'XXXXXXX' 
             }
