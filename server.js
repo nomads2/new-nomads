@@ -20,7 +20,7 @@ server.configure(function(){
 server.error(function(err, req, res, next){
     if (err instanceof NotFound) {
         res.render('404.jade', { locals: { 
-                  title : '404 - Not Found'
+                  title : '404 - Nomads aren\'t here'
                  ,description: ''
                  ,author: ''
                  ,analyticssiteid: 'XXXXXXX' 
@@ -60,7 +60,18 @@ io.sockets.on('connection', function(socket){
 server.get('/', function(req,res){
   res.render('index.jade', {
     locals : { 
-              title : 'Your Page Title'
+              title : 'Nomads'
+             ,description: 'Your Page Description'
+             ,author: 'Your Name'
+             ,analyticssiteid: 'XXXXXXX' 
+            }
+  });
+});
+
+server.get('/nomads_display', function(req,res){
+  res.render('nomads_display.jade', {
+    locals : { 
+              title : 'Nomads'
              ,description: 'Your Page Description'
              ,author: 'Your Name'
              ,analyticssiteid: 'XXXXXXX' 

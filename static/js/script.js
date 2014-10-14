@@ -1,4 +1,4 @@
-/* Author: YOUR NAME HERE
+/* Author: Travis Thatcher
 */
 
 $(document).ready(function() {   
