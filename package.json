@@ -1,14 +1,23 @@
 {
-  "name": "YOUR-PROJECT-NAME-HERE",
-  "description": "YOUR PROJECT DESCRIPTION HERE",
-  "author": "YOUR NAME <your@emailaddress.com>",
+  "name": "Nomads",
+  "description": "The Nomads Project",
+  "author": "Travis Thatcher <tthatcher@virginia.edu>",
+  "contributors": [{
+    "name": "John P Bellona",
+		"email": "jpbellona@virginia.edu"
+  }],
   "version": "0.0.1",
+  "repository": {
+  	"type": "git",
+  	"url": "https://github.com/nomads2/new-nomads"
+	},
   "dependencies": {
     "connect": "1.8.5",
     "express": "2.5.2",
     "jade": "0.20.0",
     "mongoose": "2.4.8",
-    "socket.io": "0.8.7"
+    "socket.io": "0.8.7",
+    "osc-min": "0.2.x"
   },
   "devDependencies": {
     "vows": "0.5.x",

@@ -58,7 +58,7 @@ io.sockets.on('connection', function(socket){
 /////// ADD ALL YOUR ROUTES HERE  /////////
 
 server.get('/', function(req,res){
-  res.render('index.jade', {
+  res.render('client.jade', {
     locals : { 
               title : 'Nomads'
              ,description: 'Your Page Description'
