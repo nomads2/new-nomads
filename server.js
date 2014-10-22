@@ -14,7 +14,7 @@ server.configure(function(){
     server.use(connect.bodyParser());
     server.use(express.cookieParser());
     server.use(express.session({ secret: "shhhhhhhhh!"}));
-    server.use(connect.static(__dirname + '/static'));
+    server.use(connect.static(__dirname + '/public'));
     server.use(server.router);
 });
 
@@ -50,14 +50,15 @@ io.sockets.on('connection', function(socket){
   //when new user enters his/her name, display.
   socket.on('newuser', function (data) {
     console.log('new user added! ' + data.name);
+    socket.emit('user_confirmed', data.name);
   });
 
 
   socket.on('message', function(data){
     socket.broadcast.emit('data_received',data); //send data back to all clients?
     socket.emit('server_message',data); // send data back to individual client?
-    // console.log(data);
-    sendOSC('/'+data.name+'/'+data.message['type'], data.message.value); //send OSC message
+     console.log(data);
+    //sendOSC('/'+data.name+'/'+data.message['type'], data.message.value); //send OSC message
   
   });
 

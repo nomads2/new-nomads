@@ -1,8 +1,28 @@
-extends layout
+extends client_layout
 
 block content
-	div
-		h="Here is the client interface"
-	div
-		a(id='sender')='Send a Message'
-		ul(id='receiver')
+	div(id='status')
+		p(id='info')
+	div(id='control')
+		div(id='zone1', class='zone', data-location='Zone 1')
+			p.
+				Zone 1
+		div(id='zone2', class='zone', data-location='Zone 2')
+			p.
+				Zone 2
+		div(id='zone3', class='zone', data-location='Zone 3')
+			p.
+				Zone 3
+		div(id='zone4', class='zone', data-location='Zone 4')
+			p.
+				Zone 4
+	
+	div(id='login')
+		form(id='login-form')
+			input(id='namefield', type='text')
+			button(id='enter_name') Submit
+
+	div(id='phrase-entry')
+		form(id='phrase-form')
+			input(id='phrasefield', type='text')
+			button(id='enter_phrase') Submit			
