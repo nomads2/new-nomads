@@ -3,6 +3,10 @@ body{
 	margin:0;
 }
 
+body input{
+	margin:1em;
+}
+
 #status{
 	width:50%;
 	margin:auto;
@@ -39,8 +43,24 @@ body{
 	height:50%;
 	top:20%;
 	margin:auto;
+	position:relative;
 }
 
 #phrase-entry{
 	display:none;
+	width:100%;
+	height:100%;
+	position:fixed;
+	top:0em;
+	bottom:0em;
+}
+
+#phrase-form{
+	width:50%;
+	height:auto;
+	top:90%;
+	margin:auto;
+	position:relative;
+	background-color:#999;
+	opacity:1.0;
 }

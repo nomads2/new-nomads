@@ -8,53 +8,26 @@ $(document).ready(function() {
 
   var localUser = {
     id: '',
-    name: ''
+    username: '',
+    timestamp: ''
   }
 
   var messageToSend = {
     id: '',
+    username: '',
+    time: '',
     messageText: '',
     location: ''
   }
 
-  // on connection to server
-  socket.on('connect', function() {
-    //setup user object
-      // localUser.message = new Array();
-    //socket.emit('newuser', localUser);
-  });
-
-
-
-  // listen for interactions on the page. (text, locations)
-  $('#sender').bind('click', function() {
-    localUser.message = { 
-      type: 'text',
-      value: new Date()
-    };
-    socket.emit('message', localUser);     
-  });
-
-  //listen for message from the server.
-  socket.on('user_confirmed', function(data){
-   $('#info').html("Username is: "+data);
-  });
-
   //Show Login Div
   $('#login').fadeIn();
   $('#login-form').bind('submit', function(){
-    localUser.name = $('#namefield').val();
-    localUser.id = "nomads_" + localUser.name + "_" + Math.floor(Math.random()*1000);
+    localUser.username = messageToSend.username = $('#namefield').val();
+    localUser.id = "nomads_" + localUser.username + "_" + Math.floor(Math.random()*1000);
+    localUser.timestamp = new Date();
     socket.emit('newuser', localUser);
     $('#login').fadeOut();
-    return false;
-  });
-
-  //send message
-  $('#phrase-form').bind('submit', function(){
-    messageToSend.messageText = $('#phrasefield').val();
-    socket.emit('message', messageToSend);
-    $('#phrase-entry').fadeOut();
     return false;
   });
 
@@ -63,5 +36,28 @@ $(document).ready(function() {
     $("#phrase-entry").fadeIn();
   });
 
-  
+  ///////////////////////////////////////////
+  //          Socket Communication         //
+  ///////////////////////////////////////////
+
+  // on connection to server
+  socket.on('connect', function() {
+
+  });
+
+  //listen for message from the server.
+  socket.on('user_confirmed', function(data){
+   $('#info').html("Username is: "+data.username);
+  });
+
+  //send message
+  $('#phrase-form').bind('submit', function(){
+    messageToSend.messageText = $('#phrasefield').val();
+    messageToSend.timestamp = new Date();
+    socket.emit('message', messageToSend);
+    $('#phrase-entry').fadeOut();
+    $('#phrasefield').val('');
+    return false;
+  });
+
 });

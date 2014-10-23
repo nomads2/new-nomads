@@ -49,17 +49,15 @@ io.sockets.on('connection', function(socket){
 
   //when new user enters his/her name, display.
   socket.on('newuser', function (data) {
-    console.log('new user added! ' + data.name);
-    socket.emit('user_confirmed', data.name);
+    console.log('new user added! ' + data.username);
+    socket.broadcast.emit('user_confirmed', data);
   });
 
 
   socket.on('message', function(data){
-    socket.broadcast.emit('data_received',data); //send data back to all clients?
-    socket.emit('server_message',data); // send data back to individual client?
-     console.log(data);
-    //sendOSC('/'+data.name+'/'+data.message['type'], data.message.value); //send OSC message
-  
+    socket.broadcast.emit('client_update',data); //send data back to all clients?
+    //socket.emit('server_message',data); // send data back to individual client?
+    console.log(data);
   });
 
   socket.on('disconnect', function(){
@@ -87,8 +85,19 @@ server.get('/', function(req,res){
   });
 });
 
-server.get('/nomads_display', function(req,res){
-  res.render('nomads_display.jade', {
+server.get('/client', function(req,res){
+  res.render('client.jade', {
+    locals : { 
+              title : 'Nomads'
+             ,description: 'Your Page Description'
+             ,author: 'Your Name'
+             ,analyticssiteid: 'XXXXXXX' 
+            }
+  });
+});
+
+server.get('/display', function(req,res){
+  res.render('display.jade', {
     locals : { 
               title : 'Nomads'
              ,description: 'Nomads pages blah blah blah'
@@ -106,7 +115,7 @@ server.get('/500', function(req, res){
 
 //The 404 Route (ALWAYS Keep this as the last route)
 server.get('/*', function(req, res){
-    throw new NotFound;
+    throw new NotFound('Sorry, that page is not on this server');
 });
 
 function NotFound(msg){
