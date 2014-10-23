@@ -15,4 +15,4 @@ OSC Architecture
  "/word username location message"  3 index array
 
  * point message
- "/pointer username starting XY  ending XY"
+ "/pointer username starting X starting Y ending X ending Y" 5 index array
