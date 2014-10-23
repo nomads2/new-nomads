@@ -9,15 +9,15 @@ $(document).ready(function() {
   var localUser = {
     id: '',
     username: '',
-    timestamp: ''
+    timestamp: '',
   }
 
   var messageToSend = {
     id: '',
     username: '',
-    time: '',
+    timestamp: '',
     messageText: '',
-    location: ''
+    location: '',
   }
 
   //Show Login Div
@@ -50,7 +50,9 @@ $(document).ready(function() {
 
   //listen for message from the server.
   socket.on('user_confirmed', function(data){
-   $('#info').html("Username is: "+data.username);
+    if(data.username == localUser.username){
+      $('#info').html("Username is: "+data.username);
+    }
   });
 
   //send message

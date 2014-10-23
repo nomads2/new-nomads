@@ -53,7 +53,6 @@ io.sockets.on('connection', function(socket){
     socket.broadcast.emit('user_confirmed', data);
   });
 
-
   socket.on('message', function(data){
     socket.broadcast.emit('client_update',data); //send data back to all clients?
     //socket.emit('server_message',data); // send data back to individual client?
