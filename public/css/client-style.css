@@ -18,7 +18,7 @@ body input{
 }
 
 .zone{
-	width:45%;
+	width:35%;
 	float:left;
 	border-color: #333;
 	border-style: solid;
@@ -52,13 +52,14 @@ body input{
 	height:100%;
 	position:fixed;
 	top:0em;
-	bottom:0em;
+	left:0em;
+	background:#999;
 }
 
 #phrase-form{
 	width:50%;
 	height:auto;
-	top:90%;
+	top:10%;
 	margin:auto;
 	position:relative;
 	background-color:#999;

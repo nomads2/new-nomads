@@ -22,6 +22,8 @@ $(document).ready(function() {
 
   //Show Login Div
   $('#login').fadeIn();
+  $('#namefield').focus();
+
   $('#login-form').bind('submit', function(){
     localUser.username = messageToSend.username = $('#namefield').val();
     localUser.id = "nomads_" + localUser.username + "_" + Math.floor(Math.random()*1000);
@@ -34,6 +36,7 @@ $(document).ready(function() {
   $('.zone').bind('click', function(){
     messageToSend.location = $(this).attr("data-location");
     $("#phrase-entry").fadeIn();
+    $('#phrasefield').focus();
   });
 
   ///////////////////////////////////////////
