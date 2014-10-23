@@ -55,6 +55,7 @@ io.sockets.on('connection', function(socket){
 
   socket.on('message', function(data){
     socket.broadcast.emit('client_update',data); //send data back to all clients?
+    sendOSCText('/word', data);
     //socket.emit('server_message',data); // send data back to individual client?
     console.log(data);
   });
@@ -142,15 +143,15 @@ var outport = 6789;
 /**
  * Send single OSC message
  *
- * @param {string} [url] OSC address e.g. '/username/datatype'
+ * @param {string} [url] OSC address e.g. '/datatype user location message'
  * @param {string int float} [data] data value to send
  */
-sendOSC = function(url, data) {
+sendOSCText = function(url, data) {
   var buf;
   buf = osc.toBuffer({
     address: "" + url + "",
     args: [
-      data
+      data.username, data.location, data.messageText
     ]
   });
   return udp.send(buf, 0, buf.length, outport, "localhost");
