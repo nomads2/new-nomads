@@ -8,8 +8,7 @@ $(document).ready(function() {
 
   var localUser = {
     id: '',
-    username: '',
-    timestamp: '',
+    username: ''
   }
 
   var messageToSend = {
@@ -18,6 +17,7 @@ $(document).ready(function() {
     timestamp: '',
     messageText: '',
     location: '',
+    type: ''
   }
 
   //Show Login Div
@@ -27,8 +27,10 @@ $(document).ready(function() {
   $('#login-form').bind('submit', function(){
     localUser.username = messageToSend.username = $('#namefield').val();
     localUser.id = "nomads_" + localUser.username + "_" + Math.floor(Math.random()*1000);
-    localUser.timestamp = new Date();
-    socket.emit('newuser', localUser);
+    messageToSend.timestamp = new Date();
+    messageToSend.type = 'newUser';
+    messageToSend.location = '';
+    socket.emit('newuser', messageToSend);
     $('#login').fadeOut();
     return false;
   });
@@ -59,6 +61,7 @@ $(document).ready(function() {
   $('#phrase-form').bind('submit', function(){
     messageToSend.messageText = $('#phrasefield').val();
     messageToSend.timestamp = new Date();
+    messageToSend.type = 'textMessage';
     socket.emit('message', messageToSend);
     $('#phrase-entry').fadeOut();
     $('#phrasefield').val('');
