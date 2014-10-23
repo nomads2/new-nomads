@@ -7,7 +7,6 @@ Look in the interface_mockups folder for some interface design ideas.
 
 TODO:
   * add in error check message.
-  * add in OSC message that is able to dynamically send all elements of an incoming data array.
   * HTML 5 audio play when user submits a message.
 
 OSC Architecture

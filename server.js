@@ -55,7 +55,8 @@ io.sockets.on('connection', function(socket){
 
   socket.on('message', function(data){
     socket.broadcast.emit('client_update',data); //send data back to all clients?
-    sendOSCText('/word', data);
+    sendOSCText('/thought', data);
+    sendOSC('/object', data);
     //socket.emit('server_message',data); // send data back to individual client?
     console.log(data);
   });
@@ -141,7 +142,7 @@ var outport = 6789;
 
 
 /**
- * Send single OSC message
+ * Send single OSC message (thought cloud)
  *
  * @param {string} [url] OSC address e.g. '/datatype user location message'
  * @param {string int float} [data] data value to send
@@ -153,6 +154,28 @@ sendOSCText = function(url, data) {
     args: [
       data.username, data.location, data.messageText
     ]
+  });
+  return udp.send(buf, 0, buf.length, outport, "localhost");
+};
+
+/**
+ * Dynamically send any size array as a single OSC message
+ *
+ * @param {string} [url] OSC address e.g. '/datatype user location message'
+ * @param {string int float} [data] data value to send
+ */
+sendOSC = function(url, data) {
+  var buf;
+  var argArray = new Array();
+  for (var k in data){
+    if (data.hasOwnProperty(k)) {
+      argArray.push(data[k]);
+    }
+  }
+  buf = osc.toBuffer({
+    address: "" + url + "",
+    args: 
+      argArray
   });
   return udp.send(buf, 0, buf.length, outport, "localhost");
 };

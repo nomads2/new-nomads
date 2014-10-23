@@ -8,7 +8,7 @@
 			"architecture" : "x86"
 		}
 ,
-		"rect" : [ 618.0, 363.0, 640.0, 480.0 ],
+		"rect" : [ 358.0, 341.0, 640.0, 480.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -36,9 +36,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 69.0, 406.0, 50.0, 18.0 ],
-					"presentation_rect" : [ 169.0, 392.0, 0.0, 0.0 ],
-					"text" : "track"
+					"patching_rect" : [ 69.0, 406.0, 75.0, 18.0 ],
+					"text" : "\"dfd dfdf\""
 				}
 
 			}
@@ -52,8 +51,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 40.0, 375.0, 59.0, 18.0 ],
-					"presentation_rect" : [ 139.0, 375.0, 0.0, 0.0 ],
-					"text" : "\"Zone 2\""
+					"text" : "\"Zone 3\""
 				}
 
 			}
@@ -67,7 +65,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 11.0, 357.0, 50.0, 18.0 ],
-					"text" : "steve"
+					"text" : "jon"
 				}
 
 			}
@@ -80,7 +78,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 126.0, 316.0, 150.0, 20.0 ],
+					"patching_rect" : [ 131.0, 316.0, 150.0, 20.0 ],
 					"text" : "user location message"
 				}
 
@@ -105,11 +103,11 @@
 					"fontsize" : 12.0,
 					"id" : "obj-2",
 					"maxclass" : "newobj",
-					"numinlets" : 2,
-					"numoutlets" : 2,
-					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 42.0, 276.0, 71.0, 20.0 ],
-					"text" : "route /word"
+					"numinlets" : 3,
+					"numoutlets" : 3,
+					"outlettype" : [ "", "", "" ],
+					"patching_rect" : [ 42.0, 276.0, 123.0, 20.0 ],
+					"text" : "route /thought /object"
 				}
 
 			}
@@ -179,7 +177,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 110.0, 145.0, 331.0, 18.0 ],
-					"text" : "/word steve \"Zone 2\" track"
+					"text" : "/object  jon 2014-10-23T18:59:57.873Z \"dfd dfdf\" \"Zone 3\""
 				}
 
 			}
