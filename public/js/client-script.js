@@ -1,29 +1,30 @@
 /**
- * Test functions for server.
+ * Nomads Basic Mobile and Desktop Client
  */
 
+var socket;
+
+var localUser = {
+  id: '',
+  username: '',
+}
+
+var messageToSend = {
+  id: '',
+  username: '',
+  timestamp: '',
+  messageText: '',
+  location: '',
+  type: ''
+}
+
 $(document).ready(function() {   
+  socket = io.connect();
 
-  var socket = io.connect();
-
-  var localUser = {
-    id: '',
-    username: ''
-  }
-
-  var messageToSend = {
-    id: '',
-    username: '',
-    timestamp: '',
-    messageText: '',
-    location: '',
-    type: ''
-  }
+  geoLocate();
 
   //Show Login Div
-  $('#login').fadeIn();
   $('#namefield').focus();
-
   $('#login-form').bind('submit', function(){
     localUser.username = messageToSend.username = $('#namefield').val();
     localUser.id = "nomads_" + localUser.username + "_" + Math.floor(Math.random()*1000);
@@ -69,3 +70,25 @@ $(document).ready(function() {
   });
 
 });
+
+var geoLocate = function(){
+  if(geoPosition.init()){  // Geolocation Initialisation
+              geoPosition.getCurrentPosition(success_callback,error_callback,{enableHighAccuracy:true});
+  }else{
+    // You cannot use Geolocation in this device
+    console.log("Geolocation is not available");
+  }
+
+  // p : geolocation object
+  function success_callback(p){
+    localUser.latitude = parseFloat(p.coords.latitude);
+    localUser.longitude = parseFloat(p.coords.longitude);
+    console.log("Lat/Long = " + localUser.latitude + " " + localUser.longitude);
+  }
+
+  function error_callback(p){
+      // p.message : error message
+      console.log("Geolocation is not available");
+      
+  }
+}
