@@ -2,78 +2,117 @@
  * Nomads Basic Mobile and Desktop Client
  */
 
-// Global Namespace
-var NomadsClient = NomadsClient || {};
+var client;
+var currentZone;
 
-var socket;
+$(document).ready(function(){
+  client = new NomadsMobileClient(initCallback);
+  client.geolocate();
 
-var localUser = {
-  id: '',
-  username: '',
+  $('#namefield').focus();
+
+  //Listeners
+
+  $('#login-form').submit(login);
+  $('.zone').bind('click', zoneSelect);
+  $('#phrase-form').submit(submitPhrase);
+
+});
+
+initCallback = function(){
+  $('#loader').hide();
 }
 
-var messageToSend = {
-  id: '',
-  username: '',
-  timestamp: '',
-  messageText: '',
-  location: '',
-  type: ''
+login = function(e){
+  //cancel form submission
+  e.preventDefault();
+
+  if($('#namefield').val()==""){
+    //must submit phrase
+    return;
+  }
+
+  client.login($('#namefield').val(), loginComplete);
 }
 
-$(document).ready(function() {   
-  socket = io.connect();
+loginComplete = function(){
+  $('#login').fadeOut();
+}
 
-  NomadsClient.geoLocate();
+zoneSelect = function(){
+  $("#phrase-entry").fadeIn();
+  $('#phrasefield').focus();
+  currentZone = $(this).attr("data-location");
+  return false;
+}
+
+submitPhrase = function(e){
+  //cancel form submission
+  e.preventDefault();
+  if($('#phrasefield').val()==""){
+    //must submit phrase
+    return;
+  }
+
+  client.sendMessage($('#phrasefield').val(), currentZone, 'textMessage');
+  $('#phrase-entry').fadeOut();
+  $('#phrasefield').val('');
+}
+
+// var socket;
+
+// var localUser = {
+//   id: '',
+//   username: '',
+// }
+
+// var messageToSend = {
+//   id: '',
+//   username: '',
+//   timestamp: '',
+//   messageText: '',
+//   location: '',
+//   type: ''
+// }
+
+// $(document).ready(function() {   
+//   socket = io.connect();
+
+//   NomadsClient.geoLocate();
 
   //Show Login Div
-  $('#namefield').focus();
-  $('#login-form').bind('submit', function(){
-    localUser.username = messageToSend.username = $('#namefield').val();
-    localUser.id = "nomads_" + localUser.username + "_" + Math.floor(Math.random()*1000);
-    messageToSend.timestamp = new Date();
-    messageToSend.type = 'newUser';
-    messageToSend.location = '';
-    socket.emit('newuser', messageToSend);
-    $('#login').fadeOut();
-    return false;
-  });
-
-  $('.zone').bind('click', function(){
-    messageToSend.location = $(this).attr("data-location");
-    $("#phrase-entry").fadeIn();
-    $('#phrasefield').focus();
-  });
+ // $('#namefield').focus();
+ 
 
   ///////////////////////////////////////////
   //          Socket Communication         //
   ///////////////////////////////////////////
 
   // on connection to server
-  socket.on('connect', function() {
+//   socket.on('connect', function() {
 
-  });
+//   });
 
-  //listen for message from the server.
-  socket.on('user_confirmed', function(data){
-    if(data.username == localUser.username){
-      $('#info').html("Username is: "+data.username);
-    }
-  });
+//   //listen for message from the server.
+//   socket.on('user_confirmed', function(data){
+//     if(data.username == localUser.username){
+//       $('#info').html("Username is: "+data.username);
+//     }
+//   });
 
-  //send message
-  $('#phrase-form').bind('submit', function(){
-    messageToSend.messageText = $('#phrasefield').val();
-    messageToSend.timestamp = new Date();
-    messageToSend.type = 'textMessage';
-    socket.emit('message', messageToSend);
-    $('#phrase-entry').fadeOut();
-    $('#phrasefield').val('');
-    return false;
-  });
+//   //send message
+//   $('#phrase-form').bind('submit', function(){
+//     messageToSend.messageText = $('#phrasefield').val();
+//     messageToSend.timestamp = new Date();
+//     messageToSend.type = 'textMessage';
+//     socket.emit('message', messageToSend);
+//     $('#phrase-entry').fadeOut();
+//     $('#phrasefield').val('');
+//     return false;
+//   });
 
-});
-
+// });
+/*
 NomadsClient.geoLocate = function(){
   if(geoPosition.init()){  // Geolocation Initialisation
               geoPosition.getCurrentPosition(success_callback,error_callback,{enableHighAccuracy:true});
@@ -100,5 +139,5 @@ NomadsClient.geoLocate = function(){
       // p.message : error message
       console.log("Geolocation is not available");
       
-  }
-}
+  }*/
+//}

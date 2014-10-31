@@ -12,6 +12,15 @@ body input{
 	margin:auto;
 }
 
+#loader{
+	width:100%;
+	height:100%;
+	position:absolute;
+	top:0em;
+	bottom:0em;
+	background-color:#999;
+}
+
 .control{
 	margin:auto;
 	width:90%;
