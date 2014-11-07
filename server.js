@@ -50,6 +50,7 @@ io.sockets.on('connection', function(socket){
   //when new user enters his/her name, display.
   socket.on('newuser', function (data) {
     console.log('new user added! ' + data.username);
+    console.log(data);
     socket.broadcast.emit('user_confirmed', data);
   });
 
@@ -57,6 +58,7 @@ io.sockets.on('connection', function(socket){
     socket.broadcast.emit('client_update',data); //send data back to all clients?
     sendOSCText('/thought', data);
     sendOSC('/object', data);
+    sendOSC('/geolocation', [ data.latitude, data.longitude ] );
     //socket.emit('server_message',data); // send data back to individual client?
     console.log(data);
   });

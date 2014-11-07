@@ -47,8 +47,8 @@ NomadsMobileClient.prototype = {
     this.user.id = messageToSend.id = "nomads_" + username + "_" + Math.floor(Math.random()*1000);
     messageToSend.timestamp = new Date();
     messageToSend.type = 'newUser';
-    messageToSend.latitude = this.latitude;
-    messageToSend.longitude = this.longitude;
+    messageToSend.latitude = latitude; //changed to latitude, not this.latitude to work in server.js
+    messageToSend.longitude = longitude;
     this.socket.emit('newuser', messageToSend);
     if(typeof(callback)!='undefined'){
     	callback();
@@ -61,6 +61,8 @@ NomadsMobileClient.prototype = {
 		messageToSend.id = this.user.id;
 		messageToSend.messageText = messageText;
 		messageToSend.location = location;
+		messageToSend.latitude = latitude; //since we have this stored, send lat/long with each message
+    messageToSend.longitude = longitude;
 		messageToSend.type = type;
 		messageToSend.timestamp = new Date();
 		this.socket.emit('message', messageToSend);
