@@ -8,14 +8,16 @@ Look in the interface_mockups folder for some interface design ideas.
 TODO:
   * add in error check message.
   * HTML 5 audio play when user submits a message.
+  * IP address or Lat/Long with user sign in.
 
 OSC Architecture
  * text messages 
- "/word username location message"  3 index array
+ "/thought username location message"  3 index array
 
  * point message
  "/pointer username starting X starting Y ending X ending Y" 5 index array
 
+<<<<<<< Updated upstream
 
 External Libs
 =============
@@ -31,3 +33,8 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+=======
+ Processing
+ * Lat/Long - show on map, connect
+ * thought cloud
+>>>>>>> Stashed changes
