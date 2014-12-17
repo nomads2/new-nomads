@@ -142,7 +142,8 @@ console.log('Listening on http://127.0.0.1:' + port );
 var osc = require('osc-min');
 var dgram = require('dgram');
 var udp = dgram.createSocket('udp4');
-var outport = 6789;
+var outport = 6789; //Max/MSP sound
+var outport2 = 6790; //Prcoessing visual
 
 
 /**
@@ -181,7 +182,8 @@ sendOSC = function(url, data) {
     args: 
       argArray
   });
-  return udp.send(buf, 0, buf.length, outport, "localhost");
+  udp.send(buf, 0, buf.length, outport, "localhost");
+  return udp.send(buf, 0, buf.length, outport2, "localhost");
 };
 
 /**
@@ -209,5 +211,6 @@ function sendOSCBundle(bundle) {
     elements:
       oscBundle
   });
-  return udp.send(buf, 0, buf.length, outport, "localhost");
+  udp.send(buf, 0, buf.length, outport, "localhost");
+  return udp.send(buf, 0, buf.length, outport2, "localhost");
 };
