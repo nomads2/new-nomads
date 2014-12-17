@@ -50,15 +50,17 @@ io.sockets.on('connection', function(socket){
   //when new user enters his/her name, display.
   socket.on('newuser', function (data) {
     console.log('new user added! ' + data.username);
-    console.log(data);
+    //console.log(data);
+    sendOSC('/newuser', data);
     socket.broadcast.emit('user_confirmed', data);
   });
 
+  //see NomadsMobileClient.js for data var
   socket.on('message', function(data){
     socket.broadcast.emit('client_update',data); //send data back to all clients?
-    sendOSCText('/thought', data);
-    sendOSC('/object', data);
-    sendOSC('/geolocation', [ data.latitude, data.longitude ] );
+    sendOSC('/object', data);  //just send a single block instead of multiple, smaller OSC messages
+    // sendOSCText('/thought', data);
+    // sendOSC('/geolocation', [ data.latitude, data.longitude ] );
     //socket.emit('server_message',data); // send data back to individual client?
     console.log(data);
   });
