@@ -37,7 +37,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 309.5, 310.0, 82.0, 20.0 ],
-					"presentation_rect" : [ 308.0, 310.0, 0.0, 0.0 ],
 					"text" : "8 item packet"
 				}
 
@@ -66,7 +65,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 476.857147, 439.0, 41.0, 20.0 ],
-					"presentation_rect" : [ 413.142853, 413.0, 0.0, 0.0 ],
 					"text" : "zone#"
 				}
 
@@ -81,8 +79,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 435.857147, 439.0, 41.0, 18.0 ],
-					"presentation_rect" : [ 405.142853, 434.0, 0.0, 0.0 ],
-					"text" : "10."
+					"text" : "3."
 				}
 
 			}
@@ -110,8 +107,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 360.142853, 419.0, 75.0, 18.0 ],
-					"presentation_rect" : [ 306.399994, 419.0, 0.0, 0.0 ],
-					"text" : "a\\;dlfkjadf"
+					"text" : "gfsbgsbgf"
 				}
 
 			}
@@ -125,7 +121,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 291.0, 359.0, 462.0, 20.0 ],
-					"presentation_rect" : [ 325.0, 405.0, 0.0, 0.0 ],
 					"text" : "userID user messageType message zone geolocation.lat geolocation.long timestamp"
 				}
 
@@ -141,7 +136,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 200.0, 459.0, 75.0, 45.0 ],
-					"presentation_rect" : [ 200.199997, 456.0, 0.0, 0.0 ],
 					"text" : "2014-12-17T16:55:53.875Z"
 				}
 
@@ -156,7 +150,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 172.199997, 439.0, 75.0, 18.0 ],
-					"presentation_rect" : [ 159.399994, 437.0, 0.0, 0.0 ],
 					"text" : "-78.504868"
 				}
 
@@ -171,7 +164,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 144.399994, 419.0, 75.0, 18.0 ],
-					"presentation_rect" : [ 133.600006, 421.0, 0.0, 0.0 ],
 					"text" : "38.032547"
 				}
 
@@ -341,7 +333,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 200.0, 145.0, 331.0, 32.0 ],
-					"text" : "/object nomads_lloyd_508 lloyd textMessage a\\;dlfkjadf 10. 38.032547 -78.504868 2014-12-17T16:56:22.895Z"
+					"text" : "/object nomads_lloyd_508 lloyd textMessage gfsbgsbgf 3. 38.032547 -78.504868 2014-12-17T17:11:17.378Z"
 				}
 
 			}
