@@ -3,11 +3,28 @@ new-nomads
 
 This is V2 of the Nomads codebase.  =)
 
+HOW TO RUN:
+install Node: http://nodejs.org/download/
+in  /usr/local/bin/node
+npm installed at /usr/local/bin/npm
+Make sure that /usr/local/bin is in your $PATH (printf "%s\n" $PATH).
+cd to new-nomads folder
+npm install
+node server.js
+it will be "Listening on http://127.0.0.1:8081"
+in Safari go to http://127.0.0.1:8081
+in Max udpreceive 6789
+/newuser contains userID user messageType geolocation.lat geolocation.long timestamp
+/object contains userID user messageType message zone geolocation.lat geolocation.long timestamp
+/thought contains userID zone message 
+/geolocation contains lat lon
+
 Look in the interface_mockups folder for some interface design ideas.
 
 TODO:
+  * play phone audio when user submits a message in a zone.
+  * settings in processing to receive?
   * add in error check message.
-  * HTML 5 audio play when user submits a message.
   * IP address or Lat/Long with user sign in.
 
 OSC Architecture
@@ -26,7 +43,7 @@ External Libs
 License
 ==========
 
-The MIT License (MIT) Copyright (c) 2014 VCCM
+The MIT License (MIT) Copyright (c) 2014 IMRG University of Virginia McIntire Department of Music
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
