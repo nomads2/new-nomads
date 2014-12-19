@@ -39,8 +39,8 @@ server.error(function(err, req, res, next){
 });
 server.listen( port);
 
-//Setup OSC
-var oscMessages = new Array();
+//Setup OSC functions
+var oscMessage = require("./osc-bundle.js");
 
 //Setup Socket.IO
 var io = io.listen(server);
@@ -51,14 +51,14 @@ io.sockets.on('connection', function(socket){
   socket.on('newuser', function (data) {
     console.log('new user added! ' + data.username);
     //console.log(data);
-    sendOSC('/newuser', data);
+    oscMessage.sendOSC('/newuser', data);
     socket.broadcast.emit('user_confirmed', data);
   });
 
   //see NomadsMobileClient.js for data var
   socket.on('message', function(data){
     socket.broadcast.emit('client_update',data); //send data back to all clients?
-    sendOSC('/object', data);  //just send a single block instead of multiple, smaller OSC messages
+    oscMessage.sendOSC('/object', data);  //just send a single block instead of multiple, smaller OSC messages
     // sendOSCText('/thought', data);
     // sendOSC('/geolocation', [ data.latitude, data.longitude ] );
     //socket.emit('server_message',data); // send data back to individual client?
@@ -138,79 +138,81 @@ console.log('Listening on http://127.0.0.1:' + port );
 ////////////////////// OSC PLUGIN //////////////////////
 //////////////////////            //////////////////////
 
-// GLOBAL vars
-var osc = require('osc-min');
-var dgram = require('dgram');
-var udp = dgram.createSocket('udp4');
-var outport = 6789; //Max/MSP sound
-var outport2 = 6790; //Prcoessing visual
+//REMOVE
+
+// // GLOBAL vars
+// var osc = require('osc-min');
+// var dgram = require('dgram');
+// var udp = dgram.createSocket('udp4');
+// var outport = 6789; //Max/MSP sound
+// var outport2 = 6790; //Prcoessing visual
 
 
-/**
- * Send single OSC message (thought cloud)
- *
- * @param {string} [url] OSC address e.g. '/datatype user location message'
- * @param {string int float} [data] data value to send
- */
-sendOSCText = function(url, data) {
-  var buf;
-  buf = osc.toBuffer({
-    address: "" + url + "",
-    args: [
-      data.username, data.location, data.messageText
-    ]
-  });
-  return udp.send(buf, 0, buf.length, outport, "localhost");
-};
+// /**
+//  * Send single OSC message (thought cloud)
+//  *
+//  * @param {string} [url] OSC address e.g. '/datatype user location message'
+//  * @param {string int float} [data] data value to send
+//  */
+// sendOSCText = function(url, data) {
+//   var buf;
+//   buf = osc.toBuffer({
+//     address: "" + url + "",
+//     args: [
+//       data.username, data.location, data.messageText
+//     ]
+//   });
+//   return udp.send(buf, 0, buf.length, outport, "localhost");
+// };
 
-/**
- * Dynamically send any size array as a single OSC message
- *
- * @param {string} [url] OSC address e.g. '/datatype user location message'
- * @param {string int float} [data] data value to send
- */
-sendOSC = function(url, data) {
-  var buf;
-  var argArray = new Array();
-  for (var k in data){
-    if (data.hasOwnProperty(k)) {
-      argArray.push(data[k]);
-    }
-  }
-  buf = osc.toBuffer({
-    address: "" + url + "",
-    args: 
-      argArray
-  });
-  udp.send(buf, 0, buf.length, outport, "localhost");
-  return udp.send(buf, 0, buf.length, outport2, "localhost");
-};
+// /**
+//  * Dynamically send any size array as a single OSC message
+//  *
+//  * @param {string} [url] OSC address e.g. '/datatype user location message'
+//  * @param {string int float} [data] data value to send
+//  */
+// sendOSC = function(url, data) {
+//   var buf;
+//   var argArray = new Array();
+//   for (var k in data){
+//     if (data.hasOwnProperty(k)) {
+//       argArray.push(data[k]);
+//     }
+//   }
+//   buf = osc.toBuffer({
+//     address: "" + url + "",
+//     args: 
+//       argArray
+//   });
+//   udp.send(buf, 0, buf.length, outport, "localhost");
+//   return udp.send(buf, 0, buf.length, outport2, "localhost");
+// };
 
-/**
- * Send multidimensional array as an OSC bundle (keys are addresses)
- * @author  Jon Bellona
- * @requires osc-min, dgram, udp4
- */
-function sendOSCBundle(bundle) {
-  var oscBundle = new Array();
+// /**
+//  * Send multidimensional array as an OSC bundle (keys are addresses)
+//  * @author  Jon Bellona
+//  * @requires osc-min, dgram, udp4
+//  */
+// function sendOSCBundle(bundle) {
+//   var oscBundle = new Array();
 
-  //convert keys from array into OSC addresses, push into oscBundle
-  for (var k in bundle){
-    if (bundle.hasOwnProperty(k)) {
-      var tmpItem = { address: k, args: bundle[k] };
-      oscBundle.push(tmpItem);
-    }
-  }
-  console.log(oscBundle);
+//   //convert keys from array into OSC addresses, push into oscBundle
+//   for (var k in bundle){
+//     if (bundle.hasOwnProperty(k)) {
+//       var tmpItem = { address: k, args: bundle[k] };
+//       oscBundle.push(tmpItem);
+//     }
+//   }
+//   console.log(oscBundle);
 
-  //take oscBundle and send out as OSC message
-  var buf;
-  buf = osc.toBuffer(
-  {
-    oscType: "bundle",
-    elements:
-      oscBundle
-  });
-  udp.send(buf, 0, buf.length, outport, "localhost");
-  return udp.send(buf, 0, buf.length, outport2, "localhost");
-};
+//   //take oscBundle and send out as OSC message
+//   var buf;
+//   buf = osc.toBuffer(
+//   {
+//     oscType: "bundle",
+//     elements:
+//       oscBundle
+//   });
+//   udp.send(buf, 0, buf.length, outport, "localhost");
+//   return udp.send(buf, 0, buf.length, outport2, "localhost");
+// };
