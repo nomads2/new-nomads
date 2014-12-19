@@ -2,8 +2,22 @@
  * Nomads Basic Mobile and Desktop Client
  */
 
+INTERFACE_CIRCLE_RAD = 131;
+INTERFACE_CIRCLE0_X = 298;
+INTERFACE_CIRCLE0_Y = 156;
+INTERFACE_CIRCLE1_X = 430;
+INTERFACE_CIRCLE1_Y = 249;
+INTERFACE_CIRCLE2_X = 380;
+INTERFACE_CIRCLE2_Y = 408;
+INTERFACE_CIRCLE3_X = 212;
+INTERFACE_CIRCLE3_Y = 411;
+INTERFACE_CIRCLE4_X = 155;
+INTERFACE_CIRCLE4_Y = 250;
+
 var client;
 var currentZone;
+var canvas;
+var context;
 
 $(document).ready(function(){
   client = new NomadsMobileClient(initCallback);
@@ -11,13 +25,114 @@ $(document).ready(function(){
 
   $('#namefield').focus();
 
+  //setup interaction area
+  canvas = document.getElementById('mainui');
+  context = canvas.getContext('2d');
+  var background = document.getElementById('background');  
+  context.drawImage(background, 0, 0);
+
+
+
   //Listeners
 
   $('#login-form').submit(login);
-  $('.zone').bind('click', zoneSelect);
+  //$('.zone').bind('click', zoneSelect);
+
   $('#phrase-form').submit(submitPhrase);
+  canvas.addEventListener('mousedown', zoneClick);
 
 });
+
+pointInCircle = function (center_x, center_y, radius, x, y){
+  var dist = (center_x - x)*(center_x - x) + (center_y - y)*(center_y - y);
+  if(dist < radius*radius){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+zoneClick = function(evt){
+  var rect = canvas.getBoundingClientRect();
+
+  var x = evt.clientX - rect.left;
+  var y = evt.clientY - rect.top;
+
+  //tests!
+  if(pointInCircle(INTERFACE_CIRCLE0_X, INTERFACE_CIRCLE0_Y, INTERFACE_CIRCLE_RAD, x, y)){
+    //circle 0
+    if(pointInCircle(INTERFACE_CIRCLE4_X, INTERFACE_CIRCLE4_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 9");
+      zoneSelect(9);
+    }else
+    if(pointInCircle(INTERFACE_CIRCLE1_X, INTERFACE_CIRCLE1_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 1");
+      zoneSelect(1);
+    }else{
+      console.log("zone 0");
+      zoneSelect(0);
+    } 
+  }else
+  if(pointInCircle(INTERFACE_CIRCLE1_X, INTERFACE_CIRCLE1_Y, INTERFACE_CIRCLE_RAD, x, y)){
+    //circle 1
+    if(pointInCircle(INTERFACE_CIRCLE0_X, INTERFACE_CIRCLE0_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 1");
+      zoneSelect(1);
+    }else
+    if(pointInCircle(INTERFACE_CIRCLE2_X, INTERFACE_CIRCLE2_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 3");
+      zoneSelect(3);
+    }else{
+      console.log("zone 2");
+      zoneSelect(2);
+    }
+  }else
+  if(pointInCircle(INTERFACE_CIRCLE2_X, INTERFACE_CIRCLE2_Y, INTERFACE_CIRCLE_RAD, x, y)){
+    //circle 2
+    if(pointInCircle(INTERFACE_CIRCLE1_X, INTERFACE_CIRCLE1_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 3");
+      zoneSelect(3);
+    }else
+    if(pointInCircle(INTERFACE_CIRCLE3_X, INTERFACE_CIRCLE3_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 5");
+      zoneSelect(5);
+    }else{
+      console.log("zone 4");
+      zoneSelect(4);
+    }  
+  }else
+  if(pointInCircle(INTERFACE_CIRCLE3_X, INTERFACE_CIRCLE3_Y, INTERFACE_CIRCLE_RAD, x, y)){
+    //circle 3
+    if(pointInCircle(INTERFACE_CIRCLE2_X, INTERFACE_CIRCLE2_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 5");
+      zoneSelect(5);
+    }else
+    if(pointInCircle(INTERFACE_CIRCLE4_X, INTERFACE_CIRCLE4_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 7")
+      zoneSelect(7);
+    }else{
+      console.log("zone 6");
+      zoneSelect(6);
+    }
+  }else
+  if(pointInCircle(INTERFACE_CIRCLE4_X, INTERFACE_CIRCLE4_Y, INTERFACE_CIRCLE_RAD, x, y)){
+    //circle 4
+    if(pointInCircle(INTERFACE_CIRCLE3_X, INTERFACE_CIRCLE3_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 7");
+      zoneSelect(7);
+    }else
+    if(pointInCircle(INTERFACE_CIRCLE0_X, INTERFACE_CIRCLE0_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 9");
+      zoneSelect(9);
+    }else{
+      console.log("zone 8");
+      zoneSelect(8);
+    }
+  }
+
+  
+  console.log("mouse down "+x + ' ' + y);
+}
 
 initCallback = function(){
   $('#loader').hide();
@@ -39,10 +154,10 @@ loginComplete = function(){
   $('#login').fadeOut();
 }
 
-zoneSelect = function(){
+zoneSelect = function(cz){
   $("#phrase-entry").fadeIn();
   $('#phrasefield').focus();
-  currentZone = $(this).attr("data-location");
+  currentZone = cz;//$(this).attr("data-location");
   return false;
 }
 
@@ -58,86 +173,3 @@ submitPhrase = function(e){
   $('#phrase-entry').fadeOut();
   $('#phrasefield').val('');
 }
-
-// var socket;
-
-// var localUser = {
-//   id: '',
-//   username: '',
-// }
-
-// var messageToSend = {
-//   id: '',
-//   username: '',
-//   timestamp: '',
-//   messageText: '',
-//   location: '',
-//   type: ''
-// }
-
-// $(document).ready(function() {   
-//   socket = io.connect();
-
-//   NomadsClient.geoLocate();
-
-  //Show Login Div
- // $('#namefield').focus();
- 
-
-  ///////////////////////////////////////////
-  //          Socket Communication         //
-  ///////////////////////////////////////////
-
-  // on connection to server
-//   socket.on('connect', function() {
-
-//   });
-
-//   //listen for message from the server.
-//   socket.on('user_confirmed', function(data){
-//     if(data.username == localUser.username){
-//       $('#info').html("Username is: "+data.username);
-//     }
-//   });
-
-//   //send message
-//   $('#phrase-form').bind('submit', function(){
-//     messageToSend.messageText = $('#phrasefield').val();
-//     messageToSend.timestamp = new Date();
-//     messageToSend.type = 'textMessage';
-//     socket.emit('message', messageToSend);
-//     $('#phrase-entry').fadeOut();
-//     $('#phrasefield').val('');
-//     return false;
-//   });
-
-// });
-/*
-NomadsClient.geoLocate = function(){
-  if(geoPosition.init()){  // Geolocation Initialisation
-              geoPosition.getCurrentPosition(success_callback,error_callback,{enableHighAccuracy:true});
-  }else{
-    // You cannot use Geolocation in this device
-    console.log("Geolocation is not available");
-  }
-
-  // p : geolocation object
-  function success_callback(p){
-    localUser.latitude = parseFloat(p.coords.latitude);
-    localUser.longitude = parseFloat(p.coords.longitude);
-    console.log("Lat/Long = " + localUser.latitude + " " + localUser.longitude);
-
-    // Send User Long/Lat
-    var messageToSend = new Object();
-    messageToSend.id = localUser.id;
-    messageToSend.username = localUser.username;
-    messageToSend.timestamp = new Date();
-    socket.emit('userGeo', messageToSend);
-  }
-
-  function error_callback(p){
-      // p.message : error message
-      console.log("Geolocation is not available");
-      
-  }*/
-//}
