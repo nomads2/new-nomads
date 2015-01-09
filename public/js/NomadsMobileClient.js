@@ -38,6 +38,7 @@ NomadsMobileClient.prototype = {
   	}else{
   	  // You cannot use Geolocation in this device
   	  console.log("Geolocation is not available");
+  	  this.initCallback();
   	}
 	},
 
