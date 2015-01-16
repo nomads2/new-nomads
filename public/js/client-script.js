@@ -41,6 +41,9 @@ $(document).ready(function(){
   $('#phrase-form').submit(submitPhrase);
   canvas.addEventListener('mousedown', zoneClick);
 
+  //Load sounds
+  $('.sounds').load();
+
 });
 
 pointInCircle = function (center_x, center_y, radius, x, y){
@@ -155,8 +158,10 @@ loginComplete = function(){
 }
 
 zoneSelect = function(cz){
-  $("#phrase-entry").fadeIn();
-  $('#phrasefield').focus();
+  $("#phrase-entry").fadeIn(500, function(){
+    $('#phrasefield').focus();
+  });
+  
   currentZone = cz;//$(this).attr("data-location");
   return false;
 }
@@ -172,4 +177,9 @@ submitPhrase = function(e){
   client.sendMessage($('#phrasefield').val(), currentZone, 'textMessage');
   $('#phrase-entry').fadeOut();
   $('#phrasefield').val('');
+  //Play sound
+  var i = Math.floor(Math.random()*14);
+  console.log("playing sound "+i);
+  $('#sound'+i)[0].play();
+
 }
