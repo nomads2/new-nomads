@@ -87,3 +87,28 @@ body input{
 	background-color:#999;
 	opacity:1.0;
 }
+
+input, label{
+		display:block;
+}
+
+button{
+	display:inline-block;
+	margin-left:1em;
+}
+
+/* Mobile device form formatting */
+@media only screen and (max-device-width: 480px) {
+
+	input[type="text"], input[type="password"], input[type="phone"],  textarea {
+        font-size:2em;
+	}
+
+	label{
+		font-size:2em;
+	}
+
+	button{
+		font-size:2em;
+	}
+}

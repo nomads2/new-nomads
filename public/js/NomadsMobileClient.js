@@ -2,8 +2,7 @@
 //Constructor
 function NomadsMobileClient(initCallback) {
 	//Public member variables
-	this.latitude = '';
-	this.longitude = '';
+	
 	this.user = {};
 	this.socket = io.connect();
 	this.initCallback = initCallback;
@@ -17,13 +16,15 @@ function NomadsMobileClient(initCallback) {
 	  latitude = parseFloat(p.coords.latitude);
 	  longitude = parseFloat(p.coords.longitude);
 	  console.log("Lat/Long = " + latitude + " " + longitude);
-	  this.initCallback();
+	  initCallback();
 	}
 
 	geo_error_callback = function(p){
 	    // p.message : error message
-	    console.log("Geolocation is not available");
-	    this.initCallback();
+	    console.log("callback: Geolocation is not available");
+	    latitude = 0;
+	  	longitude = 0;
+	    initCallback();
 	}
 
 }
@@ -33,12 +34,23 @@ NomadsMobileClient.prototype = {
 
 	geolocate:function(){
 		// Geolocation Initialisation
+		if(typeof(geoPosition)=='undefined'){
+			// You cannot use Geolocation in this device
+  	  console.log("Geolocation is not available");
+  	  latitude = 0;
+	  	longitude = 0;
+  	  initCallback();
+  	  return;
+		}
 		if(geoPosition.init()){  
     	geoPosition.getCurrentPosition(geo_success_callback, geo_error_callback,{enableHighAccuracy:true});
   	}else{
   	  // You cannot use Geolocation in this device
   	  console.log("Geolocation is not available");
-  	  this.initCallback();
+  	  latitude = 0;
+	  	longitude = 0;
+  	  initCallback();
+
   	}
 	},
 

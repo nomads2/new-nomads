@@ -14,6 +14,9 @@ INTERFACE_CIRCLE3_Y = 411;
 INTERFACE_CIRCLE4_X = 155;
 INTERFACE_CIRCLE4_Y = 250;
 
+GRAPHICS_W = 587;
+GRAPHICS_H = 587;
+
 var client;
 var currentZone;
 var canvas;
@@ -21,6 +24,7 @@ var context;
 
 $(document).ready(function(){
   client = new NomadsMobileClient(initCallback);
+
   client.geolocate();
 
   $('#namefield').focus();
@@ -39,6 +43,8 @@ $(document).ready(function(){
   //$('.zone').bind('click', zoneSelect);
 
   $('#phrase-form').submit(submitPhrase);
+  $('#cancel_phrase').click(cancelPhrase);
+
   canvas.addEventListener('mousedown', zoneClick);
 
   //Load sounds
@@ -181,5 +187,13 @@ submitPhrase = function(e){
   var i = Math.floor(Math.random()*14);
   console.log("playing sound "+i);
   $('#sound'+i)[0].play();
+
+}
+
+cancelPhrase = function(e){
+  //cancel form submission
+
+  $('#phrase-entry').fadeOut();
+  $('#phrasefield').val('');
 
 }
