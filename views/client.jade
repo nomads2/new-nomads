@@ -19,7 +19,10 @@ block content
 			label="What is your message?"
 			input(id='phrasefield', type='text')
 			button(id='enter_phrase') Submit			
-			button(id='cancel_phrase') Cancel			
+			button(id='cancel_phrase') Cancel		
+
+	div(id='processing-sketch')
+		canvas(id="animationUserText", data-processing-sources="/lib/animationUserText.pde")	
 
 	div(id='loader')
 			p Loading...

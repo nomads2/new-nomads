@@ -57,6 +57,7 @@ io.sockets.on('connection', function(socket){
 
   //see NomadsMobileClient.js for data var
   socket.on('message', function(data){
+    socket.broadcast.emit('proc_update',data); //send data to all clients for processing sketch
     socket.broadcast.emit('client_update',data); //send data back to all clients?
     oscMessage.sendOSC('/object', data);  //just send a single block instead of multiple, smaller OSC messages
     // sendOSCText('/thought', data);

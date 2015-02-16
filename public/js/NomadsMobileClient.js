@@ -10,6 +10,13 @@ function NomadsMobileClient(initCallback) {
 	//Socket Listeners
 	this.socket.on('connect', function(data){});
 	this.socket.on('user_confirmed', function(data){console.log("User Confirmed "+data);});
+	//couldn't get socket.emit(processing_update) function to work here. 
+	//broadcast.emit() //collected from other users. but doesn't work from its own user.
+  this.socket.on('proc_update', function(data){
+    // console.log(data.messageText);
+   var pjs = Processing.getInstanceById('animationUserText');
+   pjs.drawNewUserThought(data.location, data.messageText);
+  });
 
 	//Private functions
 	geo_success_callback = function(p){
@@ -79,6 +86,9 @@ NomadsMobileClient.prototype = {
     messageToSend.longitude = longitude;
 		messageToSend.timestamp = new Date();
 		this.socket.emit('message', messageToSend);
+		//also fire processing on user's own page.
+		var pjs = Processing.getInstanceById('animationUserText');
+    pjs.drawNewUserThought(location, messageText);
 		if(typeof(callback)!='undefined'){
     	callback();
     }
