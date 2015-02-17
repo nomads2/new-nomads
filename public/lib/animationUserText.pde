@@ -2,7 +2,8 @@
 
 //create Javascript interaction functions with the html page.
 interface JavaScript {
-  void showZone(int z);
+  void showZone(int z); //display zone number on html page
+  //void promptEntry(int x, int y); //
 }
 
 //need bind so we can display the Processing sketch in the canvas.
@@ -18,6 +19,7 @@ int rad = 250; //radius of speaker circle
 PFont myFont;
 ThoughtSystem ts;
 ArrayList<CircleSystem> circles;
+PImage bg;
 
 void setup() {
  //size(1024, 768);
@@ -27,15 +29,18 @@ void setup() {
  systems = new ArrayList<ParticleSystem>();
  ts = new ThoughtSystem(new PVector(0,0));
  myFont = createFont("Georgia", 32);
+ bg  = loadImage( "../img/NewNomads_backgroundImage_simple.png" );
  textFont(myFont);
  textAlign(CENTER, TOP); //CENTER doesn't get translated in JS on the page?
-// textAlign(CENTER, CENTER); //this is best for Processing offline.
+ // textAlign(CENTER, CENTER); //this is best for Processing offline.
  rectMode(CENTER);
  circles = new ArrayList<CircleSystem>();
 }
 
 void draw() {
   background(0);
+  imageMode(CENTER);
+  image(bg,width/2,height/2,587,587);
   displaySpeakerMap();
   
   for (CircleSystem cs: circles) {
@@ -53,9 +58,16 @@ void draw() {
   ts.intersection();
   ts.bounce();
   ts.display();
-  
-  
 }
+
+//https://github.com/processing/processing-android/wiki#Mouse_Motion_Keys_and_Input
+// void mousePressed(){
+//   int mx = mouseX;
+//   int my = mouseY;
+//   if (javascript!=null) {
+//     javascript.promptEntry(mx,my);
+//   }
+// }
 
 void keyPressed() {
   if (key == 'z' || key == 'Z') {
@@ -63,9 +75,9 @@ void keyPressed() {
     String message = randMess();
     int zone = int(random(10));
     println(zone);
-    if (javascript!=null) {
-      javascript.showZone(zone);
-    }
+    // if (javascript!=null) {
+    //   javascript.showZone(zone);
+    // }
     animateZone(zone, message);
   }
 }
@@ -83,8 +95,28 @@ void drawNewThought() {
 //called from button on the html page.
 void drawNewUserThought(String z, String t) {
   animateZone(int(z), t);
-//  println(z);
-//  println(t); 
+}
+
+//not linked in with the HTML yet.
+void drawNewThought_XY(String x, String y, String t) {
+  String thought = t; //thought cloud text
+  // Variable for heading! (angle)
+  float heading = ((PI/5) * int(random(10))); //provides correct heading in radians (0-9).
+//  println(zone + ": " + heading);
+  // Offset the angle since we have zones set up vertically.
+  float angle = heading - PI/2;
+  // Polar to cartesian for force vector!
+  PVector force = PVector.fromAngle(angle);
+  force.mult(0.1);
+  force.mult(-2);
+  float psXOrigin = int(x);
+  float psYOrigin = int(y);
+
+  systems.add(new ParticleSystem(thought,new PVector(psXOrigin,psYOrigin), force));
+  circles.add(new CircleSystem(1, new PVector(psXOrigin,psYOrigin)));
+  
+  //then add the thought to the screen
+  ts.addThought(new PVector(psXOrigin,psYOrigin),force,thought);
 }
 
 /**
@@ -392,7 +424,7 @@ class Thought {
     velocity.add(acceleration);
     location.add(velocity);
     acceleration.mult(0);
-    lifespan -= 0.3;
+    lifespan -= 0.6;
   }
 
   // Method to display
@@ -402,11 +434,12 @@ class Thought {
     fill(247, lifespan);
     //ellipse(location.x, location.y, r*2, r*2);
     
-    textSize(r/3);
+    textSize((r/3)*(255/lifespan));
     textLeading(r/3.5);
     //rectMode(CENTER);
     //textAlign(CENTER, CENTER);
-    text(theThought, location.x, location.y, r*3, r*5);
+    // text(theThought, location.x, location.y, r*3, r*5);
+    text(theThought, location.x, location.y, (255/lifespan));
   }
 
   // Is the particle still useful?

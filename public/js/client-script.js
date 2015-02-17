@@ -143,6 +143,88 @@ zoneClick = function(evt){
   console.log("mouse down "+x + ' ' + y);
 }
 
+
+zoneClickPDE = function(evt){
+  var rect = canvasPDE.getBoundingClientRect();
+
+  var x = evt.clientX - rect.left;
+  var y = evt.clientY - rect.top;
+
+  //eventually fire by x/y and not zone???
+  //tests!
+  if(pointInCircle(INTERFACE_CIRCLE0_X, INTERFACE_CIRCLE0_Y, INTERFACE_CIRCLE_RAD, x, y)){
+    //circle 0
+    if(pointInCircle(INTERFACE_CIRCLE4_X, INTERFACE_CIRCLE4_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 9");
+      zoneSelect(9);
+    }else
+    if(pointInCircle(INTERFACE_CIRCLE1_X, INTERFACE_CIRCLE1_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 1");
+      zoneSelect(1);
+    }else{
+      console.log("zone 0");
+      zoneSelect(0);
+    } 
+  }else
+  if(pointInCircle(INTERFACE_CIRCLE1_X, INTERFACE_CIRCLE1_Y, INTERFACE_CIRCLE_RAD, x, y)){
+    //circle 1
+    if(pointInCircle(INTERFACE_CIRCLE0_X, INTERFACE_CIRCLE0_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 1");
+      zoneSelect(1);
+    }else
+    if(pointInCircle(INTERFACE_CIRCLE2_X, INTERFACE_CIRCLE2_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 3");
+      zoneSelect(3);
+    }else{
+      console.log("zone 2");
+      zoneSelect(2);
+    }
+  }else
+  if(pointInCircle(INTERFACE_CIRCLE2_X, INTERFACE_CIRCLE2_Y, INTERFACE_CIRCLE_RAD, x, y)){
+    //circle 2
+    if(pointInCircle(INTERFACE_CIRCLE1_X, INTERFACE_CIRCLE1_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 3");
+      zoneSelect(3);
+    }else
+    if(pointInCircle(INTERFACE_CIRCLE3_X, INTERFACE_CIRCLE3_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 5");
+      zoneSelect(5);
+    }else{
+      console.log("zone 4");
+      zoneSelect(4);
+    }  
+  }else
+  if(pointInCircle(INTERFACE_CIRCLE3_X, INTERFACE_CIRCLE3_Y, INTERFACE_CIRCLE_RAD, x, y)){
+    //circle 3
+    if(pointInCircle(INTERFACE_CIRCLE2_X, INTERFACE_CIRCLE2_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 5");
+      zoneSelect(5);
+    }else
+    if(pointInCircle(INTERFACE_CIRCLE4_X, INTERFACE_CIRCLE4_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 7")
+      zoneSelect(7);
+    }else{
+      console.log("zone 6");
+      zoneSelect(6);
+    }
+  }else
+  if(pointInCircle(INTERFACE_CIRCLE4_X, INTERFACE_CIRCLE4_Y, INTERFACE_CIRCLE_RAD, x, y)){
+    //circle 4
+    if(pointInCircle(INTERFACE_CIRCLE3_X, INTERFACE_CIRCLE3_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 7");
+      zoneSelect(7);
+    }else
+    if(pointInCircle(INTERFACE_CIRCLE0_X, INTERFACE_CIRCLE0_Y, INTERFACE_CIRCLE_RAD, x, y)){
+      console.log("zone 9");
+      zoneSelect(9);
+    }else{
+      console.log("zone 8");
+      zoneSelect(8);
+    }
+  }
+  console.log("mouse down "+x + ' ' + y);
+}
+
 initCallback = function(){
   $('#loader').hide();
 }
