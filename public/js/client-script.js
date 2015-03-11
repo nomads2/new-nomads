@@ -2,25 +2,28 @@
  * Nomads Basic Mobile and Desktop Client
  */
 
-INTERFACE_CIRCLE_RAD = 131;
-INTERFACE_CIRCLE0_X = 298;
-INTERFACE_CIRCLE0_Y = 156;
-INTERFACE_CIRCLE1_X = 430;
-INTERFACE_CIRCLE1_Y = 249;
-INTERFACE_CIRCLE2_X = 380;
-INTERFACE_CIRCLE2_Y = 408;
-INTERFACE_CIRCLE3_X = 212;
-INTERFACE_CIRCLE3_Y = 411;
-INTERFACE_CIRCLE4_X = 155;
-INTERFACE_CIRCLE4_Y = 250;
+ANIMATION_OFFSET = 50;
 
-GRAPHICS_W = 587;
-GRAPHICS_H = 587;
+INTERFACE_CIRCLE_RAD = 110;
+INTERFACE_CIRCLE0_X = 250 + ANIMATION_OFFSET;
+INTERFACE_CIRCLE0_Y = 129 + ANIMATION_OFFSET;
+INTERFACE_CIRCLE1_X = 370 + ANIMATION_OFFSET;
+INTERFACE_CIRCLE1_Y = 215 + ANIMATION_OFFSET;
+INTERFACE_CIRCLE2_X = 330 + ANIMATION_OFFSET;
+INTERFACE_CIRCLE2_Y = 360 + ANIMATION_OFFSET;
+INTERFACE_CIRCLE3_X = 176 + ANIMATION_OFFSET;
+INTERFACE_CIRCLE3_Y = 375 + ANIMATION_OFFSET;
+INTERFACE_CIRCLE4_X = 134 + ANIMATION_OFFSET;
+INTERFACE_CIRCLE4_Y = 215 + ANIMATION_OFFSET;
+
+GRAPHICS_W = 500;
+GRAPHICS_H = 500;
 
 var client;
 var currentZone;
 var canvas;
 var context;
+var clientAnimation;
 
 $(document).ready(function(){
   client = new NomadsMobileClient(initCallback);
@@ -28,19 +31,18 @@ $(document).ready(function(){
   client.geolocate();
 
   $('#namefield').focus();
-
-  //setup interaction area
   canvas = document.getElementById('mainui');
-  context = canvas.getContext('2d');
-  var background = document.getElementById('background');  
-  context.drawImage(background, 0, 0);
-
-
+ 
+  // setup animation
+  clientAnimation = new NomadsMobileClientAnimation();
+  
+  $('#enter_phrase').prop('disabled', true);
+  $('#cancel_phrase').prop('disabled', true);
+  $('#phrasefield').prop('disabled', true);
 
   //Listeners
 
   $('#login-form').submit(login);
-  //$('.zone').bind('click', zoneSelect);
 
   $('#phrase-form').submit(submitPhrase);
   $('#cancel_phrase').click(cancelPhrase);
@@ -144,86 +146,7 @@ zoneClick = function(evt){
 }
 
 
-zoneClickPDE = function(evt){
-  var rect = canvasPDE.getBoundingClientRect();
 
-  var x = evt.clientX - rect.left;
-  var y = evt.clientY - rect.top;
-
-  //eventually fire by x/y and not zone???
-  //tests!
-  if(pointInCircle(INTERFACE_CIRCLE0_X, INTERFACE_CIRCLE0_Y, INTERFACE_CIRCLE_RAD, x, y)){
-    //circle 0
-    if(pointInCircle(INTERFACE_CIRCLE4_X, INTERFACE_CIRCLE4_Y, INTERFACE_CIRCLE_RAD, x, y)){
-      console.log("zone 9");
-      zoneSelect(9);
-    }else
-    if(pointInCircle(INTERFACE_CIRCLE1_X, INTERFACE_CIRCLE1_Y, INTERFACE_CIRCLE_RAD, x, y)){
-      console.log("zone 1");
-      zoneSelect(1);
-    }else{
-      console.log("zone 0");
-      zoneSelect(0);
-    } 
-  }else
-  if(pointInCircle(INTERFACE_CIRCLE1_X, INTERFACE_CIRCLE1_Y, INTERFACE_CIRCLE_RAD, x, y)){
-    //circle 1
-    if(pointInCircle(INTERFACE_CIRCLE0_X, INTERFACE_CIRCLE0_Y, INTERFACE_CIRCLE_RAD, x, y)){
-      console.log("zone 1");
-      zoneSelect(1);
-    }else
-    if(pointInCircle(INTERFACE_CIRCLE2_X, INTERFACE_CIRCLE2_Y, INTERFACE_CIRCLE_RAD, x, y)){
-      console.log("zone 3");
-      zoneSelect(3);
-    }else{
-      console.log("zone 2");
-      zoneSelect(2);
-    }
-  }else
-  if(pointInCircle(INTERFACE_CIRCLE2_X, INTERFACE_CIRCLE2_Y, INTERFACE_CIRCLE_RAD, x, y)){
-    //circle 2
-    if(pointInCircle(INTERFACE_CIRCLE1_X, INTERFACE_CIRCLE1_Y, INTERFACE_CIRCLE_RAD, x, y)){
-      console.log("zone 3");
-      zoneSelect(3);
-    }else
-    if(pointInCircle(INTERFACE_CIRCLE3_X, INTERFACE_CIRCLE3_Y, INTERFACE_CIRCLE_RAD, x, y)){
-      console.log("zone 5");
-      zoneSelect(5);
-    }else{
-      console.log("zone 4");
-      zoneSelect(4);
-    }  
-  }else
-  if(pointInCircle(INTERFACE_CIRCLE3_X, INTERFACE_CIRCLE3_Y, INTERFACE_CIRCLE_RAD, x, y)){
-    //circle 3
-    if(pointInCircle(INTERFACE_CIRCLE2_X, INTERFACE_CIRCLE2_Y, INTERFACE_CIRCLE_RAD, x, y)){
-      console.log("zone 5");
-      zoneSelect(5);
-    }else
-    if(pointInCircle(INTERFACE_CIRCLE4_X, INTERFACE_CIRCLE4_Y, INTERFACE_CIRCLE_RAD, x, y)){
-      console.log("zone 7")
-      zoneSelect(7);
-    }else{
-      console.log("zone 6");
-      zoneSelect(6);
-    }
-  }else
-  if(pointInCircle(INTERFACE_CIRCLE4_X, INTERFACE_CIRCLE4_Y, INTERFACE_CIRCLE_RAD, x, y)){
-    //circle 4
-    if(pointInCircle(INTERFACE_CIRCLE3_X, INTERFACE_CIRCLE3_Y, INTERFACE_CIRCLE_RAD, x, y)){
-      console.log("zone 7");
-      zoneSelect(7);
-    }else
-    if(pointInCircle(INTERFACE_CIRCLE0_X, INTERFACE_CIRCLE0_Y, INTERFACE_CIRCLE_RAD, x, y)){
-      console.log("zone 9");
-      zoneSelect(9);
-    }else{
-      console.log("zone 8");
-      zoneSelect(8);
-    }
-  }
-  console.log("mouse down "+x + ' ' + y);
-}
 
 initCallback = function(){
   $('#loader').hide();
@@ -246,9 +169,11 @@ loginComplete = function(){
 }
 
 zoneSelect = function(cz){
-  $("#phrase-entry").fadeIn(500, function(){
-    $('#phrasefield').focus();
-  });
+  $('#enter_phrase').prop('disabled', false);
+  $('#cancel_phrase').prop('disabled', false);
+  $('#phrasefield').prop('disabled', false);
+  $('#phrasefield').focus();
+  
   
   currentZone = cz;//$(this).attr("data-location");
   return false;
@@ -263,19 +188,21 @@ submitPhrase = function(e){
   }
 
   client.sendMessage($('#phrasefield').val(), currentZone, 'textMessage');
-  $('#phrase-entry').fadeOut();
+  //$('#phrase-entry').fadeOut();
+  $('#phrase-entry').fadeTo("fast", 0.5);
   $('#phrasefield').val('');
   //Play sound
   var i = Math.floor(Math.random()*14);
   console.log("playing sound "+i);
   $('#sound'+i)[0].play();
+  $("#phrase-form").prop('disabled', true);
 
 }
 
 cancelPhrase = function(e){
   //cancel form submission
 
-  $('#phrase-entry').fadeOut();
+  $('#phrase-entry').fadeTo("fast", 0.5);
   $('#phrasefield').val('');
 
 }

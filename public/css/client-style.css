@@ -3,10 +3,6 @@ body{
 	margin:0;
 }
 
-body input{
-	margin:1em;
-}
-
 #status{
 	width:50%;
 	margin:auto;
@@ -61,40 +57,41 @@ body input{
 }
 
 #login-form{
-	width:50%;
+	width:120px;
 	height:50%;
-	top:20%;
+	top:35%;
 	margin:auto;
 	position:relative;
 }
 
 #phrase-entry{
-	display:none;
-	width:100%;
+	display:block;
+	width:auto;
 	height:100%;
-	position:fixed;
-	top:0em;
-	left:0em;
-	background:#999;
+	position:relative;
 }
 
 #phrase-form{
-	width:50%;
+	width:130px;
 	height:auto;
-	top:10%;
-	margin:auto;
+	margin:5em auto 5em auto;
 	position:relative;
-	background-color:#999;
 	opacity:1.0;
 }
 
-input, label{
+input {
+		display:block;
+		margin-top:1em;
+		margin-bottom:1em;
+}
+
+label { 
 		display:block;
 }
 
 button{
 	display:inline-block;
-	margin-left:1em;
+	margin-right:1em;
 }
 
 /* Mobile device form formatting */

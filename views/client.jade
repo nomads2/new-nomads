@@ -4,9 +4,15 @@ block content
 	div(id='status')
 		p(id='info')
 	div(class='control')
-		canvas#mainui(width='587', height='587')
-			img#background(src='/img/NewNomads_backgroundImage.png')
+		canvas#mainui(width='600', height='600')
+			img#background(src='/img/NewNomads_backgroundImage_simple.png')
 
+	div(id='phrase-entry')
+		form(id='phrase-form')
+			label="What is your message?"
+			input(id='phrasefield', type='text')
+			button(id='enter_phrase') Submit			
+			button(id='cancel_phrase') Cancel					
 
 	div(id='login')
 		form(id='login-form')
@@ -14,15 +20,11 @@ block content
 			input(id='namefield', type='text')
 			button(id='enter_name') Submit
 
-	div(id='phrase-entry')
-		form(id='phrase-form')
-			label="What is your message?"
-			input(id='phrasefield', type='text')
-			button(id='enter_phrase') Submit			
-			button(id='cancel_phrase') Cancel		
+	
 
-	div(id='processing-sketch')
-		canvas(id="animationUserText", data-processing-sources="/lib/animationUserText.pde")	
+		//div(id='processing-sketch')
+		//canvas(id="animationUserText", data-processing-sources="/lib/animationUserText.pde")	
+	
 
 	div(id='loader')
 			p Loading...
