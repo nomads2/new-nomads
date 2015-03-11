@@ -188,21 +188,23 @@ submitPhrase = function(e){
   }
 
   client.sendMessage($('#phrasefield').val(), currentZone, 'textMessage');
-  //$('#phrase-entry').fadeOut();
-  $('#phrase-entry').fadeTo("fast", 0.5);
+  
   $('#phrasefield').val('');
   //Play sound
   var i = Math.floor(Math.random()*14);
   console.log("playing sound "+i);
   $('#sound'+i)[0].play();
-  $("#phrase-form").prop('disabled', true);
+  $('#enter_phrase').prop('disabled', true);
+  $('#cancel_phrase').prop('disabled', true);
+  $('#phrasefield').prop('disabled', true);
 
 }
 
 cancelPhrase = function(e){
   //cancel form submission
-
-  $('#phrase-entry').fadeTo("fast", 0.5);
+  $('#enter_phrase').prop('disabled', true);
+  $('#cancel_phrase').prop('disabled', true);
+  $('#phrasefield').prop('disabled', true);
   $('#phrasefield').val('');
 
 }
