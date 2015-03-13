@@ -1818,4 +1818,16 @@ function NomadsMobileClientAnimation() {
 
       init();
 
+      animateMessage = function(text, originX, originY, targetX, targetY){
+            var font = "120px Futurea, Helvetica, sans-serif";
+            var jitter = 25;
+            var offsetX = 10;
+            var offsetY = 12;
+            var blur = getBlurValue(100);
+            ctx.save();
+            ctx.font = font;
+            ctx.fillStyle = "white";
+            ctx.fillText(text, originX, originY);
+      }
+
 }

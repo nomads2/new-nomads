@@ -21,6 +21,8 @@ GRAPHICS_H = 500;
 
 var client;
 var currentZone;
+var currentX;
+var currentY;
 var canvas;
 var context;
 var clientAnimation;
@@ -66,8 +68,8 @@ pointInCircle = function (center_x, center_y, radius, x, y){
 zoneClick = function(evt){
   var rect = canvas.getBoundingClientRect();
 
-  var x = evt.clientX - rect.left;
-  var y = evt.clientY - rect.top;
+  var x = currentX = evt.clientX - rect.left;
+  var y = currentY = evt.clientY - rect.top;
 
   //tests!
   if(pointInCircle(INTERFACE_CIRCLE0_X, INTERFACE_CIRCLE0_Y, INTERFACE_CIRCLE_RAD, x, y)){
@@ -182,13 +184,16 @@ zoneSelect = function(cz){
 submitPhrase = function(e){
   //cancel form submission
   e.preventDefault();
-  if($('#phrasefield').val()==""){
+  var text = $('#phrasefield').val();
+  if(text==""){
     //must submit phrase
     return;
   }
 
-  client.sendMessage($('#phrasefield').val(), currentZone, 'textMessage');
+  client.sendMessage(text, currentZone, 'textMessage');
   
+  clientAnimation.sendMessage()
+
   $('#phrasefield').val('');
   //Play sound
   var i = Math.floor(Math.random()*14);
