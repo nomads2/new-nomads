@@ -27,7 +27,7 @@ var canvas;
 var context;
 var clientAnimation;
 var x, y;
-var allClientThoughts = [];
+var allClientThoughts = []; //by instantiating this here, users will get a clean slate as they enter the fray. will start populating globally as new messages appear.
 
 $(document).ready(function(){
   client = new NomadsMobileClient(initCallback);
@@ -195,7 +195,7 @@ submitPhrase = function(e){
     return;
   }
 
-  client.sendMessage(text, currentZone, 'textMessage');
+  client.sendMessage(text, currentZone, x, y, 'textMessage');
   
   //error with this function. won't play anything else below. doesn't exist?
   //clientAnimation.sendMessage();

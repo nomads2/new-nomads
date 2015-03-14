@@ -17,6 +17,18 @@ function NomadsMobileClient(initCallback) {
    //var pjs = Processing.getInstanceById('animationUserText');
    //pjs.drawNewUserThought(data.location, data.messageText);
   //});
+  
+  //add to global thought object when any user sends a message.
+  this.socket.on('client_update', function(data){
+    allClientThoughts.push({
+	    "thought":data.messageText, 
+	    "x":data.x,
+	    "y":data.y,
+	    "life":255,
+	    "size":16,
+	    "alpha":1.0
+	  });
+  });
 
 	//Private functions
 	geo_success_callback = function(p){
@@ -75,7 +87,7 @@ NomadsMobileClient.prototype = {
     }
 	},
 
-	sendMessage:function(messageText, location, type, callback){
+	sendMessage:function(messageText, location, CanvasX, CanvasY, type, callback){
 		var messageToSend = {};
 		messageToSend.id = this.user.id;
 		messageToSend.username = this.user.username;
@@ -84,6 +96,8 @@ NomadsMobileClient.prototype = {
 		messageToSend.location = location //remove zone from message. "Zone X". convert to float.
 		messageToSend.latitude = latitude; //since we have this stored, send lat/long with each message
     messageToSend.longitude = longitude;
+    messageToSend.x = CanvasX;
+    messageToSend.y = CanvasY;
 		messageToSend.timestamp = new Date();
 		this.socket.emit('message', messageToSend);
 		//also fire processing on user's own page.
