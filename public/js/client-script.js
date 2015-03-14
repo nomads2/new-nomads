@@ -26,6 +26,7 @@ var currentY;
 var canvas;
 var context;
 var clientAnimation;
+var x, y;
 
 $(document).ready(function(){
   client = new NomadsMobileClient(initCallback);
@@ -68,8 +69,8 @@ pointInCircle = function (center_x, center_y, radius, x, y){
 zoneClick = function(evt){
   var rect = canvas.getBoundingClientRect();
 
-  var x = currentX = evt.clientX - rect.left;
-  var y = currentY = evt.clientY - rect.top;
+  x = currentX = evt.clientX - rect.left;
+  y = currentY = evt.clientY - rect.top;
 
   //tests!
   if(pointInCircle(INTERFACE_CIRCLE0_X, INTERFACE_CIRCLE0_Y, INTERFACE_CIRCLE_RAD, x, y)){
@@ -187,12 +188,17 @@ submitPhrase = function(e){
   var text = $('#phrasefield').val();
   if(text==""){
     //must submit phrase
+    //tell the user to submit something?
     return;
   }
 
   client.sendMessage(text, currentZone, 'textMessage');
   
-  clientAnimation.sendMessage()
+  //error with this function. won't play anything else below
+  //clientAnimation.sendMessage();
+  //console.log("x: " + x + ".  y: " + y);
+  //console.log(text);
+  //clientAnimation.animateMessage(text, x, y);
 
   $('#phrasefield').val('');
   //Play sound
@@ -203,6 +209,11 @@ submitPhrase = function(e){
   $('#cancel_phrase').prop('disabled', true);
   $('#phrasefield').prop('disabled', true);
 
+  //jump user screen back up to top of page.
+  //$("body, html").scrollTop($("#mainui").offset().top);
+  $("body, html").animate({ 
+    scrollTop: $("#mainui").offset().top 
+  }, 600);
 }
 
 cancelPhrase = function(e){
@@ -212,4 +223,8 @@ cancelPhrase = function(e){
   $('#phrasefield').prop('disabled', true);
   $('#phrasefield').val('');
 
+  //jump user back to top after cancel.
+  $("body, html").animate({ 
+    scrollTop: $("#mainui").offset().top 
+  }, 600);
 }

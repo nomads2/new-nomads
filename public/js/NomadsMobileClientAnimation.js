@@ -1818,16 +1818,56 @@ function NomadsMobileClientAnimation() {
 
       init();
 
-      animateMessage = function(text, originX, originY, targetX, targetY){
-            var font = "120px Futurea, Helvetica, sans-serif";
-            var jitter = 25;
-            var offsetX = 10;
-            var offsetY = 12;
-            var blur = getBlurValue(100);
-            ctx.save();
-            ctx.font = font;
-            ctx.fillStyle = "white";
-            ctx.fillText(text, originX, originY);
-      }
+      //this is not being called
+      // animateMessage = function(text, originX, originY, targetX, targetY){
+      //       var font = "120px Futurea, Helvetica, sans-serif";
+      //       var jitter = 25;
+      //       var offsetX = 10;
+      //       var offsetY = 12;
+      //       var blur = getBlurValue(100);
+      //       ctx.save();
+      //       ctx.font = font;
+      //       ctx.fillStyle = "white";
+      //       ctx.fillText(text, originX, originY);
+      // }
 
 }
+
+
+//set up prototype similar to NomadsMobileClient.js in order to get animateMessage function to fire
+NomadsMobileClientAnimation.prototype = {
+      constructor:NomadsMobileClientAnimation,
+
+      animateMessage:function(text, originX, originY){
+            var font = "120px Futurea, Helvetica, sans-serif";
+            //var jitter = 25;
+            //var offsetX = 10;
+            //var offsetY = 12;
+            //var blur = getBlurValue(100);
+
+            //better way to reference this global?
+            var c = document.getElementById('mainui');
+            var ctx = c.getContext('2d');
+
+            
+            var gradient = ctx.createLinearGradient(0, 0, c.width, 0);
+            gradient.addColorStop("0", "magenta");
+            gradient.addColorStop("0.5", "blue");
+            gradient.addColorStop("1.0", "red");
+            //ctx.save();
+            ctx.font = font;
+            ctx.fillStyle = gradient;
+            ctx.fillText(text, originX, originY);
+            //ctx.restore();
+      }
+}
+
+// function getBlurValue(blur) {
+//         var userAgent = navigator.userAgent;
+//         if (userAgent && userAgent.indexOf('Firefox/4') != -1) {
+//                 var kernelSize = (blur < 8 ? blur / 2 : Math.sqrt(blur * 2));
+//                 var blurRadius = Math.ceil(kernelSize);
+//                 return blurRadius * 2;
+//         }
+//         return blur;
+// };
