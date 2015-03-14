@@ -42,6 +42,8 @@ $(document).ready(function(){
   $('#enter_phrase').prop('disabled', true);
   $('#cancel_phrase').prop('disabled', true);
   $('#phrasefield').prop('disabled', true);
+  //hide entry div until user selects a zone.
+  $("#phrase-entry").hide();
 
   //Listeners
 
@@ -172,11 +174,11 @@ loginComplete = function(){
 }
 
 zoneSelect = function(cz){
+  $("#phrase-entry").show();
   $('#enter_phrase').prop('disabled', false);
   $('#cancel_phrase').prop('disabled', false);
   $('#phrasefield').prop('disabled', false);
   $('#phrasefield').focus();
-  
   
   currentZone = cz;//$(this).attr("data-location");
   return false;
@@ -213,7 +215,12 @@ submitPhrase = function(e){
   //$("body, html").scrollTop($("#mainui").offset().top);
   $("body, html").animate({ 
     scrollTop: $("#mainui").offset().top 
-  }, 600);
+  }, 600, function() {
+    // Animation complete.
+    $("#phrase-entry").hide();
+  });
+
+  
 }
 
 cancelPhrase = function(e){
