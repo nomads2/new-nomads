@@ -1804,6 +1804,34 @@ function NomadsMobileClientAnimation() {
             ctx.scale(circle42.scaleClock.value, circle42.scaleClock.value);
             circle42(ctx);
             ctx.restore();
+
+            // Add dynamic objects from users (text)
+            // has to be in this draw loop, otherwise won't display
+            // display User Text objects that get deleted after X time.
+            // allClientThoughts[]
+            var font = "20px Futura, sans-serif";
+            ctx.font = font;
+            ctx.fillStyle = "black";
+            allClientThoughts.forEach( function (arrayItem, i)
+            {
+                //change text properties (size, fade out).
+                font = arrayItem.size + "px Futura, sans-serif";
+                ctx.font = font;
+                arrayItem.size += 0.5;
+                ctx.fillStyle = "rgba(0, 0, 0, " + arrayItem.alpha + ")";
+                arrayItem.alpha -= 0.005;
+
+                //show text
+                ctx.fillText(arrayItem.thought, arrayItem.x, arrayItem.y);
+
+                //life to delete from array
+                arrayItem.life --;
+                if(arrayItem.life <=0){
+                  if (i > -1) {
+                      allClientThoughts.splice(i, 1);
+                  }
+                }
+            });
       }
 
      draw = function(ctx) {
@@ -1831,35 +1859,6 @@ function NomadsMobileClientAnimation() {
       //       ctx.fillText(text, originX, originY);
       // }
 
-}
-
-
-//set up prototype similar to NomadsMobileClient.js in order to get animateMessage function to fire
-NomadsMobileClientAnimation.prototype = {
-      constructor:NomadsMobileClientAnimation,
-
-      animateMessage:function(text, originX, originY){
-            var font = "120px Futurea, Helvetica, sans-serif";
-            //var jitter = 25;
-            //var offsetX = 10;
-            //var offsetY = 12;
-            //var blur = getBlurValue(100);
-
-            //better way to reference this global?
-            var c = document.getElementById('mainui');
-            var ctx = c.getContext('2d');
-
-            
-            var gradient = ctx.createLinearGradient(0, 0, c.width, 0);
-            gradient.addColorStop("0", "magenta");
-            gradient.addColorStop("0.5", "blue");
-            gradient.addColorStop("1.0", "red");
-            //ctx.save();
-            ctx.font = font;
-            ctx.fillStyle = gradient;
-            ctx.fillText(text, originX, originY);
-            //ctx.restore();
-      }
 }
 
 // function getBlurValue(blur) {

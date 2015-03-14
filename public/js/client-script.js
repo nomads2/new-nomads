@@ -27,6 +27,7 @@ var canvas;
 var context;
 var clientAnimation;
 var x, y;
+var allClientThoughts = [];
 
 $(document).ready(function(){
   client = new NomadsMobileClient(initCallback);
@@ -196,11 +197,20 @@ submitPhrase = function(e){
 
   client.sendMessage(text, currentZone, 'textMessage');
   
-  //error with this function. won't play anything else below
+  //error with this function. won't play anything else below. doesn't exist?
   //clientAnimation.sendMessage();
-  //console.log("x: " + x + ".  y: " + y);
-  //console.log(text);
-  //clientAnimation.animateMessage(text, x, y);
+  
+  //create new clientThought, push to allClientThoughts[]
+  //see NomadsMobileClientAnimation.js for display on canvas.
+  //this only displays a single Client's thoughts on his/her canvas.
+  allClientThoughts.push({
+    "thought":text, 
+    "x":x,
+    "y":y,
+    "life":255,
+    "size":16,
+    "alpha":1.0
+  });
 
   $('#phrasefield').val('');
   //Play sound
