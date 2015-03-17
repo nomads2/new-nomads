@@ -2,12 +2,12 @@
 var connect = require('connect')
     , express = require('express')
     , io = require('socket.io')
-    , port = (process.env.PORT || 8081);
+    , port = (process.env.PORT || 80);
 
 //Setup OSC functions
 var oscMessage = require("./osc-bundle.js");
 var ioc = require('socket.io-client');
-var client = ioc.connect("http://nomads.music.virginia.edu:"+port);
+var client = ioc.connect("http://nomadslive.music.virginia.edu:"+port);
 
 client.once("connect", function(){
   console.log('Client connected to port ' + port);
