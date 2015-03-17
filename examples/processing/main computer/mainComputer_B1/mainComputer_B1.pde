@@ -1,11 +1,11 @@
 //MAIN computer -- Matthew's visual.
 
 ////DESIGN CONTROLS
-import controlP5.*;
-ControlP5 cp5;
-public int pulseslider = 15;
-public int sizeslider = 12;
-public ColorPicker cp;
+//import controlP5.*;
+//ControlP5 cp5;
+//public int pulseslider = 15;
+//public int sizeslider = 12;
+//public ColorPicker cp;
 
 //EMITTER particles
 import toxi.geom.*;
@@ -16,6 +16,12 @@ boolean ALLOWPERLIN = true;     // add perlin noise flow field vector?
 boolean ALLOWTRAILS = true;     // render particle trails?
 PImage particleImg;
 int counter;
+
+//OSC library and vars
+import oscP5.*;
+import netP5.*;
+OscP5 oscP5;
+NetAddress myRemoteLocation;
 
 int zones = 10;
 ArrayList<ParticleSystem> systems;
@@ -52,7 +58,10 @@ void setup() {
   speakers = new ArrayList<SpeakerSystem>();
   addSpeakers(5);
 
-  addControlP5(); //DESIGN DATA
+  //addControlP5(); //DESIGN DATA
+  
+  oscP5 = new OscP5(this, 6790);                          // OSC input port
+  myRemoteLocation = new NetAddress("127.0.0.1", 41236);  // OSC output port
 }
 
 void draw() { 
@@ -222,4 +231,66 @@ void renderImage(PImage img, Vec3D _loc, float _diam, color _col, float _alpha )
 //}
 
 
+/////////////////////////////////////////
+////////////////// OSC //////////////////
+/////////////////////////////////////////
+
+/*
+ * parse incoming OSC messages
+ *
+ * @author Jon Bellona
+ * @since simpleopenni 0.26
+ */
+void oscEvent(OscMessage theOscMessage) {
+  println(theOscMessage.typetag());
+  if (theOscMessage.checkAddrPattern("/object")==true) {
+
+    //typetag contains 
+    //s: user ID
+    //s: username
+    //s: message type
+    //s: text message!
+    //f: zone number!
+    //f: latitude of user server
+    //f: longitude of user server
+    //f: x position of mouseclick
+    //f: y position of mouseclick
+    //s: timestamp (date) 
+    if (theOscMessage.checkTypetag("ssssfffffs")) {
+      // parse theOscMessage and extract the values from the osc message arguments.
+      String thought = theOscMessage.get(3).stringValue();
+      int zoneNum = int(theOscMessage.get(4).floatValue());
+      float locX = theOscMessage.get(7).floatValue();
+      float locY = theOscMessage.get(8).floatValue();
+      locX = map(locX, 0, 500, 0, width); //500 is graphics width
+      locY = map(locY, 0, 500, 0, height); //500 is graphics height
+      //add new thought 
+      addUserThought(zoneNum, locX, locY, thought);
+    }
+  }
+
+  // print the address pattern for determing OSC information
+  //   println("### received an OSC message.");
+     println("Address pattern: " + theOscMessage.addrPattern() + " and Type Tag: " + theOscMessage.typetag());
+  //
+}
+
+
+/**
+ Upon receive message, animate particles from the zone location.
+ **/
+void addUserThought(int z, float x, float y, String t) {
+  int zone = z; //values 0-9, current zone to fire from
+  String thought = t; //thought cloud text
+  // Variable for heading! (angle)
+  float heading = ((PI/5) * zone) * -1; //provides correct heading in radians (0-9).
+  // Offset the angle since we have zones set up vertically.
+  float angle = heading - PI/2;
+  // Polar to cartesian for force vector!
+  PVector force = PVector.fromAngle(angle);
+  force.mult(0.05);
+  force.mult(-1.5);
+  //then add the thought to the screen
+  ts.addThought(x, y, force, thought);
+}
 

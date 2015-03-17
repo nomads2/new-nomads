@@ -49,9 +49,10 @@ class Speaker {
     color cL = lerpColor(c1, c2, amt);
     fill(cL, 150/num);
     noStroke();
-    float pulse = sin(fade*(num/pul))*pulseslider;  //6
-    //float pulse = sin(fade*(num/pul))*6;  //6
-    ellipse(loc.x, loc.y, pulse+sizeslider*num, pulse+sizeslider*num);
+    //float pulse = sin(fade*(num/pul))*pulseslider;  //6  //DESIGN DATA
+    //ellipse(loc.x, loc.y, pulse+sizeslider*num, pulse+sizeslider*num); //DESIGN DATA
+    float pulse = sin(fade*(num/pul))*6;  //6
+    ellipse(loc.x, loc.y, pulse+size*num, pulse+size*num);
   }
   
   // Is the particle still useful?
