@@ -1817,9 +1817,9 @@ function NomadsMobileClientAnimation() {
                 //change text properties (size, fade out).
                 font = arrayItem.size + "px Futura, sans-serif";
                 ctx.font = font;
-                arrayItem.size += 0.5;
+                arrayItem.size += 1;
                 ctx.fillStyle = "rgba(0, 0, 0, " + arrayItem.alpha + ")";
-                arrayItem.alpha -= 0.005;
+                arrayItem.alpha -= 0.05;
 
                 //show text
                 ctx.fillText(arrayItem.thought, arrayItem.x, arrayItem.y);

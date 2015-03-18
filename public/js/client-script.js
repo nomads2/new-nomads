@@ -207,8 +207,8 @@ submitPhrase = function(e){
     "thought":text, 
     "x":x,
     "y":y,
-    "life":255,
-    "size":16,
+    "life":20,
+    "size":18,
     "alpha":1.0
   });
 
