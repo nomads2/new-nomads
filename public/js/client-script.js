@@ -57,6 +57,7 @@ $(document).ready(function(){
 
   //Load sounds
   $('.sounds').load();
+  $("html, body").animate({ scrollTop: 0 }, "slow");
 
 });
 
