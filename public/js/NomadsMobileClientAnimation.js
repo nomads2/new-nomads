@@ -1825,8 +1825,8 @@ function NomadsMobileClientAnimation() {
                 ctx.fillText(arrayItem.thought, arrayItem.x, arrayItem.y);
 
                 //life to delete from array
-                arrayItem.life -= 2;
-                if(arrayItem.life <=0){
+                arrayItem.life -= 1;
+                if(arrayItem.life <= 0.0){
                   if (i > -1) {
                       allClientThoughts.splice(i, 1);
                   }
