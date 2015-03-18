@@ -21,7 +21,6 @@
     "osc-min": "0.2.x"
   },
   "devDependencies": {
-    "vows": "0.5.x",
 	"mocha": "*",
 	"should": "*"
   },
