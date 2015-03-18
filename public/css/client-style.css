@@ -57,7 +57,7 @@ body{
 }
 
 #login-form{
-	width:120px;
+	width:130px;
 	height:50%;
 	top:35%;
 	margin:auto;
@@ -107,5 +107,13 @@ button{
 
 	button{
 		font-size:2em;
+	}
+
+	#login-form{
+		width:420px;
+	}
+
+	#phrase-form{
+		width:400px;
 	}
 }
