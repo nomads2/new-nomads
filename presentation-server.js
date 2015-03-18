@@ -6,7 +6,7 @@ var connect = require('connect')
 
 //Setup OSC functions
 var oscMessage = require("./osc-bundle.js");
-var ioc = require('socket.io-client');
+
 var client = ioc.connect("http://nomadslive.music.virginia.edu:"+port);
 
 client.once("connect", function(){
