@@ -27,11 +27,54 @@ PImage bg;
 ArrayList<SpeakerSystem> speakers;
 
 //zoom
-float zoomF =1.0f;
+//float zoomF =1.0f;
+//float rotX = radians(0);
+//float rotY = radians(0);
+//float moveX = 0;
+//float moveY = 0;
+float moveX = 100;
+float moveY = 60;
 float rotX = radians(0);
-float rotY = radians(0);
-float moveX = 0;
-float moveY = 0;
+float rotY = -0.4;
+float zoomF = 0.82;
+
+///////////////
+//Background as Noise
+///////////////
+final int STAGE_WIDTH = 612;
+final int STAGE_HEIGHT = 612;
+final int NB_PARTICLES = 5000;
+final float MAX_PARTICLE_SPEED = 2.5;
+final float PARTICULE_SIZE = 1;
+final float MAX_DISTANCE = sqrt(STAGE_WIDTH*STAGE_WIDTH + STAGE_HEIGHT*STAGE_HEIGHT);
+ 
+final float MIN_STEP_NOISE = 0.001;
+final float MAX_STEP_NOISE = 0.004;//0.01;
+final float MIN_SPEED_NOISE = -.03;
+final float MAX_SPEED_NOISE = .03;
+final int MIN_LIFE_TIME = 10;
+final int MAX_LIFE_TIME = 40;
+ 
+//'root' of the noise
+float noiseX;
+float noiseY;
+//used to move the noise - or not
+float noiseSpeedX;
+float noiseSpeedY;
+//noise step (the smaller, the better granularity)
+float stepNoiseX;
+float stepNoiseY;
+myVector tabParticles[];//array of particles
+ 
+//picture
+final String IMAGE_PATH = "NewNomads_backgroundImage_700px.png";//landscape nature lao
+PImage myImage;
+int imageW;
+int imageH;
+color myPixels[];
+
+float coeffColor;
+//////////////////////////
 
 void setup() {
   size(1024, 768, P3D);
@@ -49,7 +92,13 @@ void setup() {
   
   oscP5 = new OscP5(this, 6790);                          // OSC input port
   myRemoteLocation = new NetAddress("127.0.0.1", 41236);  // OSC output port
+  
+  initializeImage();
+  initializeNoise();
+  myImage.updatePixels();
 }
+
+
 
 void draw() { 
 
@@ -65,6 +114,8 @@ void draw() {
     imageMode(CENTER);
     noTint(); //otherwise will fade
     colorMode( RGB, 255.0 );
+    
+    
     image(bg, width/2, height/2, 587, 587); //bg image
     
     //show circles where speakers are located
@@ -87,8 +138,62 @@ void draw() {
       ts.bounce();
       ts.display();
     popMatrix();
+    
+    blendMode(BLEND);
+    drawBackground(); //if you place above image(); snow will be more prevalent
   popMatrix();
 }
+
+void drawBackground()
+{
+  float imageSide = 650;
+  pushMatrix();
+  translate(width/2, height/2, 1);
+  translate( (imageSide/2)*-1, (imageSide/2)*-1, 0); 
+  fill(0, 2);
+  noStroke();
+  //rect(0, 0, imageSide, imageSide);
+ 
+  noiseX += noiseSpeedX;
+  noiseY += noiseSpeedY;
+  float n;
+  float vx;
+  float vy;
+  for (int i = 0; i < NB_PARTICLES; i++)
+  {
+    tabParticles[i].prevX = tabParticles[i].x;
+    tabParticles[i].prevY = tabParticles[i].y;
+ 
+    n = noise(noiseX+tabParticles[i].x*stepNoiseX, noiseY+tabParticles[i].y*stepNoiseY);
+ 
+    vx = (n-1)*2*cos((n-.6) * TWO_PI)*MAX_PARTICLE_SPEED;
+    vy = (n-1)*2*sin(n * TWO_PI)*MAX_PARTICLE_SPEED;
+    vx = constrain(vx, -MAX_PARTICLE_SPEED, MAX_PARTICLE_SPEED);
+    vy = constrain(vy, -MAX_PARTICLE_SPEED, MAX_PARTICLE_SPEED);
+ 
+    tabParticles[i].x += vx;
+    tabParticles[i].y += vy;
+    tabParticles[i].count++;
+    if ((tabParticles[i].x < 0) || (tabParticles[i].x > imageW-1) ||
+      (tabParticles[i].y < 0) || (tabParticles[i].y > imageH-1) ||
+      tabParticles[i].count > MAX_LIFE_TIME)
+    {
+      float myX = random(imageW-100);
+      float myY = random(imageH-100);
+
+      tabParticles[i].x = tabParticles[i].prevX = myX;
+      tabParticles[i].y = tabParticles[i].prevY = myY;
+      tabParticles[i].count = (int)random(MIN_LIFE_TIME, MAX_LIFE_TIME);
+      n = noise(noiseX+myX*stepNoiseX, noiseY+myY*stepNoiseY);
+      tabParticles[i].myColor = myPixels[(int)(tabParticles[i].y)*imageW + (int)(tabParticles[i].x)];
+    }
+    strokeWeight(sqrt(vx*vx + vy*vy)*n*1.5);
+    stroke(tabParticles[i].myColor, 150);
+    line(tabParticles[i].prevX, tabParticles[i].prevY, tabParticles[i].x, tabParticles[i].y);
+  }
+  popMatrix();
+}
+
 
 void keyPressed() {
   if (key == 'z' || key == 'Z') {
@@ -191,7 +296,7 @@ void addSpeakers(int numSpeakers) {
     origin.x = (width/2) + rad*(sin(radians((i*(360/numSpeakers))+180)));
     origin.y = (height/2) + rad*(cos(radians((i*(360/numSpeakers))+180)));
     speakers.add(new SpeakerSystem(7, origin, 16, color(119,93,39), 1)); //5 circles to each speaker location.
-    speakers.add(new SpeakerSystem(4, origin, 3, color(225,172, 50), 1)); //5 circles to each speaker location.
+    speakers.add(new SpeakerSystem(4, origin, 3, color(225,172, 50), 2)); //5 circles to each speaker location.
   }
 }
 
@@ -317,6 +422,13 @@ void oscEvent(OscMessage theOscMessage) {
     }
   }
   
+//  if (theOscMessage.checkAddrPattern("/addText")==true) {
+//    if (theOscMessage.checkTypetag("s")) {
+//      String message = randMess();
+//      animateZone(int(random(10)), message);
+//    }
+//  }
+  
   
   
 
@@ -358,3 +470,56 @@ void displayGlobalText() {
     text(globalText, 0, 20, 400, 200);
   popMatrix();
 }
+
+
+
+
+
+///////////////NOISE BACKGROUND
+
+void initializeImage()
+{
+  myImage = loadImage(IMAGE_PATH);
+  imageW = myImage.width;
+  imageH = myImage.height;
+  myPixels = new color[imageW * imageH];
+  myImage.loadPixels();
+  myPixels = myImage.pixels;
+  myImage.updatePixels();
+}
+ 
+void initializeNoise()
+{
+  int myX;
+  int myY;
+  noiseX = random(123456);
+  noiseY = random(123456);
+  noiseSpeedX = random(MIN_SPEED_NOISE, MAX_SPEED_NOISE);
+  noiseSpeedY = random(MIN_SPEED_NOISE, MAX_SPEED_NOISE);
+  stepNoiseX = random(MIN_STEP_NOISE, MAX_STEP_NOISE);
+  stepNoiseY = random(MIN_STEP_NOISE, MAX_STEP_NOISE);
+  tabParticles = new myVector[NB_PARTICLES];
+  for (int i = 0; i < NB_PARTICLES; i++)
+  {
+    myX = (int)random(imageW);
+    myY = (int)random(imageH);
+    tabParticles[i] = new myVector(myX, myY);
+    tabParticles[i].prevX = tabParticles[i].x;
+    tabParticles[i].prevY = tabParticles[i].y;
+    tabParticles[i].count = (int)random(MIN_LIFE_TIME, MAX_LIFE_TIME);
+    tabParticles[i].myColor = myPixels[(int)(tabParticles[i].y)*imageW + (int)(tabParticles[i].x)];
+  }
+}
+
+class myVector extends PVector
+{
+  myVector (float p_x, float p_y)
+  {
+    super(p_x, p_y);
+  }
+  float prevX;
+  float prevY;
+  int count;
+  color myColor;
+}
+
