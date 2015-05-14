@@ -1819,13 +1819,13 @@ function NomadsMobileClientAnimation() {
                 ctx.font = font;
                 arrayItem.size += 1;
                 ctx.fillStyle = "rgba(0, 0, 0, " + arrayItem.alpha + ")";
-                arrayItem.alpha -= 0.05;
+                arrayItem.alpha -= 0.03;
 
                 //show text
                 ctx.fillText(arrayItem.thought, arrayItem.x, arrayItem.y);
 
                 //life to delete from array
-                arrayItem.life -= 0.75; //1.5 second life at 20fps
+                arrayItem.life -= 0.5; //2 second life at 20fps
                 if(arrayItem.life <= 0.0){
                   if (i > -1) {
                       allClientThoughts.splice(i, 1);
@@ -1840,7 +1840,7 @@ function NomadsMobileClientAnimation() {
             ctx.save();
             //ctx.transform(1.000, 0.000, -0.000, 1.000, 303.4, 315.5);
             var background = document.getElementById('background');  
-            ctx.drawImage(background, 50, 50);
+            ctx.drawImage(background, 0, 0);
             ctx.restore();
       }
 

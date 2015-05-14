@@ -16,8 +16,8 @@ INTERFACE_CIRCLE3_Y = 375 + ANIMATION_OFFSET;
 INTERFACE_CIRCLE4_X = 134 + ANIMATION_OFFSET;
 INTERFACE_CIRCLE4_Y = 215 + ANIMATION_OFFSET;
 
-GRAPHICS_W = 500;
-GRAPHICS_H = 500;
+GRAPHICS_W = 600;
+GRAPHICS_H = 600;
 
 var client;
 var currentZone;
@@ -244,5 +244,8 @@ cancelPhrase = function(e){
   //jump user back to top after cancel.
   $("body, html").animate({ 
     scrollTop: $("#mainui").offset().top 
-  }, 600);
+  }, 600, function() {
+    // Animation complete.
+    $("#phrase-entry").hide();
+  });
 }
