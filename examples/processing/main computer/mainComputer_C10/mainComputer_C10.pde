@@ -20,23 +20,25 @@ PVector globalTextPosition = new PVector(0,0); //moves global text on screen
 
 int zones = 10;
 int rad = 265; //radius of speaker circle
+int canvas = 700; //width+height of canvas
 PFont myFont;
 ThoughtSystem ts;
 PImage bg;
 
+
 ArrayList<SpeakerSystem> speakers;
 
 //zoom
-//float zoomF =1.0f;
-//float rotX = radians(0);
-//float rotY = radians(0);
-//float moveX = 0;
-//float moveY = 0;
-float moveX = 100;
-float moveY = 60;
+float zoomF =1.0f;
 float rotX = radians(0);
-float rotY = -0.4;
-float zoomF = 0.82;
+float rotY = radians(0);
+float moveX = 0;
+float moveY = 0;
+//float moveX = 100;
+//float moveY = 60;
+//float rotX = radians(0);
+//float rotY = -0.4;
+//float zoomF = 0.82;
 
 ///////////////
 //Background as Noise
@@ -386,8 +388,8 @@ void oscEvent(OscMessage theOscMessage) {
       int zoneNum = int(theOscMessage.get(4).floatValue());
       float locX = theOscMessage.get(7).floatValue();
       float locY = theOscMessage.get(8).floatValue();
-      locX = locX + ((width/2) - 250); //250 is half of graphic size //map(locX, 0, 500, 0, width); //500 is graphics width
-      locY = locY + ((width/2) - 250); //map(locY, 0, 500, 0, height); //500 is graphics height
+      locX = locX + ((width/2) - (canvas/2)); //250 is half of graphic size //map(locX, 0, 500, 0, width); //500 is graphics width
+      locY = locY + ((height/2) - 300); //map(locY, 0, 500, 0, height); //500 is graphics height
       //add new thought 
       addUserThought(zoneNum, locX, locY, thought);//thread("addUserThought"); //
     }
@@ -423,13 +425,13 @@ void oscEvent(OscMessage theOscMessage) {
     }
   }
   
-  if (theOscMessage.checkAddrPattern("/bgcolor")==true) {
-    if (theOscMessage.checkTypetag("fff")) {
-      bgcolor.x = theOscMessage.get(0).floatValue();
-      globalTextPosition.y = theOscMessage.get(1).floatValue();
-      println("globalTextPosition: " + globalTextPosition.x + ", " + globalTextPosition.y);
-    }
-  }
+//  if (theOscMessage.checkAddrPattern("/color")==true) {
+//    if (theOscMessage.checkTypetag("fff")) {
+//      textcolor[0] = theOscMessage.get(0).floatValue();
+//      globalTextPosition.y = theOscMessage.get(1).floatValue();
+//      println("globalTextPosition: " + globalTextPosition.x + ", " + globalTextPosition.y);
+//    }
+//  }
   
 //  if (theOscMessage.checkAddrPattern("/addText")==true) {
 //    if (theOscMessage.checkTypetag("s")) {
@@ -460,11 +462,12 @@ void addUserThought(int z, float x, float y, String t) {
   float angle = heading - PI/2;
   // Polar to cartesian for force vector!
   PVector force = PVector.fromAngle(angle);
-  force.mult(10);//0.05
+  force.mult(0.25);//0.05
   force.mult(-1.5);
   //then add the thought to the screen
   ts.addThought(x, y, force, thought, thoughtLifespan, z);
 }
+
 
 /**
  Show text that presenter sets via OSC message. Use as a primer for audience.

@@ -18,11 +18,11 @@ class SoundWave {
   
   SoundWave( Vec3D _loc, Vec3D _vel, int _zone ) {
     radius  = 50;// random(30, 85);
-    startLoc = new Vec3D( _loc.add( new Vec3D().randomVector().scaleSelf( random(5.0) ) ) );
-    vel = new Vec3D( _vel.scale( random ( 5.0, 10.0) ) );  //scale up speed  20, 40
+    startLoc = new Vec3D( _loc ); //_loc.add( new Vec3D().randomVector().scaleSelf( random(5.0) ) )
+    vel = new Vec3D( _vel.scale( 3 ) );  //scale up speed  20, 40  random ( 5.0, 10.0)
     //vel = new Vec3D( _vel.scale( .5 ).addSelf( new Vec3D().randomVector().scaleSelf( random( 10.0 ) ) ) );
     age = 0;
-    lifeSpan = (int)(radius);
+    lifeSpan = (int)(radius*1.5);
     zone = _zone;
     c = color(1,1,0.7);//color(0.6156862745098, 0.47450980392157, 0.17647058823529); //157, 121, 45
   }
@@ -52,7 +52,7 @@ class SoundWave {
   
   void setAge() {
     age++;
-    radius+=2;
+    radius+=5;
     if(age > lifeSpan) {
       ISDEAD = true;
     } else {
