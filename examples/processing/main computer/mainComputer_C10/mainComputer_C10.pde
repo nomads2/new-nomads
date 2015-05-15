@@ -407,13 +407,13 @@ String randMess() {
 "where they’ve intersected",
 "some point",
 "true and unproven",
-    "between us",
-    "fainting",
-    "tree life",
-    "water",
-    "dream",
-    "bliss",
-    "yearning, regret."
+"between us",
+"fainting",
+"tree life",
+"water",
+"dream",
+"bliss",
+  "yearning, regret."
   };
   return facts[int(random(facts.length-1))];
 }
