@@ -139,15 +139,23 @@ class Thought {
   
   
   void addSoundWaves( int _amt, int _zone ){
+    PVector speakerLoc = new PVector(0,0);
+    speakerLoc.x = (width/2) + rad*(sin(radians((_zone*(360/zones))+180))); //zones and rad are global
+    speakerLoc.y = (height/2) + rad*(cos(radians((zone*(360/zones))+180)));
+    PVector speakerOffset = new PVector(0,0);
+    speakerOffset.x = 40*(sin(radians((_zone*(360/zones))+180)));
+    speakerOffset.y = 40*(cos(radians((_zone*(360/zones))+180)));
+    speakerLoc.x = speakerLoc.x - speakerOffset.x;
+    speakerLoc.y = speakerLoc.y - speakerOffset.y;
+    
     int dist = 25;
-    PVector space = new PVector(0,0);
-//    origin.x = dist*(sin(radians((_zone*(360/numSpeakers))+180)));
-//    origin.y = dist*(cos(radians((_zone*(360/numSpeakers))+180)));
+    PVector waveOffset = new PVector(0,0);
     
     for( int i=0; i<_amt; i++ ){
-      space.x = (i*dist)*(sin(radians((_zone*(360/10))+180)));
-      space.y = (i*dist)*(cos(radians((_zone*(360/10))+180)));
-      soundwaves.add( new SoundWave( new Vec3D(location.x+space.x, location.y+space.y, 0), new Vec3D(velocity.x, velocity.y, 0), _zone ) );
+      waveOffset.x = (i*dist)*(sin(radians((_zone*(360/zones))+180)));
+      waveOffset.y = (i*dist)*(cos(radians((_zone*(360/zones))+180)));
+      //instead of location.x,y (the text location), use the speaker location as starting point for soundwave (based upon zone)
+      soundwaves.add( new SoundWave( new Vec3D(speakerLoc.x+waveOffset.x, speakerLoc.y+waveOffset.y, 0), new Vec3D(velocity.x, velocity.y, 0), _zone ) );
     }
   }
 

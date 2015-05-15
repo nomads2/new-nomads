@@ -43,8 +43,8 @@ float moveY = 0;
 ///////////////
 //Background as Noise
 ///////////////
-final int STAGE_WIDTH = 612;
-final int STAGE_HEIGHT = 612;
+final int STAGE_WIDTH = 655;
+final int STAGE_HEIGHT = 655;
 final int NB_PARTICLES = 5000;
 final float MAX_PARTICLE_SPEED = 2.5;
 final float PARTICULE_SIZE = 1;
@@ -306,16 +306,110 @@ void addSpeakers(int numSpeakers) {
 
 String randMess() {
   String[] facts = {
-    "It wasn't bliss. What was bliss but the ordinary life?", 
-    "That's when she found the tree", 
-    "the dark, crabbed branches bearing up such speechless bounty", 
-    "It's neither red nor sweet.", 
-    "It doesn't melt or turn over, break or harden,", 
-    "so it can't feel pain", 
-    "Now your tongue grows like celery between us", 
-    "fainting in the smell of teabags",
+"It wasn't bliss. What was bliss but the ordinary life?",
+    "That's when she found the tree",
+    "the dark, crabbed branches bearing up such speechless bounty",
+    "It's neither red nor sweet.",
+    "It doesn't melt or turn over, break or harden",
+    "so it can't feel pain",
+    "prove a theorem",
+    "expanding",
+    "windows",
+    "hover near the ceiling",
+ "ceiling floats away with a sigh",
+  "ceiling floats",
+  "away with a sigh",
+"clear walls",
+"everything",
+"transparency",
+"scent of carnations",
+"leaves with them",
+"I am out in the open",
+"when hope withers",
+"a reprieve",
+"door opens",
+"onto a street",
+"clean of people, of cars",
+"your street",
+"you are leaving",
+"Reprive has been granted",
+"provisionally",
+"windows",
+"closed behind",
+"it’s gray",
+"This suitcase, the saddest object in the world",
+"the world’s open",
+"the sky begins to blush",
+"what it took to be a woman in this life",
+"hinged windows",
+"butterflies",
+"sunlight glinting",
+"magnets cleared the air",
+"that smile",
+"your hair, flying silver",
+"waving goodbye",
+"she was silver, too",
+"calling softly",
+"choose",
+"You turned in the light",
+"eyes seeking your name",
+"Cut a cane",
+"Lean on it",
+"Weigh a stone in your hands",
+"Watch it",
+"Strike the stone",
+"thinking",
+"of water",
+"shutters",
+"darkened residences",
+"playing",
+"hunger shaking",
+"hear them sighing and not answer",
+"to deny this world",
+"no loss and no desire",
+"Listen",
+"empty yet full",
+"silken",
+"air",
+"refuse to be born",
+"you are here",
+"suck the good milk in",
+"an awkward loveliness",
+"a mirror",
+"a box in a box",
+"Blue is all around",
+"an overturned bowl",
+"this noise",
+"lint",
+"filled past caring",
+"on the edge of a system",
+"small",
+"unimaginable",
+"cold",
+"dark dark",
+"no wind",
+"no heaven",
+"i am not anything",
+"slice the air",
+"no wind can hold me",
+"aperture",
+"now i can  feel",
+"the beginning was the dark",
+"moan and creak",
+"Thicker then",
+"scent of thyme",
+"slight hairs",
+"We were falling down",
+"river, carnal",
+"slippage and shadow melt",
+"velocity",
+"Oh beautiful body",
+"where they’ve intersected",
+"some point",
+"true and unproven",
+    "between us",
+    "fainting",
     "tree life",
-    "I was sick",
     "water",
     "dream",
     "bliss",
@@ -340,8 +434,12 @@ void animateZone(int z, String t) {
   PVector force = PVector.fromAngle(angle);
   force.mult(0.05);
   force.mult(-1.5);
-  float psXOrigin = (width/2) + rad*(sin(radians((zone*(360/zones))+180)));
-  float psYOrigin = (height/2) + rad*(cos(radians((zone*(360/zones))+180)));
+  //float psXOrigin = (width/2) + rad*(sin(radians((zone*(360/zones))+180)));
+  float psXOrigin = (width/2) + (random(0.3, 1.0)*rad)*(sin(radians((zone*(360/zones))+180)));
+  //subtract random value from X,Y in order to get random location from center and external speaker position
+  //float psYOrigin = (height/2) + rad*(cos(radians((zone*(360/zones))+180)));
+  float psYOrigin = (height/2) + (random(0.3, 1.0)*rad)*(cos(radians((zone*(360/zones))+180)));
+  //psYOrigin = psYOrigin - (random(0.0, 0.7)*rad)*(sin(radians((zone*(360/zones))+180)));
 
   //then add the thought to the screen
   ts.addThought(psXOrigin, psYOrigin, force, thought, thoughtLifespan, zone);
