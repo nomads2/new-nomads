@@ -20,7 +20,7 @@ PVector globalTextPosition = new PVector(0,0); //moves global text on screen
 
 int zones = 10;
 int rad = 265; //radius of speaker circle
-int canvas = 700; //width+height of canvas
+int canvas = 655; //width+height of canvas
 PFont myFont;
 ThoughtSystem ts;
 PImage bg;
@@ -69,7 +69,7 @@ float stepNoiseY;
 myVector tabParticles[];//array of particles
  
 //picture
-final String IMAGE_PATH = "NewNomads_backgroundImage_700px.png";//landscape nature lao
+final String IMAGE_PATH = "NewNomads_backgroundImage2.png";//"NewNomads_backgroundImage_700px.png";//landscape nature lao
 PImage myImage;
 int imageW;
 int imageH;
@@ -88,7 +88,7 @@ void setup() {
   myFont = createFont("Gill Sans", 32);
   textFont(myFont);
   textAlign(CENTER, CENTER);
-  bg  = loadImage( "NewNomads_backgroundImage_simple.png" );
+  bg  = loadImage("NewNomads_backgroundImage2.png");//loadImage( "NewNomads_backgroundImage_simple.png" );//loadImage("backgroundImageMay15.png");//
   speakers = new ArrayList<SpeakerSystem>();
   addSpeakers(5);
   
