@@ -61,7 +61,8 @@ void draw() {
     
     //setup the background
     blendMode(BLEND); // default blend mode
-    background(0.8); //RGB is set to 0 - 1.
+    colorMode( RGB, 255.0 );
+    background(74, 51, 32); //RGB is set to 0 - 1.
     imageMode(CENTER);
     noTint(); //otherwise will fade
     colorMode( RGB, 255.0 );
@@ -230,8 +231,8 @@ void animateZone(int z, String t) {
   float angle = heading - PI/2;
   // Polar to cartesian for force vector!
   PVector force = PVector.fromAngle(angle);
-  force.mult(0.05);
-  force.mult(-1.5);
+  force.mult(.1);
+  force.mult(-1.2);
   float psXOrigin = (width/2) + rad*(sin(radians((zone*(360/zones))+180)));
   float psYOrigin = (height/2) + rad*(cos(radians((zone*(360/zones))+180)));
 
@@ -280,8 +281,8 @@ void oscEvent(OscMessage theOscMessage) {
       int zoneNum = int(theOscMessage.get(4).floatValue());
       float locX = theOscMessage.get(7).floatValue();
       float locY = theOscMessage.get(8).floatValue();
-      locX = locX + ((width/2) - 250); //250 is half of graphic size //map(locX, 0, 500, 0, width); //500 is graphics width
-      locY = locY + ((width/2) - 250); //map(locY, 0, 500, 0, height); //500 is graphics height
+      locX = locX + ((width/2) - 300); //250 is half of graphic size //map(locX, 0, 500, 0, width); //500 is graphics width
+      locY = locY + ((height/2) - 300); //map(locY, 0, 500, 0, height); //500 is graphics height
       //add new thought 
       addUserThought(zoneNum, locX, locY, thought);//thread("addUserThought"); //
     }
@@ -339,7 +340,7 @@ void addUserThought(int z, float x, float y, String t) {
   float angle = heading - PI/2;
   // Polar to cartesian for force vector!
   PVector force = PVector.fromAngle(angle);
-  force.mult(10);//0.05
+  force.mult(0.2); //0.05
   force.mult(-1.5);
   //then add the thought to the screen
   ts.addThought(x, y, force, thought, thoughtLifespan, z);

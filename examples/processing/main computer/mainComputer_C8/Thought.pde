@@ -16,14 +16,16 @@ class Thought {
   Thought(float x, float y, PVector dir, String t, float l, int z) {
     acceleration = new Vec3D(0.025, 0.025, 0.1);//dir.get(); //instead of new PVector();
     //velocity = PVector.random2D();
-    velocity = new Vec3D(dir.x, dir.y, 0.1);//dir.get();
+    velocity = new Vec3D(dir.x, dir.y, 0.9);//dir.get();
     location = new Vec3D(x,y,10);//new PVector(x, y);
     lifespan = l;
     theThought = t;
     zone = z;
     soundwaves  = new ArrayList<SoundWave>();
-    addSoundWaves( 10, z ); //number and zone
-    lineC = color(0.5, 0.5, 0);
+    addSoundWaves( 3, z ); //number and zone
+    //lineC = color(0.5, 0.5, 0);
+    //lineC = color(1,1,1);
+    lineC = color(0, 0.2);
   }
 
   void run() {
@@ -35,7 +37,7 @@ class Thought {
     for (Thought other : thoughts) {
       if (other != this) {
         Vec3D dir = location.sub(other.location);
-        if (dir.magnitude() < r*2) {
+        if (dir.magnitude() < r*1.2) {
           dir.normalizeTo(0.05); 
           applyForce3D(dir);
         }
@@ -77,7 +79,9 @@ class Thought {
     //
     stroke(0, lifespan);
     strokeWeight(2);
-    fill(0.01, lifespan/thoughtLifespan);  //rgb mode 1.0
+    colorMode( RGB, 255.0);
+      fill(255,231,210, (lifespan/thoughtLifespan)*255);  //rgb mode 1.0
+    //colorMode( RGB, 1.0);
    
     textSize(thoughtSize); //thoughtSize is Global, default 20.0
     textAlign(CENTER, CENTER);
@@ -87,6 +91,7 @@ class Thought {
       translate(0,0,15); //eleveate text above speakers. +pow((thoughtLifespan/lifespan),3)
       text(theThought, location.x, location.y, location.z);
     popMatrix();
+    colorMode( RGB, 1.0);
     
   }
   
@@ -121,9 +126,9 @@ class Thought {
         Thought tc = thoughts.get(c);
    
         float d = sq(tc.x() - ti.x()) + sq(tc.y() - ti.y()) + sq(tc.z() - ti.z());
-        if( d < pow(150,2)  ) {
+        if( d < pow(1500,2)  ) {
           strokeWeight(1);
-          stroke(lineC, map(d, 0.0, pow(150,2), 1.0, 0.1) ); //rgb mode is 1.0
+          stroke(lineC, map(d, 0.0, pow(1500,2), 1.0, 0.1) ); //rgb mode is 1.0
           line(tc.x(),tc.y(),tc.z(),ti.x(),ti.y(),ti.z());
         }
       }
