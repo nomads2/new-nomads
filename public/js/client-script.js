@@ -51,6 +51,7 @@ $(document).ready(function(){
   $('#login-form').submit(login);
 
   $('#phrase-form').submit(submitPhrase);
+  $('#cancel_phrase').hide();
   $('#cancel_phrase').click(cancelPhrase);
 
   canvas.addEventListener('mousedown', zoneClick);
@@ -229,6 +230,7 @@ submitPhrase = function(e){
   }, 600, function() {
     // Animation complete.
     $("#phrase-entry").hide();
+    $("#phrasefield").blur();
   });
 
   
