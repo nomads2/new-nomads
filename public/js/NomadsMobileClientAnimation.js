@@ -1825,7 +1825,7 @@ function NomadsMobileClientAnimation() {
                 ctx.fillText(arrayItem.thought, arrayItem.x, arrayItem.y);
 
                 //life to delete from array
-                arrayItem.life -= 0.1; //2 second life at 20fps
+                arrayItem.life -= 0.2; //2 second life at 20fps
                 if(arrayItem.life <= 0.0){
                   if (i > -1) {
                       allClientThoughts.splice(i, 1);
