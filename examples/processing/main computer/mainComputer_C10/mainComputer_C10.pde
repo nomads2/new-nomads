@@ -83,7 +83,7 @@ float coeffColor;
 void setup() {
   size(1024, 768, P3D);
   //Color of background
-  ((javax.swing.JFrame) frame).getContentPane().setBackground(new Color(0,0,0));
+  ((javax.swing.JFrame) frame).getContentPane().setBackground(new Color(74,51,32));
   
   
   smooth(4);
