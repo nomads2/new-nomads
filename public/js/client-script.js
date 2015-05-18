@@ -226,11 +226,12 @@ submitPhrase = function(e){
   //jump user screen back up to top of page.
   //$("body, html").scrollTop($("#mainui").offset().top);
   $("body, html").animate({ 
+    $("#phrasefield").blur();
     scrollTop: $("#mainui").offset().top 
   }, 600, function() {
     // Animation complete.
     $("#phrase-entry").hide();
-    $("#phrasefield").blur();
+
   });
 
   
