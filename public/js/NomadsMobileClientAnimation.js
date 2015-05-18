@@ -1819,7 +1819,7 @@ function NomadsMobileClientAnimation() {
                 ctx.font = font;
                 arrayItem.size += .5;
                 ctx.fillStyle = "rgba(0, 0, 0, " + arrayItem.alpha + ")";
-                arrayItem.alpha -= 0.2;
+                arrayItem.alpha -= 0.02;
 
                 //show text
                 ctx.fillText(arrayItem.thought, arrayItem.x, arrayItem.y);
