@@ -1817,15 +1817,15 @@ function NomadsMobileClientAnimation() {
                 //change text properties (size, fade out).
                 font = arrayItem.size + "px Futura, sans-serif";
                 ctx.font = font;
-                arrayItem.size += 1;
+                arrayItem.size += .5;
                 ctx.fillStyle = "rgba(0, 0, 0, " + arrayItem.alpha + ")";
-                arrayItem.alpha -= 0.03;
+                arrayItem.alpha -= 0.01;
 
                 //show text
                 ctx.fillText(arrayItem.thought, arrayItem.x, arrayItem.y);
 
                 //life to delete from array
-                arrayItem.life -= 0.5; //2 second life at 20fps
+                arrayItem.life -= 0.1; //2 second life at 20fps
                 if(arrayItem.life <= 0.0){
                   if (i > -1) {
                       allClientThoughts.splice(i, 1);
