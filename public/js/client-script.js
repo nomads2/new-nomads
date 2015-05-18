@@ -222,11 +222,10 @@ submitPhrase = function(e){
   $('#enter_phrase').prop('disabled', true);
   $('#cancel_phrase').prop('disabled', true);
   $('#phrasefield').prop('disabled', true);
-
+  $("#phrasefield").blur();
   //jump user screen back up to top of page.
   //$("body, html").scrollTop($("#mainui").offset().top);
   $("body, html").animate({ 
-    $("#phrasefield").blur();
     scrollTop: $("#mainui").offset().top 
   }, 600, function() {
     // Animation complete.
