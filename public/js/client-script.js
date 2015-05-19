@@ -149,7 +149,7 @@ zoneClick = function(evt){
     }
   }
 
-  
+  $(window).scrollTop($(document).height());
   console.log("mouse down "+x + ' ' + y);
 }
 
