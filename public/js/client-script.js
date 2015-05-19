@@ -199,13 +199,14 @@ submitPhrase = function(e){
   }
 
   if(profanityCheck(text)){
+    $("#phrasefield").blur();
     $("#phrasefield").val("");
+
     $("body, html").animate({ 
       scrollTop: $("#mainui").offset().top 
     }, 600, function() {
     // Animation complete.
       $("#phrase-entry").hide();
-      $("#phrasefield").blur();
     });
     return;
   }
