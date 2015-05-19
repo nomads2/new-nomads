@@ -21,8 +21,8 @@ float thoughtSize = 20.0;
 PVector globalTextPosition = new PVector(0,0); //moves global text on screen
 
 int zones = 10;
-int rad = 265; //radius of speaker circle
-int canvas = 655; //width+height of canvas
+int rad = 265;//265; //radius of speaker circle
+int canvas = 700; //width+height of canvas
 PFont myFont;
 ThoughtSystem ts;
 PImage bg;
@@ -99,7 +99,7 @@ void setup() {
   addSpeakers(5);
   
   oscP5 = new OscP5(this, 6790);                          // OSC input port
-  myRemoteLocation = new NetAddress("127.0.0.1", 41236);  // OSC output port
+  myRemoteLocation = new NetAddress("127.0.0.1", 6789);  // OSC output port
   
   initializeImage();
   initializeNoise();
@@ -124,7 +124,7 @@ void draw() {
     colorMode( RGB, 255.0 );
     
     
-    image(bg, width/2, height/2, 587, 587); //bg image
+    image(bg, width/2, height/2, 587, 587); //bg image 587 is a happy accident for size of bg image
     
     //show circles where speakers are located
     //displaySpeakerMap();  
@@ -139,13 +139,13 @@ void draw() {
       blendMode(ADD);//return Blend Mode back to ADD
       colorMode( RGB, 1.0 ); //openGL uses 0.0 - 1.0 RGB colors
       counter ++;
-      
+    popMatrix();
       //display the thoughtSystem
       ts.update();
       ts.intersection();
       ts.bounce();
       ts.display();
-    popMatrix();
+    
     
     blendMode(BLEND);
     drawBackground(); //if you place above image(); snow will be more prevalent
@@ -284,7 +284,7 @@ void displaySpeakerMap() {
   for (int i=0; i<zones; i++) {
     pushMatrix();
     translate(width/2, height/2); //move to center.
-    translate( rad*(sin(radians((i*(360/zones))+180))), rad*(cos(radians((i*(360/zones))+180))) );//move to angle location.
+    translate( rad*(sin(radians((i*(360/zones))))), rad*(cos(radians((i*(360/zones))+180))) );//move to angle location.
     stroke(255);
     strokeWeight(1);
     fill(0);
@@ -301,7 +301,7 @@ void displaySpeakerMap() {
 void addSpeakers(int numSpeakers) {
   PVector origin = new PVector(0, 0);
   for (int i=0; i<numSpeakers; i++) {
-    origin.x = (width/2) + rad*(sin(radians((i*(360/numSpeakers))+180)));
+    origin.x = (width/2) + rad*(sin(radians((i*(360/numSpeakers)))));
     origin.y = (height/2) + rad*(cos(radians((i*(360/numSpeakers))+180)));
     speakers.add(new SpeakerSystem(7, origin, 16, color(119,93,39), 1)); //5 circles to each speaker location.
     speakers.add(new SpeakerSystem(4, origin, 3, color(225,172, 50), 2)); //5 circles to each speaker location.
@@ -428,10 +428,10 @@ String randMess() {
  Upon receive message, animate particles from the zone location.
  **/
 void animateZone(int z, String t) {
-  int zone = z; //values 0-9, current zone to fire from
+  //int zone = z; //values 0-9, current zone to fire from
   String thought = t; //thought cloud text
   // Variable for heading! (angle)
-  float heading = ((PI/5) * zone) * -1; //provides correct heading in radians (0-9).
+  float heading = ((PI/5) * z) * -1; //provides correct heading in radians (0-9).
   //  println(zone + ": " + heading);
   // Offset the angle since we have zones set up vertically.
   float angle = heading - PI/2;
@@ -440,14 +440,22 @@ void animateZone(int z, String t) {
   force.mult(0.05);
   force.mult(-1.5);
   //float psXOrigin = (width/2) + rad*(sin(radians((zone*(360/zones))+180)));
-  float psXOrigin = (width/2) + (random(0.3, 1.0)*rad)*(sin(radians((zone*(360/zones))+180)));
+  float psXOrigin = (width/2) + (random(0.3, 1.0)*rad)*(sin(radians((z*(360/zones)))));
   //subtract random value from X,Y in order to get random location from center and external speaker position
   //float psYOrigin = (height/2) + rad*(cos(radians((zone*(360/zones))+180)));
-  float psYOrigin = (height/2) + (random(0.3, 1.0)*rad)*(cos(radians((zone*(360/zones))+180)));
+  float psYOrigin = (height/2) + (random(0.3, 1.0)*rad)*(cos(radians((z*(360/zones))+180)));
   //psYOrigin = psYOrigin - (random(0.0, 0.7)*rad)*(sin(radians((zone*(360/zones))+180)));
 
   //then add the thought to the screen
-  ts.addThought(psXOrigin, psYOrigin, force, thought, thoughtLifespan, zone);
+  ts.addThought(psXOrigin, psYOrigin, force, thought, thoughtLifespan, z);
+  
+  OscMessage myM = new OscMessage("/object");
+  myM.add("a");
+  myM.add("b");
+  myM.add("c");
+  myM.add(thought);
+  myM.add(z);
+  oscP5.send(myM, myRemoteLocation);
 }
 
 
@@ -492,7 +500,7 @@ void oscEvent(OscMessage theOscMessage) {
       float locX = theOscMessage.get(7).floatValue();
       float locY = theOscMessage.get(8).floatValue();
       locX = locX + ((width/2) - (canvas/2)); //250 is half of graphic size //map(locX, 0, 500, 0, width); //500 is graphics width
-      locY = locY + ((height/2) - 300); //map(locY, 0, 500, 0, height); //500 is graphics height
+      locY = locY + ((height/2) - (canvas/2)); //map(locY, 0, 500, 0, height); //500 is graphics height
       //add new thought 
       addUserThought(zoneNum, locX, locY, thought);//thread("addUserThought"); //
     }
@@ -557,10 +565,10 @@ void oscEvent(OscMessage theOscMessage) {
  Upon receive message, animate particles from the zone location.
  **/
 void addUserThought(int z, float x, float y, String t) {
-  int zone = z; //values 0-9, current zone to fire from
+  //int zone = z; //values 0-9, current zone to fire from
   String thought = t; //thought cloud text
   // Variable for heading! (angle)
-  float heading = ((PI/5) * zone) * -1; //provides correct heading in radians (0-9).
+  float heading = ((PI/5) * z) * -1; //provides correct heading in radians (0-9).
   // Offset the angle since we have zones set up vertically.
   float angle = heading - PI/2;
   // Polar to cartesian for force vector!
