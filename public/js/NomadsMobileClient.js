@@ -102,7 +102,9 @@ NomadsMobileClient.prototype = {
     messageToSend.longitude = longitude;
     messageToSend.x = CanvasX;
     messageToSend.y = CanvasY;
-		messageToSend.timestamp = new Date();
+		var date = new Date();
+    d = date.getMonth()+1+"."+date.getDate()+"."+date.getFullYear()+ " at " + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+    messageToSend.timestamp = d;
 		this.socket.emit('message', messageToSend);
 		//also fire processing on user's own page.
 		//var pjs = Processing.getInstanceById('animationUserText');
