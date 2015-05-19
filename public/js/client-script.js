@@ -205,7 +205,7 @@ submitPhrase = function(e){
     }, 600, function() {
     // Animation complete.
       $("#phrase-entry").hide();
-      $("#namefield").blur();
+      $("#phrasefield").blur();
     });
     return;
   }
