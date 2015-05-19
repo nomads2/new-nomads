@@ -173,6 +173,7 @@ login = function(e){
 }
 
 loginComplete = function(){
+  $("#namefield").blur();
   $('#login').fadeOut();
 }
 
