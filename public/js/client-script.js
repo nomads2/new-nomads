@@ -178,7 +178,7 @@ loginComplete = function(){
 }
 
 zoneSelect = function(cz){
-  $("#phrase-entry").show("fast", function(){$('#phrasefield').focus();});
+  $("#phrase-entry").show(1, function(){$('#phrasefield').focus();});
   $('#enter_phrase').prop('disabled', false);
   $('#cancel_phrase').prop('disabled', false);
   $('#phrasefield').prop('disabled', false);
