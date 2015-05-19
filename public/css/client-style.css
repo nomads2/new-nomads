@@ -25,7 +25,7 @@ body{
 	position:absolute;
 	top:0em;
 	bottom:0em;
-	background-color:#999;
+	background-color:#745132;
 }
 
 .control{
@@ -53,14 +53,22 @@ body{
 	position:fixed;
 	top:0em;
 	bottom:0em;
-	background-color:#999;
+	background-color:#745132;
 }
 
 #login-form{
 	width:130px;
 	height:50%;
-	top:35%;
+	top:auto;
 	margin:auto;
+	position:relative;
+}
+
+#description{
+	width:400px;
+	height:auto;
+	
+	margin:3em auto 3em auto;
 	position:relative;
 }
 
