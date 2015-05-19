@@ -271,6 +271,7 @@ profanityCheck = function(text){
 
   for(var i=0;i<profanityArray.length;i++){
     if(testText.indexOf(profanityArray[i])>-1){
+      console.log("No Profanity!");
       return true;
     }
   }
