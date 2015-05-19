@@ -198,6 +198,17 @@ submitPhrase = function(e){
     return;
   }
 
+  if(profanityCheck(text)){
+    $("#phrasefield").val("");
+    $("body, html").animate({ 
+      scrollTop: $("#mainui").offset().top 
+    }, 600, function() {
+    // Animation complete.
+      $("#phrase-entry").hide();
+    });
+    return;
+  }
+
   client.sendMessage(text, currentZone, x, y, 'textMessage');
   
   //error with this function. won't play anything else below. doesn't exist?
@@ -251,4 +262,15 @@ cancelPhrase = function(e){
     // Animation complete.
     $("#phrase-entry").hide();
   });
+}
+
+profanityCheck = function(text){
+  var testText = text.toLowerCase();
+
+  for(var i=0;i<profanityArray.length;i++){
+    if(testText.indexOf(profanityArray[i])>-1){
+      return true;
+    }
+  }
+  return false;
 }
