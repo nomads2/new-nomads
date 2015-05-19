@@ -72,6 +72,14 @@ body{
 	position:relative;
 }
 
+#instruction{
+	width:380px;
+	height:auto;
+	font-size: 2em;
+	margin:0 auto auto auto;
+	position:relative;
+}
+
 #phrase-entry{
 	display:block;
 	width:auto;

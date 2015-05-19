@@ -150,6 +150,7 @@ zoneClick = function(evt){
   }
 
   $(window).scrollTop($(document).height());
+  $("#instruction").hide();
   console.log("mouse down "+x + ' ' + y);
 }
 
@@ -207,6 +208,7 @@ submitPhrase = function(e){
     }, 600, function() {
     // Animation complete.
       $("#phrase-entry").hide();
+      $("#instruction").show();
     });
     return;
   }
@@ -244,6 +246,7 @@ submitPhrase = function(e){
   }, 600, function() {
     // Animation complete.
     $("#phrase-entry").hide();
+    $("#instruction").show();
 
   });
 
