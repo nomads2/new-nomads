@@ -83,7 +83,7 @@ NomadsMobileClient.prototype = {
     messageToSend.latitude = latitude; //changed to latitude, not this.latitude to work in server.js
     messageToSend.longitude = longitude;
     var date = new Date();
-    d = date.getFullYear() + "."+date.getMonth() + "." + date.getDate()+ " "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+    d = date.getMonth()+1+"."+date.getDate()+"."+date.getFullYear()+ " at " + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
     messageToSend.timestamp = d;
     this.socket.emit('newuser', messageToSend);
     if(typeof(callback)!='undefined'){
