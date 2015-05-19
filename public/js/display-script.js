@@ -14,6 +14,7 @@ $(document).ready(function() {
   // on connection to server
   socket.on('connect', function() {
     console.log("connected!");
+    $('#status').append("Connected to NOMADS server");
   });
 
   //listen for user joining
