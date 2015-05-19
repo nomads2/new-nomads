@@ -178,11 +178,11 @@ loginComplete = function(){
 }
 
 zoneSelect = function(cz){
-  $("#phrase-entry").show();
+  $("#phrase-entry").show("fast", function(){$('#phrasefield').focus();});
   $('#enter_phrase').prop('disabled', false);
   $('#cancel_phrase').prop('disabled', false);
   $('#phrasefield').prop('disabled', false);
-  $('#phrasefield').focus();
+  
   
   currentZone = cz;//$(this).attr("data-location");
   return false;
