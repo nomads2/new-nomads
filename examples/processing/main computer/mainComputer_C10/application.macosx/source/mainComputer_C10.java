@@ -43,8 +43,8 @@ float thoughtSize = 20.0f;
 PVector globalTextPosition = new PVector(0,0); //moves global text on screen
 
 int zones = 10;
-int rad = 265; //radius of speaker circle
-int canvas = 655; //width+height of canvas
+int rad = 265;//265; //radius of speaker circle
+int canvas = 700; //width+height of canvas
 PFont myFont;
 ThoughtSystem ts;
 PImage bg;
@@ -146,7 +146,7 @@ public void draw() {
     colorMode( RGB, 255.0f );
     
     
-    image(bg, width/2, height/2, 587, 587); //bg image
+    image(bg, width/2, height/2, 587, 587); //bg image 587 is a happy accident for size of bg image
     
     //show circles where speakers are located
     //displaySpeakerMap();  
@@ -161,13 +161,13 @@ public void draw() {
       blendMode(ADD);//return Blend Mode back to ADD
       colorMode( RGB, 1.0f ); //openGL uses 0.0 - 1.0 RGB colors
       counter ++;
-      
+    popMatrix();
       //display the thoughtSystem
       ts.update();
       ts.intersection();
       ts.bounce();
       ts.display();
-    popMatrix();
+    
     
     blendMode(BLEND);
     drawBackground(); //if you place above image(); snow will be more prevalent
@@ -306,7 +306,7 @@ public void displaySpeakerMap() {
   for (int i=0; i<zones; i++) {
     pushMatrix();
     translate(width/2, height/2); //move to center.
-    translate( rad*(sin(radians((i*(360/zones))+180))), rad*(cos(radians((i*(360/zones))+180))) );//move to angle location.
+    translate( rad*(sin(radians((i*(360/zones))))), rad*(cos(radians((i*(360/zones))+180))) );//move to angle location.
     stroke(255);
     strokeWeight(1);
     fill(0);
@@ -323,29 +323,28 @@ public void displaySpeakerMap() {
 public void addSpeakers(int numSpeakers) {
   PVector origin = new PVector(0, 0);
   for (int i=0; i<numSpeakers; i++) {
-    origin.x = (width/2) + rad*(sin(radians((i*(360/numSpeakers))+180)));
+    origin.x = (width/2) + rad*(sin(radians((i*(360/numSpeakers)))));
     origin.y = (height/2) + rad*(cos(radians((i*(360/numSpeakers))+180)));
     speakers.add(new SpeakerSystem(7, origin, 16, color(119,93,39), 1)); //5 circles to each speaker location.
     speakers.add(new SpeakerSystem(4, origin, 3, color(225,172, 50), 2)); //5 circles to each speaker location.
   }
 }
 
-
 public String randMess() {
   String[] facts = {
 "It wasn't bliss. What was bliss but the ordinary life?",
-    "That's when she found the tree",
-    "the dark, crabbed branches bearing up such speechless bounty",
-    "It's neither red nor sweet.",
-    "It doesn't melt or turn over, break or harden",
-    "so it can't feel pain",
-    "prove a theorem",
-    "expanding",
-    "windows",
-    "hover near the ceiling",
- "ceiling floats away with a sigh",
-  "ceiling floats",
-  "away with a sigh",
+"That's when she found the tree",
+"the dark, crabbed branches bearing up such speechless bounty",
+"It's neither red nor sweet.",
+"It doesn't melt or turn over, break or harden",
+"so it can't feel pain",
+"prove a theorem",
+"expanding",
+"windows",
+"hover near the ceiling",
+"ceiling floats away with a sigh",
+"ceiling floats",
+"away with a sigh",
 "clear walls",
 "everything",
 "transparency",
@@ -420,7 +419,7 @@ public String randMess() {
 "slice the air",
 "no wind can hold me",
 "aperture",
-"now i can  feel",
+"now i can feel",
 "the beginning was the dark",
 "moan and creak",
 "Thicker then",
@@ -440,8 +439,49 @@ public String randMess() {
 "water",
 "dream",
 "bliss",
-  "yearning, regret."
-  };
+"tell me once again", 
+"a single note in time",
+"the thing at the edge", 
+"outside in the open",
+"the woods were dark",
+"over the moment",
+"more common", 
+"the smell of a flower", 
+"fly away",
+"bring release", 
+"forget where",
+"happy in the soft daylight",
+"profit is finite",
+"ask and find the truth",
+"sun eye",
+"free to open and run",
+"shining and perfect",
+"go velocity",
+"never cold again",
+"filled with silence and waiting",
+"a garden of thoughts",
+"give, stand, wait",
+"going for gold",
+"wind noise, a sigh",
+"dismissed", 
+"today and forever",
+"windows in rain",
+"remind the world", 
+"near whistle",
+"going",
+"saying",
+"thick heat",
+"the door is cold",
+"touch fire",
+"every exit",
+"heart filled",
+"beaten", 
+"wanting to fall away",
+"a final door", 
+"the long return ride",
+"paradise",
+"yearning, regret."
+};
   return facts[PApplet.parseInt(random(facts.length-1))];
 }
 
@@ -450,10 +490,10 @@ public String randMess() {
  Upon receive message, animate particles from the zone location.
  **/
 public void animateZone(int z, String t) {
-  int zone = z; //values 0-9, current zone to fire from
+  //int zone = z; //values 0-9, current zone to fire from
   String thought = t; //thought cloud text
   // Variable for heading! (angle)
-  float heading = ((PI/5) * zone) * -1; //provides correct heading in radians (0-9).
+  float heading = ((PI/5) * z) * -1; //provides correct heading in radians (0-9).
   //  println(zone + ": " + heading);
   // Offset the angle since we have zones set up vertically.
   float angle = heading - PI/2;
@@ -462,21 +502,21 @@ public void animateZone(int z, String t) {
   force.mult(0.05f);
   force.mult(-1.5f);
   //float psXOrigin = (width/2) + rad*(sin(radians((zone*(360/zones))+180)));
-  float psXOrigin = (width/2) + (random(0.3f, 1.0f)*rad)*(sin(radians((zone*(360/zones))+180)));
+  float psXOrigin = (width/2) + (random(0.3f, 1.0f)*rad)*(sin(radians((z*(360/zones)))));
   //subtract random value from X,Y in order to get random location from center and external speaker position
   //float psYOrigin = (height/2) + rad*(cos(radians((zone*(360/zones))+180)));
-  float psYOrigin = (height/2) + (random(0.3f, 1.0f)*rad)*(cos(radians((zone*(360/zones))+180)));
+  float psYOrigin = (height/2) + (random(0.3f, 1.0f)*rad)*(cos(radians((z*(360/zones))+180)));
   //psYOrigin = psYOrigin - (random(0.0, 0.7)*rad)*(sin(radians((zone*(360/zones))+180)));
 
   //then add the thought to the screen
-  ts.addThought(psXOrigin, psYOrigin, force, thought, thoughtLifespan, zone);
+  ts.addThought(psXOrigin, psYOrigin, force, thought, thoughtLifespan, z);
   
   OscMessage myM = new OscMessage("/object");
   myM.add("a");
   myM.add("b");
   myM.add("c");
   myM.add(thought);
-  myM.add(zone);
+  myM.add(z);
   oscP5.send(myM, myRemoteLocation);
 }
 
@@ -522,7 +562,7 @@ public void oscEvent(OscMessage theOscMessage) {
       float locX = theOscMessage.get(7).floatValue();
       float locY = theOscMessage.get(8).floatValue();
       locX = locX + ((width/2) - (canvas/2)); //250 is half of graphic size //map(locX, 0, 500, 0, width); //500 is graphics width
-      locY = locY + ((height/2) - 300); //map(locY, 0, 500, 0, height); //500 is graphics height
+      locY = locY + ((height/2) - (canvas/2)); //map(locY, 0, 500, 0, height); //500 is graphics height
       //add new thought 
       addUserThought(zoneNum, locX, locY, thought);//thread("addUserThought"); //
     }
@@ -587,10 +627,10 @@ public void oscEvent(OscMessage theOscMessage) {
  Upon receive message, animate particles from the zone location.
  **/
 public void addUserThought(int z, float x, float y, String t) {
-  int zone = z; //values 0-9, current zone to fire from
+  //int zone = z; //values 0-9, current zone to fire from
   String thought = t; //thought cloud text
   // Variable for heading! (angle)
-  float heading = ((PI/5) * zone) * -1; //provides correct heading in radians (0-9).
+  float heading = ((PI/5) * z) * -1; //provides correct heading in radians (0-9).
   // Offset the angle since we have zones set up vertically.
   float angle = heading - PI/2;
   // Polar to cartesian for force vector!
@@ -682,19 +722,26 @@ class SoundWave {
   float agePer;      // range from 1.0 (birth) to 0.0 (death)
   int zone;          // starting zone (on speaker or in between two speakers)
   int c;
+  int r;
+  PVector swLoc;
+    
   
   Vec3D acceleration;
   Vec3D velo;
   
-  SoundWave( Vec3D _loc, Vec3D _vel, int _zone ) {
+  SoundWave( Vec3D _lo, Vec3D _vel, int _zonenum, int _radOffset ) {
     radius  = 5;// 50; random(30, 85);
-    startLoc = new Vec3D( _loc ); //_loc.add( new Vec3D().randomVector().scaleSelf( random(5.0) ) )
+    startLoc = new Vec3D( _lo ); //_loc.add( new Vec3D().randomVector().scaleSelf( random(5.0) ) )
     vel = new Vec3D( _vel.scale( 3 ) );  //scale up speed  20, 40  random ( 5.0, 10.0)
     //vel = new Vec3D( _vel.scale( .5 ).addSelf( new Vec3D().randomVector().scaleSelf( random( 10.0 ) ) ) );
     age = 0;
-    lifeSpan = 75;
-    zone = _zone;
+    lifeSpan = 60;//75 lower shorter lifespan
+    zone = _zonenum;
     c = color(1,1,0.7f);//color(0.6156862745098, 0.47450980392157, 0.17647058823529); //157, 121, 45
+    r = _radOffset;
+    swLoc = new PVector(0,0);
+    swLoc.x = (width/2) + rad*(sin(radians((zone*(360/zones))))); //number of speakers and rad are global
+    swLoc.y = (height/2) + rad*(cos(radians((zone*(360/zones))+180)));
   }
   
   public void exist() {
@@ -710,19 +757,22 @@ class SoundWave {
   public void render() {
     blendMode(BLEND);
     stroke(c, agePer);
-    strokeWeight(2);
+    strokeWeight(1);
     noFill();
-    float percentage = ((float)(zone)) / ((float)(zones)); //have to cast as floats to not get 0
-    float angle = PI+HALF_PI-(TWO_PI*percentage);//starting location point
-    angle = angle + HALF_PI+QUARTER_PI; //rotate angle to match inner circle
-    float arcX = angle; //zones is global (10)  PI+HALF_PI+
-    float arcY = angle + HALF_PI;//+QUARTER_PI; //arc is HALF_PI long
-    arc(startLoc.x, startLoc.y, radius, radius, arcX, arcY); 
+//    float percentage = ((float)(zone)) / ((float)(zones)); //have to cast as floats to not get 0
+//    float angle = PI+HALF_PI-(TWO_PI*percentage);//starting location point
+//    angle = angle+HALF_PI+QUARTER_PI; //rotate angle to match inner circle
+//    float arcX = angle; //zones is global (10)  PI+HALF_PI+
+//    float arcY = angle+HALF_PI; //+ HALF_PI;//+QUARTER_PI; //arc is HALF_PI long
+    //arc(startLoc.x, startLoc.y, radius, radius, arcX, arcY);
+    
+    
+    ellipse(swLoc.x, swLoc.y, radius+r, radius+r);
   }
   
   public void setAge() {
     age++;
-    radius+=6;
+    radius+=4;//how big the circles grow
     if(age > lifeSpan) {
       ISDEAD = true;
     } else {
@@ -848,6 +898,7 @@ class Thought {
   Vec3D location;
   Vec3D velocity;
   Vec3D acceleration;
+  Vec3D swV;// = new Vec3D(velocity.x, velocity.y, 0);
   float lifespan;
   String theThought;
   float r = 50;
@@ -862,6 +913,7 @@ class Thought {
     //velocity = PVector.random2D();
     velocity = new Vec3D(dir.x, dir.y, 1.5f);//dir.get();
     location = new Vec3D(x,y,10);//new PVector(x, y);
+    swV = new Vec3D(velocity.x, velocity.y, 0);
     lifespan = l;
     theThought = t;
     zone = z;
@@ -982,26 +1034,51 @@ class Thought {
   }
   
   
-  public void addSoundWaves( int _amt, int _zone ){
+  public void addSoundWaves( int _amt, int _zonen ){
     PVector speakerLoc = new PVector(0,0);
-    speakerLoc.x = (width/2) + rad*(sin(radians((_zone*(360/zones))+180))); //zones and rad are global
-    speakerLoc.y = (height/2) + rad*(cos(radians((zone*(360/zones))+180)));
-    PVector speakerOffset = new PVector(0,0);
-    speakerOffset.x = 40*(sin(radians((_zone*(360/zones))+180)));
-    speakerOffset.y = 40*(cos(radians((_zone*(360/zones))+180)));
-    speakerLoc.x = speakerLoc.x - speakerOffset.x;
-    speakerLoc.y = speakerLoc.y - speakerOffset.y;
+    speakerLoc.x = (width/2) + rad*(sin(radians((_zonen*(360/zones))))); //number of speakers and rad are global
+    speakerLoc.y = (height/2) + rad*(cos(radians((_zonen*(360/zones))+180)));
+    //PVector speakerOffset = new PVector(0,0);
+//    speakerOffset.x = 40*(sin(radians((_zone*(360/zones)))));
+//    speakerOffset.y = 40*(cos(radians((_zone*(360/zones)))));
+//    speakerLoc.x = speakerLoc.x - speakerOffset.x;
+//    speakerLoc.y = speakerLoc.y - speakerOffset.y;
     
     int dist = 25;
-    PVector waveOffset = new PVector(0,0);
+   // PVector waveOffset = new PVector(0,0);
+     
     
     for( int i=0; i<_amt; i++ ){
-      waveOffset.x = (i*dist)*(sin(radians((_zone*(360/zones))+180)));
-      waveOffset.y = (i*dist)*(cos(radians((_zone*(360/zones))+180)));
+      //waveOffset.x = (i*dist)*(sin(radians((_zone*(360/zones)))));
+      //waveOffset.y = (i*dist)*(cos(radians((_zone*(360/zones))+180)));
       //instead of location.x,y (the text location), use the speaker location as starting point for soundwave (based upon zone)
-      soundwaves.add( new SoundWave( new Vec3D(speakerLoc.x+waveOffset.x, speakerLoc.y+waveOffset.y, 0), new Vec3D(velocity.x, velocity.y, 0), _zone ) );
+      //soundwaves.add( new SoundWave( new Vec3D(speakerLoc.x+waveOffset.x, speakerLoc.y+waveOffset.y, 0), new Vec3D(velocity.x*-1, velocity.y*-1, 0), _zone, i*dist ) );
+      //new SoundWave( new Vec3D(speakerLoc.x, speakerLoc.y, 0), 
+      soundwaves.add( new SoundWave( new Vec3D(speakerLoc.x, speakerLoc.y, 0), swV, _zonen, i*dist) );
+      //soundwaves.add( new SoundWave( new Vec3D(speakerLoc.x+waveOffset.x, speakerLoc.y, 0), new Vec3D(velocity.x*-1, velocity.y*-1, 0), _zone, i*dist ) );
     }
   }
+  
+//  void addSoundWaves( int _amt, int _zone ){
+//    PVector speakerLoc = new PVector(0,0);
+//    speakerLoc.x = (width/2) + rad*(sin(radians((_zone*(360/zones))+180))); //zones and rad are global
+//    speakerLoc.y = (height/2) + rad*(cos(radians((_zone*(360/zones))+180)));
+//    PVector speakerOffset = new PVector(0,0);
+//    speakerOffset.x = 40*(sin(radians((_zone*(360/zones))+180)));
+//    speakerOffset.y = 40*(cos(radians((_zone*(360/zones))+180)));
+//    speakerLoc.x = speakerLoc.x - speakerOffset.x;
+//    speakerLoc.y = speakerLoc.y - speakerOffset.y;
+//    
+//    int dist = 25;
+//    PVector waveOffset = new PVector(0,0);
+//    
+//    for( int i=0; i<_amt; i++ ){
+//      waveOffset.x = (i*dist)*(sin(radians((_zone*(360/zones))+180)));
+//      waveOffset.y = (i*dist)*(cos(radians((_zone*(360/zones))+180)));
+//      //instead of location.x,y (the text location), use the speaker location as starting point for soundwave (based upon zone)
+//      soundwaves.add( new SoundWave( new Vec3D(speakerLoc.x+waveOffset.x, speakerLoc.y+waveOffset.y, 0), new Vec3D(velocity.x, velocity.y, 0), _zone ) );
+//    }
+//  }
 
   // Is the thought still useful?
   public boolean isDead() {
