@@ -6,6 +6,11 @@ $(document).ready(function() {
 
   var log = new Array();
 
+
+  var user = {};
+  var socket = io.connect();
+  
+
   // on connection to server
   socket.on('connect', function() {
     console.log("connected!");
