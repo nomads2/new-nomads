@@ -1,5 +1,7 @@
 //MAIN computer -- Matthew's visual.
 //C2 05/05/15
+//C10 05/20/15
+//update 05/27/15
 
 //EMITTER particles
 import toxi.geom.*; //enables Vec3D Class
@@ -26,7 +28,6 @@ int canvas = 700; //width+height of canvas
 PFont myFont;
 ThoughtSystem ts;
 PImage bg;
-
 
 ArrayList<SpeakerSystem> speakers;
 
@@ -576,27 +577,33 @@ void oscEvent(OscMessage theOscMessage) {
     }
   }
   
-//  if (theOscMessage.checkAddrPattern("/color")==true) {
-//    if (theOscMessage.checkTypetag("fff")) {
-//      textcolor[0] = theOscMessage.get(0).floatValue();
-//      globalTextPosition.y = theOscMessage.get(1).floatValue();
-//      println("globalTextPosition: " + globalTextPosition.x + ", " + globalTextPosition.y);
-//    }
-//  }
-  
-//  if (theOscMessage.checkAddrPattern("/addText")==true) {
-//    if (theOscMessage.checkTypetag("s")) {
-//      String message = randMess();
-//      animateZone(int(random(10)), message);
-//    }
-//  }
-  
-  
-  
+  //receive poetry from Max/MSP
+  //see "send-poem-to-processing.maxpat" inside max folder
+  if (theOscMessage.checkAddrPattern("/poem")==true) {
+    if (theOscMessage.checkTypetag("si")) {
+      //s = thought string
+      //f = the zone number.
+      String poemLine = theOscMessage.get(0).stringValue();
+      int poemZone = theOscMessage.get(1).intValue();
+      
+      //make up a starting point and direction
+      float pHeading = ((PI/5) * poemZone) * -1; //provides correct heading in radians (0-9).
+      float pAngle = pHeading - PI/2; // Offset the angle since we have zones set up vertically.
+      PVector pForce = PVector.fromAngle(pAngle); // Polar to cartesian for force vector!
+      pForce.mult(0.05);
+      pForce.mult(-1.5);
+      float pXOrigin = (width/2) + (random(0.3, 1.0)*rad)*(sin(radians((poemZone*(360/zones)))));
+      float pYOrigin = (height/2) + (random(0.3, 1.0)*rad)*(cos(radians((poemZone*(360/zones))+180)));
 
+      //then add the thought to the screen
+      ts.addThought(pXOrigin, pYOrigin, pForce, poemLine, thoughtLifespan, poemZone);
+
+    }
+  }
+  
   // print the address pattern for determing OSC information
-  //   println("### received an OSC message.");
-     //println("Address pattern: " + theOscMessage.addrPattern() + " and Type Tag: " + theOscMessage.typetag());
+//     println("### received an OSC message.");
+//     println("Address pattern: " + theOscMessage.addrPattern() + " and Type Tag: " + theOscMessage.typetag());
   //
 }
 
