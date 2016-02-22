@@ -25,6 +25,7 @@ function NomadsMobileClient(initCallback) {
   // });
 
 	this.socket.on('message', function(data){
+		console.log("data received ", data);
 		if(data.type = "poemMessage"){
     	allClientThoughts.push({
 	    	"thought":data.messageText, 

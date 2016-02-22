@@ -64,7 +64,7 @@ process.stdin.on('keypress', function (ch, key) {
 process.stdin.setRawMode(true);
 process.stdin.resume();
 
-sendTestData = function(data){
+sendPoemData = function(data){
   console.log("sending data ", data);
 
   var messageToSend = {};
