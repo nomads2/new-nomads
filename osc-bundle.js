@@ -10,7 +10,6 @@ var osc = require('osc-min');
 var dgram = require('dgram');
 var callback;
 udpcallback = function(message){
-  console.log("message callback thang",message);
   callback(message);
 }
 
@@ -19,9 +18,8 @@ var client = dgram.createSocket('udp4', function(msg, rinfo) {
   // parse message
   msg = osc.fromBuffer(msg);
   
-  // send args to browser
-  console.log("message to send",msg);  
-  udpcallback(msg); 
+  // send args to browser 
+  udpcallback(msg.args[0].value); 
  
 });
 

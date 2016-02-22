@@ -13,7 +13,6 @@ var userID = "Matthew_Max_Patch_"+Math.floor(Math.random()*1000);
 var message = '';
 
 receiveOsc = function(data){
-  console.log("got some osc ", data);
   sendPoemData(data);
 }
 
@@ -53,7 +52,7 @@ process.stdin.on('keypress', function (ch, key) {
     process.exit();
   }
   if(key.name == 'return'){
-    sendTestData(message);
+    sendPoemData(message);
     message = '';
   }else{
     message = message + key.name;

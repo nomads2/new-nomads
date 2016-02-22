@@ -13,18 +13,7 @@ function NomadsMobileClient(initCallback) {
   
   //add to global thought object when any user sends a message.
   // only use this function for Desktops. NO PHONES. Too much info and too slow.
-  // this.socket.on('client_update', function(data){
-  //   allClientThoughts.push({
-	 //    "thought":data.messageText, 
-	 //    "x":data.x,
-	 //    "y":data.y,
-	 //    "life":255,
-	 //    "size":16,
-	 //    "alpha":1.0
-	 //  });
-  // });
-
-	this.socket.on('message', function(data){
+  this.socket.on('client_update', function(data){
 		console.log("data received ", data);
 		if(data.type = "poemMessage"){
     	allClientThoughts.push({
