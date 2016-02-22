@@ -10,14 +10,6 @@ function NomadsMobileClient(initCallback) {
 	//Socket Listeners
 	this.socket.on('connect', function(data){});
 	this.socket.on('user_confirmed', function(data){console.log("User Confirmed "+data);});
-	//couldn't get socket.emit(processing_update) function to work here. 
-	//broadcast.emit() //collected from other users. but doesn't work from its own user.
-  //this.socket.on('proc_update', function(data){
-    // console.log(data.messageText);
-   //var pjs = Processing.getInstanceById('animationUserText');
-   //pjs.drawNewUserThought(data.location, data.messageText);
-  //});
-  
   
   //add to global thought object when any user sends a message.
   // only use this function for Desktops. NO PHONES. Too much info and too slow.
@@ -31,6 +23,19 @@ function NomadsMobileClient(initCallback) {
 	 //    "alpha":1.0
 	 //  });
   // });
+
+	this.socket.on('message', function(data){
+		if(data.type = "poemMessage"){
+    	allClientThoughts.push({
+	    	"thought":data.messageText, 
+		    "x":100,
+		    "y":100,
+		    "life":255,
+		    "size":16,
+		    "alpha":1.0
+		  });
+  	}
+  });
 
 	//Private functions
 	geo_success_callback = function(p){

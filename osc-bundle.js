@@ -1,15 +1,35 @@
 /**
  * OSC plugin using node and osc-min.
  * @author Jon Bellona
+ * @author Travis Thatcher - added udp listening for OSC from Max 
  */
 
 
 // GLOBAL vars
 var osc = require('osc-min');
 var dgram = require('dgram');
-var udp = dgram.createSocket('udp4');
+var callback;
+udpcallback = function(message){
+  console.log("message callback thang",message);
+  callback(message);
+}
+
+var client = dgram.createSocket('udp4', function(msg, rinfo) {
+ 
+  // parse message
+  msg = osc.fromBuffer(msg);
+  
+  // send args to browser
+  console.log("message to send",msg);  
+  udpcallback(msg); 
+ 
+});
+
 var outport = 6789; //Max/MSP sound
 var outport2 = 6790; //Prcoessing visual
+var inport = 6791; //From Max/MSP
+
+client.bind(6791); //Listen for incoming OSC messages
 
 /**
  * Dynamically send any size array as a single OSC message
@@ -30,8 +50,8 @@ exports.sendOSC = function(url, data) {
     args: 
       argArray
   });
-  udp.send(buf, 0, buf.length, outport, "localhost");
-  return udp.send(buf, 0, buf.length, outport2, "localhost");
+  client.send(buf, 0, buf.length, outport, "localhost");
+  return client.send(buf, 0, buf.length, outport2, "localhost");
 };
 
 /**
@@ -59,24 +79,11 @@ exports.sendOSCBundle = function(bundle) {
     elements:
       oscBundle
   });
-  udp.send(buf, 0, buf.length, outport, "localhost");
-  return udp.send(buf, 0, buf.length, outport2, "localhost");
+  client.send(buf, 0, buf.length, outport, "localhost");
+  return client.send(buf, 0, buf.length, outport2, "localhost");
 };
 
+exports.setOscCallback = function(OSCcallback){
+  callback = OSCcallback;
+}
 
-// function heartbeat() {
-//   var languageBundle = new Array();
-//   languageBundle["/length"] = Math.random(100);
-//   languageBundle["/avgLength"] = 24.6;
-//   languageBundle["/lang"] = 'english';
-//   sendOSCBundle(languageBundle);
-// }
-// setInterval(heartbeat, 2000);
-
-////////////////////////////////////////////
-// //example: sendOSC as a bundle
-// var languageBundle = new Array();
-// languageBundle["/length"] = 50;
-// languageBundle["/avgLength"] = 24.6;
-// languageBundle["/lang"] = 'english';
-// sendOSCBundle(languageBundle);
