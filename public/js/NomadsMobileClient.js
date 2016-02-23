@@ -13,6 +13,7 @@ function NomadsMobileClient(initCallback) {
   
   this.socket.on("disconnect", function() {
   	//https://github.com/LearnBoost/socket.io-client/issues/251
+  	console.log("reconnecting");
     socket.socket.reconnect();
   });
 
