@@ -23,7 +23,7 @@ function NomadsMobileClient(initCallback) {
 		console.log("data received ", data);
 		if(data.type == 'poemMessage'){
 			
-			var xLoc = 300 - (8*(data.messageText.length/2));
+			var xLoc = 300 - (10*(data.messageText.length/2));
     	allClientThoughts.push({
 	    	"thought":data.messageText, 
 		    "x":xLoc,
