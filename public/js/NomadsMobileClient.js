@@ -21,7 +21,7 @@ function NomadsMobileClient(initCallback) {
   // only use this function for Desktops. NO PHONES. Too much info and too slow.
   this.socket.on('client_update', function(data){
 		console.log("data received ", data);
-		if(data.type = 'poemMessage'){
+		if(data.type == 'poemMessage'){
 			
 			var xLoc = 300 - (8*(data.messageText.length/2));
     	allClientThoughts.push({
