@@ -22,9 +22,10 @@ function NomadsMobileClient(initCallback) {
   this.socket.on('client_update', function(data){
 		console.log("data received ", data);
 		if(data.type = "poemMessage"){
+			int xLoc = 300 - (5*(data.messageText.length/2));
     	allClientThoughts.push({
 	    	"thought":data.messageText, 
-		    "x":115,
+		    "x":300,
 		    "y":270,
 		    "life":255,
 		    "size":16,
