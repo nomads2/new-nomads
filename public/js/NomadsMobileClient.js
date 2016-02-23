@@ -26,7 +26,7 @@ function NomadsMobileClient(initCallback) {
 			var xLoc = 300 - (5*(data.messageText.length/2));
     	allClientThoughts.push({
 	    	"thought":data.messageText, 
-		    "x":300,
+		    "x":xLoc,
 		    "y":270,
 		    "life":255,
 		    "size":16,
