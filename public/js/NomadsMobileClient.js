@@ -24,8 +24,8 @@ function NomadsMobileClient(initCallback) {
 		if(data.type = "poemMessage"){
     	allClientThoughts.push({
 	    	"thought":data.messageText, 
-		    "x":86,
-		    "y":255,
+		    "x":115,
+		    "y":270,
 		    "life":255,
 		    "size":16,
 		    "alpha":1.0
