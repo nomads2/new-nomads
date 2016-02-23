@@ -601,8 +601,8 @@ void oscEvent(OscMessage theOscMessage) {
         int zoneNum = int(theOscMessage.get(4).floatValue());
         float locX = theOscMessage.get(7).floatValue();
         float locY = theOscMessage.get(8).floatValue();
-        locX = locX + ((width/2) - (canvas/2)); //250 is half of graphic size //map(locX, 0, 500, 0, width); //500 is graphics width
-        locY = locY + ((height/2) - (canvas/2)); //map(locY, 0, 500, 0, height); //500 is graphics height
+        locX = locX + ((width/2) - (canvas/2) + 50); //locX + ((width/2) - (canvas/2)); //250 is half of graphic size //map(locX, 0, 600, 0, width); //500 is graphics width
+        locY = locY + ((height/2) - (canvas/2) + 50); //locY + ((height/2) - (canvas/2)); //map(locY, 0, 500, 0, height); //500 is graphics height
         //add new thought 
         addUserThought(zoneNum, locX, locY, thought);//thread("addUserThought"); // 
       }
