@@ -11,6 +11,11 @@ function NomadsMobileClient(initCallback) {
 	this.socket.on('connect', function(data){});
 	this.socket.on('user_confirmed', function(data){console.log("User Confirmed "+data);});
   
+  this.socket.on("disconnect", function() {
+  	//https://github.com/LearnBoost/socket.io-client/issues/251
+    socket.socket.reconnect();
+  });
+
   //add to global thought object when any user sends a message.
   // only use this function for Desktops. NO PHONES. Too much info and too slow.
   this.socket.on('client_update', function(data){
