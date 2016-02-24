@@ -36,7 +36,7 @@ class Thought {
       if (other != this) {
         Vec3D dir = location.sub(other.location);
         if (dir.magnitude() < r*1.5) {
-          dir.normalizeTo(0.02); 
+          dir.normalizeTo(0.01);   //0.02 is too fast
           applyForce3D(dir);
         }
       }

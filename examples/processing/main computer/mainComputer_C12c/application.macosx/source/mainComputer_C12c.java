@@ -604,7 +604,7 @@ public void oscEvent(OscMessage theOscMessage) {
         String thoughtP = theOscMessage.get(3).stringValue();
         int zoneNumPoem = PApplet.parseInt(0);
         float locXp = (width/2); //theOscMessage.get(7).floatValue();
-        float locYp = (height/2); //theOscMessage.get(8).floatValue();
+        float locYp = (height/2) + (random(-50,50)); //theOscMessage.get(8).floatValue();
         //add new thought 
         //addUserThought(zoneNumPoem, locXp, locYp, thought);//thread("addUserThought"); // 
         // Variable for heading! (angle)
@@ -613,8 +613,8 @@ public void oscEvent(OscMessage theOscMessage) {
         float anglep = headingp - PI/2;
         // Polar to cartesian for force vector!
         PVector forceP = PVector.fromAngle(anglep);
-        forceP.mult(0.25f);//0.05
-        forceP.mult(1.5f);
+        forceP.mult(0.05f);//0.05random(0.05,0.5)
+        forceP.mult(1.25f); //random(1.25,
         ts.addThought(locXp, locYp, forceP, thoughtP, thoughtLifespan, zoneNumPoem, false);
       } else {
         // "textMessage" type.
@@ -1000,7 +1000,7 @@ class Thought {
       if (other != this) {
         Vec3D dir = location.sub(other.location);
         if (dir.magnitude() < r*1.5f) {
-          dir.normalizeTo(0.02f); 
+          dir.normalizeTo(0.01f);   //0.02 is too fast
           applyForce3D(dir);
         }
       }
