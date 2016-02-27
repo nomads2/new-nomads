@@ -29,8 +29,8 @@ function NomadsMobileClient(initCallback) {
 	    	"thought":data.messageText, 
 		    "x":xLoc,
 		    "y":yLoc,
-		    "life":600,
-		    "size":14,
+		    "life":800,
+		    "size":12,
 		    "alpha":1.0
 		  });
   	}
