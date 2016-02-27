@@ -25,7 +25,7 @@ body{
 	position:absolute;
 	top:0em;
 	bottom:0em;
-	background-color:#745132;
+	background-color:#efefef;
 }
 
 .control{
@@ -53,7 +53,7 @@ body{
 	position:fixed;
 	top:0em;
 	bottom:0em;
-	background-color:#745132;
+	background-color:#efefef;
 }
 
 #login-form{

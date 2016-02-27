@@ -24,13 +24,13 @@ function NomadsMobileClient(initCallback) {
 		if(data.type == 'poemMessage'){
 			
 			var xLoc = 300 - (10*(data.messageText.length/2));
-			var yLoc = Math.random()*300+100;
+			var yLoc = Math.random()*200+200;
     	allClientThoughts.push({
 	    	"thought":data.messageText, 
 		    "x":xLoc,
 		    "y":yLoc,
-		    "life":400,
-		    "size":16,
+		    "life":600,
+		    "size":14,
 		    "alpha":1.0
 		  });
   	}
