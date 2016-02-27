@@ -232,7 +232,14 @@ submitPhrase = function(e){
 
   $('#phrasefield').val('');
   //Play sound
-  var i = Math.floor(Math.random()*14);
+  console.log('stopping all sounds');
+  for(var s = 0; s<15; s++){
+    var sound = $('#sound'+s)[0];
+    sound.pause();
+    sound.currentTime = 0;
+  }
+  var i = Math.floor(Math.random()*15);
+  
   console.log("playing sound "+i);
   $('#sound'+i)[0].play();
   $('#enter_phrase').prop('disabled', true);
