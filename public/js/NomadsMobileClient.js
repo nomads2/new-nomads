@@ -29,7 +29,7 @@ function NomadsMobileClient(initCallback) {
 	    	"thought":data.messageText, 
 		    "x":xLoc,
 		    "y":yLoc,
-		    "life":800,
+		    "life":1000,
 		    "size":12,
 		    "alpha":1.0
 		  });
