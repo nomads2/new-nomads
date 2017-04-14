@@ -90,7 +90,8 @@ float coeffColor;
 void setup() {
   size(1024, 768, P3D);
   //Color of background
-  ((javax.swing.JFrame) frame).getContentPane().setBackground(new Color(74,51,32));
+  ((javax.swing.JFrame) frame).getContentPane().setBackground(new Color(74,51,32)); //brown
+  //((javax.swing.JFrame) frame).getContentPane().setBackground(new Color(0,0,0)); //black
   
   smooth(4);
   noFill();
@@ -126,7 +127,8 @@ void draw() {
     //setup the background and bg image
     blendMode(BLEND); // default blend mode
     colorMode( RGB, 255.0 );
-    background(74,51,32); //RGB is set to 0 - 1.
+    background(74,51,32); //brown //RGB is set to 0 - 1.
+    //background(0,0,0); //black
     imageMode(CENTER);
     noTint(); //otherwise will fade
     colorMode( RGB, 255.0 );
@@ -755,4 +757,3 @@ class myVector extends PVector
   int count;
   color myColor;
 }
-
