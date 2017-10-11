@@ -85,7 +85,7 @@ server.get('/', function(req,res){
     locals : { 
               title : 'Nomads'
              ,description: 'Your Page Description'
-             ,author: 'Your Name'
+             ,author: 'TThatcher'
              ,analyticssiteid: 'XXXXXXX' 
             }
   });
@@ -95,8 +95,8 @@ server.get('/client', function(req,res){
   res.render('client.jade', {
     locals : { 
               title : 'Nomads'
-             ,description: 'Your Page Description'
-             ,author: 'Your Name'
+             ,description: 'Nomads main client'
+             ,author: 'TThatcher'
              ,analyticssiteid: 'XXXXXXX' 
             }
   });
@@ -106,8 +106,19 @@ server.get('/display', function(req,res){
   res.render('display.jade', {
     locals : { 
               title : 'Nomads'
-             ,description: 'Nomads pages blah blah blah'
-             ,author: 'Your Name'
+             ,description: 'Nomads message disply'
+             ,author: 'TThatcher'
+             ,analyticssiteid: 'XXXXXXX' 
+            }
+  });
+});
+
+server.get('/conference', function(req,res){
+  res.render('conference.jade', {
+    locals : { 
+              title : 'Nomads'
+             ,description: 'Nomads conference display'
+             ,author: 'TThatcher'
              ,analyticssiteid: 'XXXXXXX' 
             }
   });

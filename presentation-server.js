@@ -8,7 +8,7 @@ var connect = require('connect')
 //Setup OSC functions
 var oscMessage = require("./osc-bundle.js");
 var ioc = require('socket.io-client');
-var client = ioc.connect("http://nomadslive.music.virginia.edu:"+port);
+var client = ioc.connect("http://nomads.music.virginia.edu:"+port);
 var userID = "Matthew_Max_Patch_"+Math.floor(Math.random()*1000);
 var message = '';
 
