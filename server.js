@@ -7,7 +7,8 @@ var connect = require('connect')
 //var oscFunctions = require('./osc-bundle.js'); //require
 
 //Setup Express
-var server = express.createServer();
+var server = express();
+/*
 server.configure(function(){
     server.set('views', __dirname + '/views');
     server.set('view options', { layout: false });
@@ -37,7 +38,8 @@ server.error(function(err, req, res, next){
                 },status: 500 });
     }
 });
-server.listen( port);
+*/
+server.listen(port);
 
 //Setup OSC functions
 var oscMessage = require("./osc-bundle.js");

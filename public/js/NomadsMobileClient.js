@@ -6,10 +6,17 @@ function NomadsMobileClient(initCallback) {
 	this.user = {};
 	this.socket = io.connect();
 	this.initCallback = initCallback;
+	this.loggedin = false;
 
 	//Socket Listeners
 	this.socket.on('connect', function(data){});
-	this.socket.on('user_confirmed', function(data){console.log("User Confirmed "+data);});
+	this.socket.on('user_confirmed', function(data){
+		if(data.user.id == this.user.id){
+			console.log("User Confirmed "+data);	
+			this.loggedin = true;
+		}
+		
+	});
   
   this.socket.on("disconnect", function() {
   	//https://github.com/LearnBoost/socket.io-client/issues/251
@@ -96,6 +103,9 @@ NomadsMobileClient.prototype = {
 	},
 
 	sendMessage:function(messageText, location, CanvasX, CanvasY, type, callback){
+		if(!this.loggedin){
+			return;
+		}
 		var messageToSend = {};
 		messageToSend.id = this.user.id;
 		messageToSend.username = this.user.username;

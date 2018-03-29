@@ -51,10 +51,20 @@ process.stdin.on('keypress', function (ch, key) {
     process.stdin.pause();
     process.exit();
   }
-  if(key.name == 'return'){
-    sendPoemData(message);
-    message = '';
-  }else{
+  else if(key.name == 'return'){
+    if(message=='start_nomads'){
+      sendPoemData(message. "start_nomads");
+      message = '';  
+    }
+    else if(message=='stop_nomads'){
+      sendPoemData(message. "stop_nomads");
+      message = '';  
+    }else{
+      sendPoemData(message. "poemMessage");
+      message = '';  
+    }
+  }
+  else{
     message = message + key.name;
   }
 
@@ -63,13 +73,13 @@ process.stdin.on('keypress', function (ch, key) {
 process.stdin.setRawMode(true);
 process.stdin.resume();
 
-sendPoemData = function(data){
+sendPoemData = function(data, type){
   console.log("sending data ", data);
 
   var messageToSend = {};
   messageToSend.id = userID;
   messageToSend.username = "Matthew_Max_Patch";
-  messageToSend.type = "poemMessage";
+  messageToSend.type = type;
   messageToSend.messageText = data;
   messageToSend.location = 0;
   messageToSend.latitude = 0;
