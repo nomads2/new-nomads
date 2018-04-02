@@ -1,0 +1,34 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    title=title
+    meta(name="description", content=description)
+    meta(name="author", content=author)
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(href='/css/client-style.css', rel='stylesheet')
+    //-script(src='js/libs/modernizr-2.0.6.min.js')
+
+  body
+    block header
+
+    block content
+
+    block footer
+      footer
+        script(src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
+        
+        script(defer, src='/socket.io/socket.io.js')
+        script(defer, src='http://www.google.com/jsapi')
+        script(defer, src='/lib/geoPosition.js')
+        script(defer, src='/js/NomadsMobileClient.js')  
+        //script(defer, src='/lib/processing-1.4.8.min.js')
+        //script(defer, src='/lib/processing-jpb.js')
+        script(defer, src='/lib/animationlib.js')
+        script(defer, src='/lib/profanity-check.js')
+        script(defer, src='/js/NomadsMobileClientAnimation.js')
+        script(defer, src='/js/client-script.js')
+
+        
+        

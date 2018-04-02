@@ -28,7 +28,6 @@
     "mocha": "^5.0.5",
     "should": "*"
   },
-  "engine": "node >= 7.0 < 9.10.0", 
-  "license":"
-The MIT License (MIT) Copyright (c) 2014 IMRG University of Virginia McIntire Department of Music"
+  "engine": "node >= 7.0 < 9.10.0",
+  "license": "MIT"
 }
