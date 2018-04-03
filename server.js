@@ -17,12 +17,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.set('env', 'development');
 
-
-
 server.listen(port);
-
-//Setup OSC functions
-//var oscMessage = require("./osc-bundle.js");
 
 //Setup Socket.IO
 
@@ -33,20 +28,25 @@ io.on('connection', function(socket){
   socket.on('newuser', function (data) {
     console.log('new user added! ' + data.username);
     console.log(data);
-    //oscMessage.sendOSC('/newuser', data);
-    socket.broadcast.emit('user_confirmed', data);
+    
+    socket.emit('user_confirmed', data);
   });
 
   //see NomadsMobileClient.js for data var
   socket.on('message', function(data){
     socket.broadcast.emit('proc_update',data); //send data to all clients for processing sketch
     socket.broadcast.emit('client_update',data); //send data back to all clients?
-    //oscMessage.sendOSC('/object', data);  //just send a single block instead of multiple, smaller OSC messages
-    // sendOSCText('/thought', data);
-    // sendOSC('/geolocation', [ data.latitude, data.longitude ] );
-    //socket.emit('server_message',data); // send data back to individual client?
+   
     console.log(data);
   });
+
+  socket.on('begin_ceiling'){
+
+  };
+
+  socket.on('begin_auksalak'){
+
+  };
 
   socket.on('disconnect', function(){
     console.log('Client Disconnected.');
@@ -63,50 +63,86 @@ io.on('connection', function(socket){
 /////// ADD ALL YOUR ROUTES HERE  /////////
 
 app.get('/', function(req,res){
-  res.render('client.pug', {
+  res.render('index.pug', {
     locals : { 
               title : 'Nomads'
-             ,description: 'Your Page Description'
+             ,description: 'Nomads System'
              ,author: 'TThatcher'
              ,analyticssiteid: 'XXXXXXX' 
             }
   });
 });
 
-app.get('/client', function(req,res){
-  res.render('client.pug', {
+// The Ceiling Floats Away Routes
+
+app.get('/ceiling', function(req,res){
+  res.render('ceiling_client.pug', {
     locals : { 
-              title : 'Nomads'
-             ,description: 'Nomads main client'
+              title : 'The Ceiling Floats Away'
+             ,description: 'The Ceiluing Floats Away'
              ,author: 'TThatcher'
              ,analyticssiteid: 'XXXXXXX' 
             }
   });
 });
 
-app.get('/display', function(req,res){
-  res.render('display.pug', {
+app.get('/ceiling_display', function(req,res){
+  res.render('ceiling_display.pug', {
     locals : { 
-              title : 'Nomads'
-             ,description: 'Nomads message disply'
+              title : 'The Ceiling Floats Away'
+             ,description: 'Ceiling Nomads message disply'
              ,author: 'TThatcher'
              ,analyticssiteid: 'XXXXXXX' 
             }
   });
 });
 
-app.get('/conference', function(req,res){
-  res.render('conference.pug', {
+app.get('/ceiling_control', function(req,res){
+  res.render('ceiling_control.pug', {
     locals : { 
-              title : 'Nomads'
-             ,description: 'Nomads conference display'
+              title : 'The Ceiling Floats Away Control'
+             ,description: 'Ceiling Nomads System Control'
              ,author: 'TThatcher'
              ,analyticssiteid: 'XXXXXXX' 
             }
   });
 });
 
-/*
+// Auksalaq Routes
+
+app.get('/auksalaq', function(req,res){
+  res.render('auksalaq_client.pug', {
+    locals : { 
+              title : 'Auksalaq'
+             ,description: 'Auksalaq Nomads System'
+             ,author: 'TThatcher'
+             ,analyticssiteid: 'XXXXXXX' 
+            }
+  });
+});
+
+app.get('/auksalaq_display', function(req,res){
+  res.render('auksalaq_display.pug', {
+    locals : { 
+              title : 'Auksalaq'
+             ,description: 'Auksalaq Nomads message disply'
+             ,author: 'TThatcher'
+             ,analyticssiteid: 'XXXXXXX' 
+            }
+  });
+});
+
+app.get('/cauksalaq_control', function(req,res){
+  res.render('auksalaq_control.pug', {
+    locals : { 
+              title : 'Auksalaq Control'
+             ,description: 'Auksalaq Nomads System Control'
+             ,author: 'TThatcher'
+             ,analyticssiteid: 'XXXXXXX' 
+            }
+  });
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -124,7 +160,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('404');
 });
-*/
+
 
 function NotFound(msg){
     this.name = 'NotFound';
