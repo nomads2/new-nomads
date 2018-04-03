@@ -39,15 +39,23 @@ io.on('connection', function(socket){
    
     console.log(data);
   });
+/*
+  socket.on('begin_ceiling', function(){
+    ;
+  });
 
-  socket.on('begin_ceiling'){
+  socket.on('begin_auksalak', function(){
+    ;
+  });
 
-  };
+  socket.on('stop_ceiling', function(){
+    ;
+  });
 
-  socket.on('begin_auksalak'){
-
-  };
-
+  socket.on('stop_auksalak', function(){
+    ;
+ });
+*/
   socket.on('disconnect', function(){
     console.log('Client Disconnected.');
   });
@@ -63,18 +71,21 @@ io.on('connection', function(socket){
 /////// ADD ALL YOUR ROUTES HERE  /////////
 
 app.get('/', function(req,res){
+  //res.send('hello world');
+  
   res.render('index.pug', {
     locals : { 
               title : 'Nomads'
              ,description: 'Nomads System'
              ,author: 'TThatcher'
              ,analyticssiteid: 'XXXXXXX' 
+             ,cache: 'false'
             }
   });
 });
 
 // The Ceiling Floats Away Routes
-
+/*
 app.get('/ceiling', function(req,res){
   res.render('ceiling_client.pug', {
     locals : { 
@@ -142,7 +153,7 @@ app.get('/cauksalaq_control', function(req,res){
             }
   });
 });
-
+*/
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

@@ -7,7 +7,9 @@ html(lang="en")
     meta(name="description", content=description)
     meta(name="author", content=author)
     meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(href='/css/client-style.css', rel='stylesheet')
+    
 
   body
-  	p
-  		h1="Welcome to Nomads"
+    block header
+    	p h1="Welcome to Nomads"

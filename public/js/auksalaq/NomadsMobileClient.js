@@ -13,7 +13,6 @@ function NomadsMobileClient(initCallback) {
 	//Socket Listeners
 	this.socket.on('connect', function(data){});
 	this.socket.on('user_confirmed', function(data){
-		
 		if(data.id == user.id){
 			console.log("User Confirmed "+data);	
 			loggedin = true;
