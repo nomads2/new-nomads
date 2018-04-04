@@ -8,20 +8,20 @@ html(lang="en")
     meta(name="author", content=author)
     meta(name="viewport", content="width=device-width, initial-scale=1")
     link(href='/css/client-style.css', rel='stylesheet')
-    //-script(src='js/libs/modernizr-2.0.6.min.js')
+
+    block scripts
+        script(src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
+        script(defer, src='/socket.io/socket.io.js')
+        script(defer, src='http://www.google.com/jsapi')
+        script(defer, src='/lib/geoPosition.js')
 
   body
     block header
 
     block content
 
-    block footer
-      footer
-        script(src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
-        
-        script(defer, src='/socket.io/socket.io.js')
-        script(defer, src='http://www.google.com/jsapi')
-        script(defer, src='/lib/geoPosition.js')
+    footer
+       
 
 
 

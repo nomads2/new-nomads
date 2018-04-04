@@ -30,6 +30,7 @@ io.on('connection', function(socket){
     console.log(data);
     
     socket.emit('user_confirmed', data);
+    socket.broadcast.emit('user_confirmed', data);
   });
 
   //see NomadsMobileClient.js for data var
@@ -85,7 +86,7 @@ app.get('/', function(req,res){
 });
 
 // The Ceiling Floats Away Routes
-/*
+
 app.get('/ceiling', function(req,res){
   res.render('ceiling_client.pug', {
     locals : { 
@@ -153,7 +154,7 @@ app.get('/cauksalaq_control', function(req,res){
             }
   });
 });
-*/
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

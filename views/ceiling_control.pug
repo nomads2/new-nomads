@@ -1,5 +1,16 @@
 extends ceiling_client_layout
 
+block append scripts
+	script(src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
+	script(defer, src='/socket.io/socket.io.js')
+	script(defer, src='http://www.google.com/jsapi')
+	script(defer, src='/lib/geoPosition.js')
+	script(defer, src='/js/ceiling/NomadsMobileClient.js')
+	script(defer, src='/lib/animationlib.js')
+	script(defer, src='/lib/profanity-check.js')
+	script(defer, src='/js/ceiling/NomadsMobileClientAnimation.js')
+	script(defer, src='/js/ceiling/client-script.js')
+
 block content
 	div(id='status')
 		p(id='info')

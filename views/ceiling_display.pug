@@ -1,5 +1,15 @@
 extends ceiling_client_layout
 
+block append scripts
+	script(src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
+	script(defer, src='/socket.io/socket.io.js')
+	script(defer, src='http://www.google.com/jsapi')
+	script(defer, src='/js/ceiling/display-script.js')
+
 block content
+	div
+		p
+			center 
+				h1="The Ceiling Floats Away Display Status"
 	div
 		ul(id='status')

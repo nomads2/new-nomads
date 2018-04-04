@@ -17,6 +17,12 @@ $(document).ready(function() {
     $('#status').append("Connected to NOMADS server");
   });
 
+  socket.on("disconnect", function() {
+    //https://github.com/LearnBoost/socket.io-client/issues/251
+    console.log("reconnecting");
+    socket.socket.reconnect();
+  });
+
   //listen for user joining
   socket.on('user_confirmed', function(data){
     log.push(data);

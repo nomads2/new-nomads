@@ -1,30 +1,35 @@
 //setup Dependencies
-var connect = require('connect')
-    , express = require('express')
-    , io = require('socket.io')
-    , keypress = require('keypress')
-    , port = (process.env.PORT || 80);
+var connect = require('connect');
+var keypress = require('keypress');
+
+//Setup Express
+var express = require('express');
+var path = require('path');
+let app = express();
+var server = require('http').Server(app);
+var ioc = require('socket.io-client');
+
+
+var port = (process.env.PORT || 80);
+var server_loc = 'http://nomads.music.virginia.edu:';
+
 
 //Setup OSC functions
 var oscMessage = require("./osc-bundle.js");
-var ioc = require('socket.io-client');
-var client = ioc.connect("http://nomads.music.virginia.edu:"+port);
+
+
 var userID = "Matthew_Max_Patch_"+Math.floor(Math.random()*1000);
 var message = '';
 
-receiveOsc = function(data){
-  sendPoemData(data);
-}
+socket = ioc.connect('http://nomads.music.virginia.edu:8081');
 
-oscMessage.setOscCallback(receiveOsc);
-
-client.once("connect", function(){
+socket.once("connection", function(socket){
   console.log('Client connected to port ' + port);
 
 });
 
 //when new user enters his/her name, display.
-client.on('user_confirmed', function (data) {
+socket.on('user_confirmed', function (data) {
   console.log('new user added! ' + data.username);
   //console.log(data);
   oscMessage.sendOSC('/newuser', data);
@@ -32,7 +37,7 @@ client.on('user_confirmed', function (data) {
 });
 
 //see NomadsMobileClient.js for data var
-client.on('client_update', function(data){
+socket.on('client_update', function(data){
   
   oscMessage.sendOSC('/object', data);  //just send a single block instead of multiple, smaller OSC messages
   // sendOSCText('/thought', data);
@@ -46,21 +51,21 @@ keypress(process.stdin);
  
 // listen for the "keypress" event 
 process.stdin.on('keypress', function (ch, key) {
-  console.log('got "keypress"', key);
+  console.log(key.name);
   if (key && key.ctrl && key.name == 'c') {
     process.stdin.pause();
     process.exit();
   }
   else if(key.name == 'return'){
     if(message=='start_nomads'){
-      sendPoemData(message. "start_nomads");
+      sendPoemData(message, "start_nomads");
       message = '';  
     }
     else if(message=='stop_nomads'){
-      sendPoemData(message. "stop_nomads");
+      sendPoemData(message, "stop_nomads");
       message = '';  
     }else{
-      sendPoemData(message. "poemMessage");
+      sendPoemData(message, "poemMessage");
       message = '';  
     }
   }
@@ -72,6 +77,12 @@ process.stdin.on('keypress', function (ch, key) {
  
 process.stdin.setRawMode(true);
 process.stdin.resume();
+
+receiveOsc = function(data){
+  sendPoemData(data);
+}
+
+oscMessage.setOscCallback(receiveOsc);
 
 sendPoemData = function(data, type){
   console.log("sending data ", data);
@@ -90,7 +101,7 @@ sendPoemData = function(data, type){
   d = date.getMonth()+1+"."+date.getDate()+"."+date.getFullYear()+ " at " + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
   messageToSend.timestamp = d;
   
-  client.emit('message', messageToSend);
+  socket.emit('message', messageToSend);
      
 }
 
