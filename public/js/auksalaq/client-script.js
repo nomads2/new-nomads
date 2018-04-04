@@ -32,7 +32,8 @@ var allClientThoughts = []; //by instantiating this here, users will get a clean
 $(document).ready(function(){
   client = new NomadsMobileClient(initCallback);
 
-  client.geolocate();
+  //client.geolocate();
+  initCallback();
 
   $('#namefield').focus();
   canvas = document.getElementById('mainui');
@@ -174,6 +175,9 @@ login = function(e){
 }
 
 loginComplete = function(){
+  //while(!client.loggedIn){
+    
+  //}
   $("#namefield").blur();
   $('#login').fadeOut();
 }

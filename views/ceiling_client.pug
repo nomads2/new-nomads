@@ -1,0 +1,95 @@
+extends ceiling_client_layout
+block append scripts
+	script(src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
+	script(defer, src='/socket.io/socket.io.js')
+	script(defer, src='http://www.google.com/jsapi')
+	script(defer, src='/lib/geoPosition.js')
+	script(defer, src='/js/ceiling/NomadsMobileClient.js')
+	script(defer, src='/lib/animationlib.js')
+	script(defer, src='/lib/profanity-check.js')
+	script(defer, src='/js/ceiling/NomadsMobileClientAnimation.js')
+	script(defer, src='/js/ceiling/client-script.js')
+
+block content
+	div(id='status')
+		p(id='info')
+	div(class='control')
+		canvas#mainui(width='600', height='600')
+			img#background(src='/img/backgroundImageMay15_2.png')
+
+	div(id='phrase-entry')
+		form(id='phrase-form')
+			label="respond, reflect, echo, imagine..."
+			input(id='phrasefield', type='text')
+			button(id='enter_phrase') Submit			
+			button(id='cancel_phrase') Cancel					
+
+	div(id='instruction')
+		p Touch to place your thought.
+
+	div(id='login')
+		div(id='description')
+			h1
+				|Ceiling Floats Away NOMADS
+			p
+				|Click on your location.
+				
+				|Share a poetic thought.
+				
+				|The system responds to your unique thought and location.
+
+		form(id='login-form')
+			label="your name:"
+			input(id='namefield', type='text')
+			button(id='enter_name') Submit
+		//div(id='processing-sketch')
+		//canvas(id="animationUserText", data-processing-sources="/lib/animationUserText.pde")	
+	
+
+	div(id='loader')
+			p Loading...
+
+	audio(id='sound0', class='sounds')
+		source(src='/audio/ceiling/sound-0.mp3', type='audio/mpeg')
+
+	audio(id='sound1', class='sounds')
+		source(src='/audio/ceiling/sound-1.mp3', type='audio/mpeg')
+
+	audio(id='sound2', class='sounds')
+		source(src='/audio/ceiling/sound-2.mp3', type='audio/mpeg')
+
+	audio(id='sound3', class='sounds')
+		source(src='/audio/ceiling/sound-3.mp3', type='audio/mpeg')
+
+	audio(id='sound4', class='sounds')
+		source(src='/audio/ceiling/sound-4.mp3', type='audio/mpeg')
+	
+	audio(id='sound5', class='sounds')
+		source(src='/audio/ceiling/sound-5.mp3', type='audio/mpeg')
+
+	audio(id='sound6', class='sounds')
+		source(src='/audio/ceiling/sound-6.mp3', type='audio/mpeg')
+
+	audio(id='sound7', class='sounds')
+		source(src='/audio/ceiling/sound-7.mp3', type='audio/mpeg')
+
+	audio(id='sound8', class='sounds')
+		source(src='/audio/ceiling/sound-8.mp3', type='audio/mpeg')
+
+	audio(id='sound9', class='sounds')
+		source(src='/audio/ceiling/sound-9.mp3', type='audio/mpeg')
+
+	audio(id='sound10', class='sounds')
+		source(src='/audio/ceiling/sound-10.mp3', type='audio/mpeg')
+
+	audio(id='sound11', class='sounds')
+		source(src='/audio/ceiling/sound-11.mp3', type='audio/mpeg')
+
+	audio(id='sound12', class='sounds')
+		source(src='/audio/ceiling/sound-12.mp3', type='audio/mpeg')
+
+	audio(id='sound13', class='sounds')
+		source(src='/audio/ceiling/sound-13.mp3', type='audio/mpeg')
+
+	audio(id='sound14', class='sounds')
+		source(src='/audio/ceiling/sound-14.mp3', type='audio/mpeg')

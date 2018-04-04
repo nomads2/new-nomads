@@ -3,13 +3,22 @@
 function NomadsMobileClient(initCallback) {
 	//Public member variables
 	
-	this.user = {};
+	user = {};
 	this.socket = io.connect();
 	this.initCallback = initCallback;
+	loggedin = false;
+	latitude = 0;
+	longitude = 0;
 
 	//Socket Listeners
 	this.socket.on('connect', function(data){});
-	this.socket.on('user_confirmed', function(data){console.log("User Confirmed "+data);});
+	this.socket.on('user_confirmed', function(data){
+		if(data.id == user.id){
+			console.log("User Confirmed "+data);	
+			loggedin = true;
+		}
+
+	});
   
   this.socket.on("disconnect", function() {
   	//https://github.com/LearnBoost/socket.io-client/issues/251
@@ -80,9 +89,10 @@ NomadsMobileClient.prototype = {
 	},
 
 	login:function(username, callback){
+		console.log('logging in');
 		var messageToSend = {};
-    this.user.id = messageToSend.id = "nomads_" + username + "_" + Math.floor(Math.random()*1000);
-    this.user.username = messageToSend.username = username;
+    user.id = messageToSend.id = "nomads_" + username + "_" + Math.floor(Math.random()*1000);
+    user.username = messageToSend.username = username;
     messageToSend.type = 'newUser';
     messageToSend.latitude = latitude; //changed to latitude, not this.latitude to work in server.js
     messageToSend.longitude = longitude;
@@ -96,9 +106,13 @@ NomadsMobileClient.prototype = {
 	},
 
 	sendMessage:function(messageText, location, CanvasX, CanvasY, type, callback){
+		if(!loggedin){
+			console.log('not logged in');
+			return;
+		}
 		var messageToSend = {};
-		messageToSend.id = this.user.id;
-		messageToSend.username = this.user.username;
+		messageToSend.id = user.id;
+		messageToSend.username = user.username;
 		messageToSend.type = type;
 		messageToSend.messageText = messageText;
 		messageToSend.location = location //remove zone from message. "Zone X". convert to float.

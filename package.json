@@ -2,28 +2,32 @@
   "name": "Nomads",
   "description": "The Nomads Project",
   "author": "Travis Thatcher <tthatcher@virginia.edu>",
-  "contributors": [{
-    "name": "John P Bellona",
-		"email": "jpbellona@virginia.edu"
-  }],
-  "version": "0.0.1",
+  "contributors": [
+    {
+      "name": "John P Bellona",
+      "email": "jpbellona@virginia.edu"
+    }
+  ],
+  "version": "0.2.0",
   "repository": {
-  	"type": "git",
-  	"url": "https://github.com/nomads2/new-nomads"
-	},
+    "type": "git",
+    "url": "https://github.com/nomads2/new-nomads"
+  },
   "dependencies": {
-    "connect": "1.8.5",
-    "express": "2.5.2",
-    "jade": "0.20.0",
+    "connect": "3.6.6",
+    "express": "4.16.3",
+    "keypress": "0.2.x",
     "mongoose": "2.4.8",
-    "socket.io": "0.9.16",
-    "socket.io-client": "0.9.16",
-    "osc-min": "0.2.x",
-    "keypress": "0.2.x"
+    "npm": "^5.8.0",
+    "osc-js": "1.2.2",
+    "pug": "2.0.3",
+    "socket.io": "2.0.4",
+    "socket.io-client": "2.0.4"
   },
   "devDependencies": {
-	"mocha": "*",
-	"should": "*"
+    "mocha": "^5.0.5",
+    "should": "*"
   },
-  "engine": "node >= 0.6.6"
+  "engine": "node >= 7.0 < 9.10.0",
+  "license": "MIT"
 }
