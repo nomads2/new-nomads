@@ -9,19 +9,23 @@ let app = express();
 var server = require('http').Server(app);
 var ioc = require('socket.io-client');
 
+// OSC Lib
+var outport_max = 6789; //Max/MSP sound
+var inport_max = 6791; //From Max/MSP
+var outport_proc = 6790; //Prcoessing visual
+
+const OSC = require('osc-js');
+const options = { send: { port: outport_max }};
+const osc = new OSC({ plugin: new OSC.DatagramPlugin(options)});
 
 var port = (process.env.PORT || 80);
 var server_loc = 'http://nomads.music.virginia.edu:';
 
 
-//Setup OSC functions
-var oscMessage = require("./osc-bundle.js");
-
-
 var userID = "Matthew_Max_Patch_"+Math.floor(Math.random()*1000);
 var message = '';
 
-socket = ioc.connect('http://nomads.music.virginia.edu:8081');
+socket = ioc.connect('http://nomads.music.virginia.edu:80');
 
 socket.once("connection", function(socket){
   console.log('Client connected to port ' + port);
@@ -32,19 +36,23 @@ socket.once("connection", function(socket){
 socket.on('user_confirmed', function (data) {
   console.log('new user added! ' + data.username);
   //console.log(data);
-  oscMessage.sendOSC('/newuser', data);
+  osc.send(new OSC.Message('/newuser', data.username, data.id, data.type));
   
 });
 
 //see NomadsMobileClient.js for data var
 socket.on('client_update', function(data){
   
-  oscMessage.sendOSC('/object', data);  //just send a single block instead of multiple, smaller OSC messages
+  osc.send(new OSC.Message('/object', data.id, data.username, data.type, data.messageText, data.location));  //just send a single block instead of multiple, smaller OSC messages
   // sendOSCText('/thought', data);
   // sendOSC('/geolocation', [ data.latitude, data.longitude ] );
   //socket.emit('server_message',data); // send data back to individual client?
   console.log(data);
 });
+
+socket.on("connect_error", function(error){console.log("connect error "+error);});
+socket.on("connect_timeout", function(error){console.log("timeoout error "+error);});
+socket.on("error", function(error){console.log(error);});
 
 //Setup key input listening
 keypress(process.stdin);
@@ -78,11 +86,10 @@ process.stdin.on('keypress', function (ch, key) {
 process.stdin.setRawMode(true);
 process.stdin.resume();
 
-receiveOsc = function(data){
-  sendPoemData(data);
-}
+sendOSCMessage = function(type, data){
+  osc.send(new OSC.Message(type, data));
 
-oscMessage.setOscCallback(receiveOsc);
+}
 
 sendPoemData = function(data, type){
   console.log("sending data ", data);
@@ -101,7 +108,10 @@ sendPoemData = function(data, type){
   d = date.getMonth()+1+"."+date.getDate()+"."+date.getFullYear()+ " at " + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
   messageToSend.timestamp = d;
   
-  socket.emit('message', messageToSend);
+  //socket.emit('message', messageToSend);
+
+  osc.send(new OSC.Message('/ceiling_message', messageToSend.id, messageToSend.messageText));
+
      
 }
 

@@ -36,14 +36,14 @@ socket.once("connection", function(socket){
 socket.on('user_confirmed', function (data) {
   console.log('new user added! ' + data.username);
   //console.log(data);
-  oscMessage.sendOSC('/newuser', data);
+  osc.send(new OSC.Message('/newuser', data.username, data.id, data.type));
   
 });
 
 //see NomadsMobileClient.js for data var
 socket.on('client_update', function(data){
   
-  oscMessage.sendOSC('/object', data);  //just send a single block instead of multiple, smaller OSC messages
+  osc.send(new OSC.Message('/object', data.id, data.username, data.type, data.messageText, data.location));  //just send a single block instead of multiple, smaller OSC messages
   // sendOSCText('/thought', data);
   // sendOSC('/geolocation', [ data.latitude, data.longitude ] );
   //socket.emit('server_message',data); // send data back to individual client?
