@@ -10,6 +10,7 @@ var io = require('socket.io')(server);
 
 var port = (process.env.PORT || 8081);
 
+const boolean debug = false;
 
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
@@ -22,12 +23,16 @@ server.listen(port);
 //Setup Socket.IO
 
 io.on('connection', function(socket){
-  console.log('Client Connected');
+  if(debug){
+    console.log('Client Connected');  
+  }
 
   //when new user enters his/her name, display.
   socket.on('newuser', function (data) {
-    console.log('new user added! ' + data.username);
-    console.log(data);
+    if(debug){
+      console.log('new user added! ' + data.username);
+      console.log(data);
+    }
     
     socket.emit('user_confirmed', data);
     socket.broadcast.emit('user_confirmed', data);
@@ -37,8 +42,9 @@ io.on('connection', function(socket){
   socket.on('message', function(data){
     socket.broadcast.emit('proc_update',data); //send data to all clients for processing sketch
     socket.broadcast.emit('client_update',data); //send data back to all clients?
-   
-    console.log(data);
+    if(debug){
+      console.log(data);
+    }
   });
 /*
   socket.on('begin_ceiling', function(){
@@ -58,7 +64,9 @@ io.on('connection', function(socket){
  });
 */
   socket.on('disconnect', function(){
-    console.log('Client Disconnected.');
+    if(debug){
+      console.log('Client Disconnected.');
+    }
   });
 
 });
@@ -180,8 +188,9 @@ function NotFound(msg){
     Error.captureStackTrace(this, arguments.callee);
 }
 
-
-console.log('Listening on http://127.0.0.1:' + port );
+if(debug){
+  console.log('Listening on http://127.0.0.1:' + port );
+}
 
 
 
