@@ -12,7 +12,7 @@ function NomadsMobileClient(initCallback) {
 
 	//Socket Listeners
 	this.socket.on('connect', function(data){});
-	this.socket.on('user_confirmed', function(data){
+	this.socket.on('auksalaq_user_confirmed', function(data){
 		if(data.id == user.id){
 			console.log("User Confirmed "+data);	
 			loggedin = true;
@@ -28,9 +28,9 @@ function NomadsMobileClient(initCallback) {
 
   //add to global thought object when any user sends a message.
   // only use this function for Desktops. NO PHONES. Too much info and too slow.
-  this.socket.on('client_update', function(data){
+  this.socket.on('auksalaq_client_update', function(data){
 		console.log("data received ", data);
-		if(data.type == 'poemMessage'){
+		if(data.type == 'aukthought'){
 			
 			var xLoc = 300 - (10*(data.messageText.length/2));
 			var yLoc = Math.random()*200+200;
@@ -38,11 +38,17 @@ function NomadsMobileClient(initCallback) {
 	    	"thought":data.messageText, 
 		    "x":xLoc,
 		    "y":yLoc,
-		    "life":1000,
+		    "life":4000,
 		    "size":12,
 		    "alpha":1.0
 		  });
   	}
+  });
+
+  this.socket.on('auksalaq_mode', function(data){
+  	console.log('mode change to '+data);
+  	//change inteface to new mode
+  	//initCallback(data);
   });
 
 	//Private functions
@@ -99,7 +105,7 @@ NomadsMobileClient.prototype = {
     var date = new Date();
     d = date.getMonth()+1+"."+date.getDate()+"."+date.getFullYear()+ " at " + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
     messageToSend.timestamp = d;
-    this.socket.emit('newuser', messageToSend);
+    this.socket.emit('auksalaq_newuser', messageToSend);
     if(typeof(callback)!='undefined'){
     	callback();
     }
@@ -123,13 +129,17 @@ NomadsMobileClient.prototype = {
 		var date = new Date();
     d = date.getMonth()+1+"."+date.getDate()+"."+date.getFullYear()+ " at " + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
     messageToSend.timestamp = d;
-		this.socket.emit('message', messageToSend);
+		this.socket.emit('auksalaq_message', messageToSend);
 		//also fire processing on user's own page.
 		//var pjs = Processing.getInstanceById('animationUserText');
     //pjs.drawNewUserThought(location, messageText);
 		if(typeof(callback)!='undefined'){
     	callback();
     }
+	},
+
+	changeMode:function(mode){
+		this.socket.emit('auksalaq_mode', mode);	
 	}
 }
 

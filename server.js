@@ -10,7 +10,7 @@ var io = require('socket.io')(server);
 
 var port = (process.env.PORT || 8081);
 
-const boolean debug = false;
+const debug = true;
 
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
@@ -27,25 +27,56 @@ io.on('connection', function(socket){
     console.log('Client Connected');  
   }
 
-  //when new user enters his/her name, display.
-  socket.on('newuser', function (data) {
+  
+  //ceiling
+  socket.on('ceiling_newuser', function (data) {
     if(debug){
       console.log('new user added! ' + data.username);
       console.log(data);
     }
     
-    socket.emit('user_confirmed', data);
-    socket.broadcast.emit('user_confirmed', data);
+    socket.emit('ceiling_user_confirmed', data);
+    socket.broadcast.emit('ceiling_user_confirmed', data);
   });
 
   //see NomadsMobileClient.js for data var
-  socket.on('message', function(data){
-    socket.broadcast.emit('proc_update',data); //send data to all clients for processing sketch
-    socket.broadcast.emit('client_update',data); //send data back to all clients?
+  socket.on('ceiling_message', function(data){
+    socket.broadcast.emit('ceiling_proc_update',data); //send data to all clients for processing sketch
+    socket.broadcast.emit('ceiling_client_update',data); //send data back to all clients?
     if(debug){
       console.log(data);
     }
   });
+
+
+  //auksalaq
+  socket.on('auksalaq_newuser', function (data) {
+    if(debug){
+      console.log('new user added! ' + data.username);
+      console.log(data);
+    }
+    
+    socket.emit('auksalaq_user_confirmed', data);
+    socket.broadcast.emit('auksalaq_user_confirmed', data);
+  });
+
+  //see NomadsMobileClient.js for data var
+  socket.on('auksalaq_message', function(data){
+    //socket.broadcast.emit('auksalaq_proc_update',data); //send data to all clients for processing sketch
+    socket.broadcast.emit('auksalaq_client_update',data); //send data back to all clients?
+    if(debug){
+      console.log(data);
+    }
+  });
+
+  //mode change from controller
+  socket.on('auksalaq_mode', function(data){
+    socket.broadcast.emit('auksalaq_mode', data);
+    if(debug){
+      console.log(data);
+    }
+  });
+
 /*
   socket.on('begin_ceiling', function(){
     ;
@@ -96,7 +127,7 @@ app.get('/', function(req,res){
 // The Ceiling Floats Away Routes
 
 app.get('/ceiling', function(req,res){
-  res.render('ceiling_client.pug', {
+  res.render('ceiling/ceiling_client.pug', {
     locals : { 
               title : 'The Ceiling Floats Away'
              ,description: 'The Ceiluing Floats Away'
@@ -107,7 +138,7 @@ app.get('/ceiling', function(req,res){
 });
 
 app.get('/ceiling_display', function(req,res){
-  res.render('ceiling_display.pug', {
+  res.render('ceiling/ceiling_display.pug', {
     locals : { 
               title : 'The Ceiling Floats Away'
              ,description: 'Ceiling Nomads message disply'
@@ -118,7 +149,7 @@ app.get('/ceiling_display', function(req,res){
 });
 
 app.get('/ceiling_control', function(req,res){
-  res.render('ceiling_control.pug', {
+  res.render('ceiling/ceiling_control.pug', {
     locals : { 
               title : 'The Ceiling Floats Away Control'
              ,description: 'Ceiling Nomads System Control'
@@ -131,7 +162,7 @@ app.get('/ceiling_control', function(req,res){
 // Auksalaq Routes
 
 app.get('/auksalaq', function(req,res){
-  res.render('auksalaq_client.pug', {
+  res.render('auksalaq/auksalaq_client.pug', {
     locals : { 
               title : 'Auksalaq'
              ,description: 'Auksalaq Nomads System'
@@ -142,7 +173,7 @@ app.get('/auksalaq', function(req,res){
 });
 
 app.get('/auksalaq_display', function(req,res){
-  res.render('auksalaq_display.pug', {
+  res.render('auksalaq/auksalaq_display.pug', {
     locals : { 
               title : 'Auksalaq'
              ,description: 'Auksalaq Nomads message disply'
@@ -152,8 +183,8 @@ app.get('/auksalaq_display', function(req,res){
   });
 });
 
-app.get('/cauksalaq_control', function(req,res){
-  res.render('auksalaq_control.pug', {
+app.get('/auksalaq_control', function(req,res){
+  res.render('auksalaq/auksalaq_control.pug', {
     locals : { 
               title : 'Auksalaq Control'
              ,description: 'Auksalaq Nomads System Control'
@@ -175,6 +206,11 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // very basic!
+  if(debug){
+    console.error(err.stack);
+  }
 
   // render the error page
   res.status(err.status || 500);

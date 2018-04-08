@@ -33,7 +33,7 @@ socket.once("connection", function(socket){
 });
 
 //when new user enters his/her name, display.
-socket.on('user_confirmed', function (data) {
+socket.on('auksalaq_user_confirmed', function (data) {
   console.log('new user added! ' + data.username);
   //console.log(data);
   osc.send(new OSC.Message('/newuser', data.username, data.id, data.type));
@@ -41,7 +41,7 @@ socket.on('user_confirmed', function (data) {
 });
 
 //see NomadsMobileClient.js for data var
-socket.on('client_update', function(data){
+socket.on('auqsalaq_client_update', function(data){
   
   osc.send(new OSC.Message('/object', data.id, data.username, data.type, data.messageText, data.location));  //just send a single block instead of multiple, smaller OSC messages
   // sendOSCText('/thought', data);
@@ -66,14 +66,14 @@ process.stdin.on('keypress', function (ch, key) {
   }
   else if(key.name == 'return'){
     if(message=='start_nomads'){
-      sendPoemData(message, "start_nomads");
+      sendChat(message, "start_nomads");
       message = '';  
     }
     else if(message=='stop_nomads'){
-      sendPoemData(message, "stop_nomads");
+      sendChat(message, "stop_nomads");
       message = '';  
     }else{
-      sendPoemData(message, "poemMessage");
+      sendChat(message, "aukchatmessage");
       message = '';  
     }
   }
@@ -91,7 +91,7 @@ sendOSCMessage = function(type, data){
 
 }
 
-sendPoemData = function(data, type){
+sendChat = function(data, type){
   console.log("sending data ", data);
 
   var messageToSend = {};
@@ -110,7 +110,7 @@ sendPoemData = function(data, type){
   
   //socket.emit('message', messageToSend);
 
-  osc.send(new OSC.Message('/ceiling_message', messageToSend.id, messageToSend.messageText));
+  osc.send(new OSC.Message('/aukchatmessage', messageToSend.id, messageToSend.username, messageToSend.messageText));
 
      
 }

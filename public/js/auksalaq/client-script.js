@@ -39,7 +39,7 @@ $(document).ready(function(){
   canvas = document.getElementById('mainui');
  
   // setup animation
-  clientAnimation = new NomadsMobileClientAnimation();
+  //clientAnimation = new NomadsMobileClientAnimation();
   
   $('#enter_phrase').prop('disabled', true);
   $('#cancel_phrase').prop('disabled', true);
@@ -193,6 +193,10 @@ zoneSelect = function(cz){
   return false;
 }
 
+submitChat = function(e){
+
+}
+
 submitPhrase = function(e){
   //cancel form submission
   e.preventDefault();
@@ -217,7 +221,7 @@ submitPhrase = function(e){
     return;
   }
 
-  client.sendMessage(text, currentZone, x, y, 'textMessage');
+  client.sendMessage(text, currentZone, x, y, 'thoughtMessage');
   
   //error with this function. won't play anything else below. doesn't exist?
   //clientAnimation.sendMessage();

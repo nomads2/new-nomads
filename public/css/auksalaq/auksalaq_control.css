@@ -1,0 +1,53 @@
+body{
+	width:100%;
+	margin:0;
+}
+
+#content{
+	height:100%;
+}
+
+#left{
+	margin-right:150px;
+}
+
+#status{
+	margin:1em;
+}
+
+#right{
+	position:fixed;
+	z-index: 1;
+	top:0;
+	right:0;
+	width:150px;
+}
+
+
+button{
+	margin:1em;
+}
+
+/* Mobile device form formatting */
+@media only screen and (max-device-width: 480px) {
+
+	input[type="text"], input[type="password"], input[type="phone"],  textarea {
+        font-size:2em;
+	}
+
+	label{
+		font-size:2em;
+	}
+
+	button{
+		font-size:2em;
+	}
+
+	#login-form{
+		width:420px;
+	}
+
+	#phrase-form{
+		width:400px;
+	}
+}

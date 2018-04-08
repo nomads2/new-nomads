@@ -4,8 +4,8 @@ block content
 	div(id='status')
 		p(id='info')
 	div(class='control')
-		canvas#mainui(width='600', height='600')
-			img#background(src='/img/backgroundImageMay15_2.png')
+		canvas#mainui(width='800', height='600')
+			//img#background(src='/img/auksalaqbg_full.jpg')
 
 	div(id='phrase-entry')
 		form(id='phrase-form')
@@ -19,21 +19,17 @@ block content
 
 	div(id='login')
 		div(id='description')
-			h1
-				|Ceiling Floats Away NOMADS
-			p
-				|Click on your location.
-				
-				|Share a poetic thought.
-				
-				|The system responds to your unique thought and location.
+			center
+				h1
+					|Auksalaq NOMADS
+				p
+					|Welcome to the Auksalaq NOMADS system
+					
 
 		form(id='login-form')
-			label="your name:"
+			label="Your Name:"
 			input(id='namefield', type='text')
 			button(id='enter_name') Submit
-		//div(id='processing-sketch')
-		//canvas(id="animationUserText", data-processing-sources="/lib/animationUserText.pde")	
 	
 
 	div(id='loader')

@@ -1,0 +1,28 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    title=title
+    meta(name="description", content=description)
+    meta(name="author", content=author)
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(href='/css/auksalaq/auksalaq_control.css', rel='stylesheet')
+
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
+    script(defer, src='/socket.io/socket.io.js')
+    script(defer, src='http://www.google.com/jsapi')
+    script(defer, src='/js/auksalaq/NomadsMobileClient.js')
+    script(defer, src='/js/auksalaq/control.js')
+
+  body
+    block content
+      div(id='content')
+        div(id='left')
+          div(id='status')
+        div(id='right')
+          button(id='chatMode') chatMode
+          button(id='xyMode') xyMode
+          button(id='thoughtMode') thoughtMode
+
+  footer    
