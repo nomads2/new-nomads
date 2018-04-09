@@ -1,5 +1,23 @@
-extends auksalaq_client_layout
+doctype html
+html(lang="en")
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    title=title
+    meta(name="description", content=description)
+    meta(name="author", content=author)
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(href='/css/auksalaq/auksalaq_control.css', rel='stylesheet')
 
-block content
-	div
-		ul(id='status')
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
+    script(defer, src='/socket.io/socket.io.js')
+    script(defer, src='http://www.google.com/jsapi')
+    script(defer, src='/js/auksalaq/NomadsMobileClient.js')
+    	script(defer, src='/js/auksalaq/NomadsDisplayClientAnimation.js')
+    script(defer, src='/js/auksalaq/display.js')
+
+  body
+    block content
+      div(id='content')
+        
+  footer    

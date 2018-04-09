@@ -7,6 +7,7 @@ var path = require('path');
 let app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+var keypress = require('keypress');
 
 var port = (process.env.PORT || 8081);
 
@@ -20,6 +21,9 @@ app.set('env', 'development');
 
 server.listen(port);
 
+var message = '';
+var main_socket;
+
 //Setup Socket.IO
 
 io.on('connection', function(socket){
@@ -27,6 +31,7 @@ io.on('connection', function(socket){
     console.log('Client Connected');  
   }
 
+  main_socket = socket;
   
   //ceiling
   socket.on('ceiling_newuser', function (data) {
@@ -227,6 +232,64 @@ function NotFound(msg){
 if(debug){
   console.log('Listening on http://127.0.0.1:' + port );
 }
+
+//for testing
+sendChat = function(data, type){
+  if(debug)
+    console.log("sending data ", data);
+
+  var messageToSend = {};
+  messageToSend.id = 123;
+  messageToSend.username = "Nomads_Server";
+  messageToSend.type = type;
+  messageToSend.messageText = data;
+  messageToSend.location = 0;
+  messageToSend.latitude = 0;
+  messageToSend.longitude = 0;
+  messageToSend.x = 0;
+  messageToSend.y = 0;
+  var date = new Date();
+  d = date.getMonth()+1+"."+date.getDate()+"."+date.getFullYear()+ " at " + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+  messageToSend.timestamp = d;
+  
+  main_socket.broadcast.emit('auksalaq_client_update', messageToSend);
+  
+
+     
+}
+
+//Setup key input listening
+keypress(process.stdin);
+ 
+// listen for the "keypress" event 
+process.stdin.on('keypress', function (ch, key) {
+  console.log(key.name);
+  if (key && key.ctrl && key.name == 'c') {
+    process.stdin.pause();
+    process.exit();
+  }
+  else if(key.name == 'return'){
+    if(message=='start_nomads'){
+      sendChat(message, "start_nomads");
+      message = '';  
+    }
+    else if(message=='stop_nomads'){
+      sendChat(message, "stop_nomads");
+      message = '';  
+    }else{
+      sendChat(message, "aukchatmessage");
+      message = '';  
+    }
+  }
+  else{
+    message = message + key.name;
+  }
+
+});
+ 
+process.stdin.setRawMode(true);
+process.stdin.resume();
+
 
 
 

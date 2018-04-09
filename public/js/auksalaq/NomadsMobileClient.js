@@ -1,11 +1,12 @@
 
 //Constructor
-function NomadsMobileClient(initCallback) {
+function NomadsMobileClient(initCallback, changeClientMode) {
 	//Public member variables
 	
 	user = {};
 	this.socket = io.connect();
 	this.initCallback = initCallback;
+	this.changeClientMode = changeClientMode;
 	loggedin = false;
 	latitude = 0;
 	longitude = 0;
@@ -43,10 +44,19 @@ function NomadsMobileClient(initCallback) {
 		    "alpha":1.0
 		  });
   	}
+
+  	if(data.type == 'aukchatmessgge'){
+  		if($('chat-log')!=null){
+  			$('#chat-log').append("<li>"+data.username + ": "	+ data.messageText + "</li>");
+  		
+  			$('chat-log').y = $('chat-log').height - 600;
+  		}
+  	}
   });
 
   this.socket.on('auksalaq_mode', function(data){
   	console.log('mode change to '+data);
+  	changeClientMode(data);
   	//change inteface to new mode
   	//initCallback(data);
   });
@@ -111,7 +121,7 @@ NomadsMobileClient.prototype = {
     }
 	},
 
-	sendMessage:function(messageText, location, CanvasX, CanvasY, type, callback){
+	sendMessage:function(messageText, type, x, y, callback){
 		if(!loggedin){
 			console.log('not logged in');
 			return;
@@ -121,11 +131,9 @@ NomadsMobileClient.prototype = {
 		messageToSend.username = user.username;
 		messageToSend.type = type;
 		messageToSend.messageText = messageText;
-		messageToSend.location = location //remove zone from message. "Zone X". convert to float.
-		messageToSend.latitude = latitude; //since we have this stored, send lat/long with each message
-    messageToSend.longitude = longitude;
-    messageToSend.x = CanvasX;
-    messageToSend.y = CanvasY;
+		
+    messageToSend.x = x;
+    messageToSend.y = y;
 		var date = new Date();
     d = date.getMonth()+1+"."+date.getDate()+"."+date.getFullYear()+ " at " + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
     messageToSend.timestamp = d;
