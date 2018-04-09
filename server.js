@@ -11,7 +11,7 @@ var keypress = require('keypress');
 
 var port = (process.env.PORT || 8081);
 
-const debug = true;
+const debug = false;
 
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
