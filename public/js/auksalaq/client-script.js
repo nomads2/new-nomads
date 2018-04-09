@@ -81,6 +81,7 @@ $(document).ready(function(){
 });
 
 startXY = function(e){
+  xyClick();
   xyTimer = setTimeout(xyClick, 500);
 }
 
