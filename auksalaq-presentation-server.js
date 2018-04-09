@@ -43,7 +43,7 @@ socket.on('auksalaq_user_confirmed', function (data) {
 //see NomadsMobileClient.js for data var
 socket.on('auqsalaq_client_update', function(data){
   
-  osc.send(new OSC.Message('/object', data.id, data.username, data.type, data.messageText, data.location));  //just send a single block instead of multiple, smaller OSC messages
+  osc.send(new OSC.Message('/object', data.type, data.id, data.username, data.messageText, data.x, data.,y);
   // sendOSCText('/thought', data);
   // sendOSC('/geolocation', [ data.latitude, data.longitude ] );
   //socket.emit('server_message',data); // send data back to individual client?

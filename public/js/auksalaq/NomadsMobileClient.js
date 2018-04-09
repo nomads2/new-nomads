@@ -45,9 +45,10 @@ function NomadsMobileClient(initCallback, changeClientMode) {
 		  });
   	}
 
-  	if(data.type == 'aukchatmessgge'){
+  	if(data.type == 'aukchatmessage'){
+  		console.log('got chat message '+data.messageText);
   		if($('chat-log')!=null){
-  			$('#chat-log').append("<li>"+data.username + ": "	+ data.messageText + "</li>");
+  			$('#chat-log').append("<li>"+data.messageText + "</li>");
   		
   			$('chat-log').y = $('chat-log').height - 600;
   		}

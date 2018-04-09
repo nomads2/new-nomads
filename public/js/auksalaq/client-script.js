@@ -51,13 +51,12 @@ $(document).ready(function(){
 
   //listeners
   $('#phrase-form').submit(submitPhrase);
-  $('#cancel_phrase').hide();
-  $('#cancel_phrase').click(cancelPhrase);
-
 
   /*
     setup chat
   */
+
+  $('#chat-form').submit(submitChat);
 
   //hide chat div 
   $("#chat").hide();
@@ -65,16 +64,15 @@ $(document).ready(function(){
   $('#cancel_chat').prop('disabled', true);
   $('#chat_message').prop('disabled', true);
 
-  //listeners
-  $('#chat_message').submit(submitChat);
-  
-
-  $('#login-form').submit(login);
-
   
   canvas.addEventListener('mousedown', startXY);
   canvas.addEventListener('mouseup', stopXY);
+  canvas.addEventListener('mousemove', function(evt){
+    currentX = evt.clientX;
+    currentY = evt.clientY;
+  });
 
+  $('#login-form').submit(login);
 
   //Load sounds
   $('.sounds').load();
@@ -90,15 +88,16 @@ stopXY = function(e){
   clearTimeout(xyTimer);
 }
 
-xyClick = function(evt){
+xyClick = function(){
+  
   if(mode!='xyMode'){
     return;
   }
   var rect = canvas.getBoundingClientRect();
 
-  x = currentX = evt.clientX - rect.left;
-  y = currentY = evt.clientY - rect.top;
-
+  x = currentX - rect.left;
+  y = currentY - rect.top;
+  console.log('xy stuff '+x+' '+y);
   client.sendMessage('xy', 'aukxy', x, y);  
 
   //$(window).scrollTop($(document).height());
@@ -107,58 +106,68 @@ xyClick = function(evt){
 }
 
 changeClientMode = function(mode){
+  this.mode=mode;
   if(mode=='chatMode'){
-    
+    $('#chat').show();
+    $('#chat-log').val('Enter your discussion message');
     $('#xy-instruction').fadeTo( "slow" , 0, function() {
       // Animation complete.
+      $('#xy-instruction').hide();
     });
     $('#chat').fadeTo( "slow" , 1.0, function() {
       // Animation complete.
       $("#chat").show(1, function(){$('#chat_message').focus();});
-      $('#enter_chat').prop('disabled', false);
-      $('#chat_message').prop('disabled', false);
     });
+    $('#enter_chat').prop('disabled', false);
+    $('#chat_message').prop('disabled', false);
     $('#phrase-entry').fadeTo( "slow" , 0, function() {
       // Animation complete.
+      $('#phrase-entry').hide();
     });
     $('#mainui').fadeTo( "slow" , 1, function() {
       // Animation complete.
     });
-    mode = 'chatMode';
+    
     clearTimeout(xyTimer);
   }else if(mode=='xyMode'){
     
+    $('xy-instruction').show();
     $('#xy-instruction').fadeTo( "slow" , 1, function() {
       // Animation complete.
     });
 
     $('#chat').fadeTo( "slow" , 0, function() {
       // Animation complete.
+      $('#chat').hide();
     });
     $('#phrase-entry').fadeTo( "slow" , 0, function() {
       // Animation complete.
+      $('#phrase-entry').hide();
     });
     $('#mainui').fadeTo( "slow" , 1.0, function() {
       // Animation complete.
     });
-    mode = 'cyMode';
-  }else if(mode=='thoughtMode'){
-    mode = 'thoughtMode';
     
+  }else if(mode=='thoughtMode'){
+    
+    $('phrase-entry').show();   
     $('#xy-instruction').fadeTo( "slow" , 0, function() {
       // Animation complete.
+      $('#xy-instruction').hide();
     });
 
     $('#chat').fadeTo( "slow" , 0, function() {
       // Animation complete.
+      $('#chat').hide();
     });
     $('#phrase-entry').fadeTo( "slow" , 1.0, function() {
       // Animation complete.
       // Animation complete.
       $("#phrase-entry").show(1, function(){$('#chat_message').focus();});
-      $('#enter_phrase').prop('disabled', false);
-      $('#phrasefield').prop('disabled', false);
+      
     });
+    $('#enter_phrase').prop('disabled', false);
+    $('#phrasefield').prop('disabled', false);
     $('#mainui').fadeTo( "slow" , 1, function() {
       // Animation complete.
     });
@@ -243,14 +252,12 @@ submitPhrase = function(e){
     rY = -.5;
   }
 
-  console.log("thought vector "+x+" "+y);
-
   allClientThoughts.push({
     "thought":text, 
     "x":x,
     "y":y,
     "life":20,
-    "size":18,
+    "size":20,
     "alpha":1.0,
     "vectorX":rX,
     "vectorY":rY
@@ -292,9 +299,9 @@ cancelPhrase = function(e){
 }
 
 submitChat = function(e){
-  console.log('sending chat');
-  //cancel form submission
   e.preventDefault();
+  console.log('sending chat ' + $('#chat_message').val());
+  
   var text = $('#chat_message').val();
   if(text==""){
     //must submit phrase
@@ -310,8 +317,7 @@ submitChat = function(e){
       scrollTop: $("#mainui").offset().top 
     }, 600, function() {
     // Animation complete.
-      $("#chat").hide();
-      $("#chat-instruction").show();
+      
     });
     return;
   }
@@ -321,18 +327,7 @@ submitChat = function(e){
   //error with this function. won't play anything else below. doesn't exist?
   //clientAnimation.sendMessage();
   
-  //create new clientThought, push to allClientThoughts[]
-  //see NomadsMobileClientAnimation.js for display on canvas.
-  //this only displays a single Client's thoughts on his/her canvas.
-  allClientThoughts.push({
-    "thought":text, 
-    "x":x,
-    "y":y,
-    "life":20,
-    "size":18,
-    "alpha":1.0
-  });
-
+  
   $('#chat_message').val('');
   
   
@@ -342,9 +337,7 @@ submitChat = function(e){
     scrollTop: $("#mainui").offset().top 
   }, 600, function() {
     // Animation complete.
-    
-
-  });
+    });
 }
 
 cancelChat = function(e){

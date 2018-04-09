@@ -38,7 +38,7 @@ $(document).ready(function() {
     log.push(data);
     //oscMessage.sendOSC('/object', data);
    
-   $('#status').append("<li>"+data.timestamp + ": " + data.messageText + " from: " + data.username + " located at: " + data.location+"</li>");
+   $('#status').append("<li>"+data.timestamp + ": " + data.messageText + " from: " + data.username+"</li>");
   });
 
   $('#chatMode').click(chatMode);

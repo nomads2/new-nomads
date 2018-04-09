@@ -68,7 +68,8 @@ io.on('connection', function(socket){
   //see NomadsMobileClient.js for data var
   socket.on('auksalaq_message', function(data){
     //socket.broadcast.emit('auksalaq_proc_update',data); //send data to all clients for processing sketch
-    socket.broadcast.emit('auksalaq_client_update',data); //send data back to all clients?
+    socket.broadcast.emit('auksalaq_client_update',data);
+    socket.emit('auksalaq_client_update',data);
     if(debug){
       console.log(data);
     }
