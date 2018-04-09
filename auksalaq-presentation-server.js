@@ -43,7 +43,7 @@ socket.on('auksalaq_user_confirmed', function (data) {
 //see NomadsMobileClient.js for data var
 socket.on('auksalaq_client_update', function(data){
   console.log(data);
-  osc.send(new OSC.Message('/object', data.type, data.id, data.username, data.messageText, data.x, data.y));
+  osc.send(new OSC.Message('/'+data.type, data.id, data.username, data.messageText, data.x, data.y));
   // sendOSCText('/thought', data);
   // sendOSC('/geolocation', [ data.latitude, data.longitude ] );
   //socket.emit('server_message',data); // send data back to individual client?
