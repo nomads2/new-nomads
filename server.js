@@ -262,37 +262,7 @@ sendChat = function(data, type){
      
 }
 
-//Setup key input listening
-keypress(process.stdin);
- 
-// listen for the "keypress" event 
-process.stdin.on('keypress', function (ch, key) {
-  console.log(key.name);
-  if (key && key.ctrl && key.name == 'c') {
-    process.stdin.pause();
-    process.exit();
-  }
-  else if(key.name == 'return'){
-    if(message=='start_nomads'){
-      sendChat(message, "start_nomads");
-      message = '';  
-    }
-    else if(message=='stop_nomads'){
-      sendChat(message, "stop_nomads");
-      message = '';  
-    }else{
-      sendChat(message, "aukchatmessage");
-      message = '';  
-    }
-  }
-  else{
-    message = message + key.name;
-  }
 
-});
- 
-process.stdin.setRawMode(true);
-process.stdin.resume();
 
 
 
