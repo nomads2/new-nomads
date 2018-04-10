@@ -15,8 +15,9 @@ function NomadsMobileClient(initCallback, changeClientMode) {
 	this.socket.on('connect', function(data){});
 	this.socket.on('auksalaq_user_confirmed', function(data){
 		if(data.id == user.id){
-			console.log("User Confirmed "+data);	
+			console.log("User Confirmed "+data + " " + data.mode);	
 			loggedin = true;
+			changeClientMode(data.mode);
 		}
 
 	});
@@ -50,7 +51,7 @@ function NomadsMobileClient(initCallback, changeClientMode) {
   		if($('chat-log')!=null){
   			$('#chat-log').append("<li>"+data.messageText + "</li>");
   		
-  			$('chat-log').y = $('chat-log').height - 600;
+  			//$('chat-log').y = $('chat-log').height - 600;
   		}
   	}
   });

@@ -4,8 +4,8 @@
 
 ANIMATION_OFFSET = 50;
 
-GRAPHICS_W = 800;
-GRAPHICS_H = 600;
+GRAPHICS_W = 500;
+GRAPHICS_H = 500;
 
 var client;
 
@@ -21,8 +21,14 @@ var xyTimer;
 var soundTimer;
 
 var muted = true;
+var xyMoving = false;
+var debug = false;
 
 $(document).ready(function(){
+  if(debug){
+    $('#debug').show();
+    $('#debug').append('Debug text here<br/>');
+  }
   client = new NomadsMobileClient(initCallback, changeClientMode);
 
   //client.geolocate();
@@ -65,11 +71,23 @@ $(document).ready(function(){
   $('#chat_message').prop('disabled', true);
 
   
-  canvas.addEventListener('mousedown', startXY);
-  canvas.addEventListener('mouseup', stopXY);
-  canvas.addEventListener('mousemove', function(evt){
+  //canvas.addEventListener('mousedown', startXY);
+  //canvas.addEventListener('mouseup', stopXY);
+  /*canvas.addEventListener('mousemove', function(evt){
     currentX = evt.clientX;
     currentY = evt.clientY;
+  });
+*/
+  $('#mainui').on('tapstart', startXY);
+  $('#mainui').on('tapend', stopXY);
+  $('#mainui').on('tapmove', function(evt, touch){
+    
+    currentX = touch.offset.x;
+    //currentX = currentX - (($(window).width() - canvas.width)/2);
+    currentY = touch.offset.y;
+    if(xyMoving){
+      clientAnimation.xyMove(currentX, currentY);
+    }
   });
 
   $('#login-form').submit(login);
@@ -82,10 +100,14 @@ $(document).ready(function(){
 
 startXY = function(e){
   xyClick();
-  xyTimer = setTimeout(xyClick, 500);
+  xyMoving = true;
+  if(debug){
+    $('#debug').append(currentX+' '+currentY+'<br/>');
+  }
 }
 
 stopXY = function(e){
+  xyMoving = false;
   clearTimeout(xyTimer);
 }
 
@@ -96,10 +118,13 @@ xyClick = function(){
   }
   var rect = canvas.getBoundingClientRect();
 
-  x = currentX - rect.left;
-  y = currentY - rect.top;
+  //x = currentX - rect.left;
+  //y = currentY - rect.top;
+  x = currentX;
+  y = currentY;
   console.log('xy stuff '+x+' '+y);
   client.sendMessage('xy', 'aukxy', x, y);  
+  xyTimer = setTimeout(xyClick, 500);
 
   //$(window).scrollTop($(document).height());
   //$("#instruction").hide();
@@ -109,6 +134,7 @@ xyClick = function(){
 changeClientMode = function(mode){
   this.mode=mode;
   if(mode=='chatMode'){
+    clientAnimation.xyOff();
     $('#chat').show();
     $('#chat-log').val('Enter your discussion message');
     $('#xy-instruction').fadeTo( "slow" , 0, function() {
@@ -131,8 +157,10 @@ changeClientMode = function(mode){
     
     clearTimeout(xyTimer);
   }else if(mode=='xyMode'){
-    
-    $('xy-instruction').show();
+
+    clientAnimation.xyOn();
+
+    $('#xy-instruction').show();
     $('#xy-instruction').fadeTo( "slow" , 1, function() {
       // Animation complete.
     });
@@ -150,8 +178,8 @@ changeClientMode = function(mode){
     });
     
   }else if(mode=='thoughtMode'){
-    
-    $('phrase-entry').show();   
+    clientAnimation.xyOff();
+    $('#phrase-entry').show();   
     $('#xy-instruction').fadeTo( "slow" , 0, function() {
       // Animation complete.
       $('#xy-instruction').hide();
@@ -196,7 +224,7 @@ loginComplete = function(){
   $('#login').fadeOut();
   var time = Math.random()*6000+4000;
   soundTimer = setTimeout(playSound, time);
-  changeClientMode('chatMode');
+  
 }
 
 initCallback = function(){
@@ -265,22 +293,7 @@ submitPhrase = function(e){
   });
 
   $('#phrasefield').val('');
-  //Play sound
- 
- 
-  //jump user screen back up to top of page.
-  //$("body, html").scrollTop($("#mainui").offset().top);
-  /*
-  $("body, html").animate({ 
-    scrollTop: $("#mainui").offset().top 
-  }, 600, function() {
-    // Animation complete.
-    
-    
-
-  });
-
- */ 
+  
 }
 
 cancelPhrase = function(e){

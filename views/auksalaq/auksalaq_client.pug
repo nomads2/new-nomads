@@ -1,11 +1,12 @@
 extends auksalaq_client_layout
 
 block content
-	div(class='control')
-		canvas#mainui(width='800', height='600')
-			img#background(src='/img/auksalaqbg_full.jpg')
-			
 
+	div(class='control')
+		canvas#mainui(width='500', height='500')
+			img#background(src='/img/auksalaqbg_sq.jpg')
+			
+	div(id='debug')
 	div(id='phrase-entry')
 		form(id='phrase-form')
 			label="Contribute to the thought cloud"
@@ -15,7 +16,7 @@ block content
 
 	div(id='chat')
 		div(id='chat-log-container')
-			ul(id='chat-log')
+			ul(id='chat-log' class='wordwrap')
 				
 
 		form(id='chat-form')
@@ -28,7 +29,7 @@ block content
 		p Touch and drag your element on the image to interact with the system.
 
 	div(id='login')
-		div(id='description')
+		div#description
 			center
 				h1
 					|Auksalaq NOMADS

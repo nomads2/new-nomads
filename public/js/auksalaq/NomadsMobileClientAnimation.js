@@ -5,6 +5,9 @@ function NomadsMobileClientAnimation() {
   var canvas = document.getElementById('mainui');
   var ctx = canvas.getContext('2d');
   var fps = 20.0;
+  var pointerX = 100;
+  var pointerY = 100;
+  var drawPointer = false;
 
   console.log('animation started');
 
@@ -31,6 +34,15 @@ function NomadsMobileClientAnimation() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     draw(ctx);
+
+    if(drawPointer){
+      ctx. beginPath();
+      ctx.arc(pointerX,pointerY,10,0,2*Math.PI);
+      ctx.fillStyle = "rgba(204, 204, 204, 1)";
+      ctx.fill();
+      ctx.strokeStyle = '#999';
+      ctx.stroke();
+    }
 
     // Add dynamic objects from users (text)
     // has to be in this draw loop, otherwise won't display
@@ -62,7 +74,7 @@ function NomadsMobileClientAnimation() {
     });
   }
 
-   draw = function(ctx) {
+  draw = function(ctx) {
 
     // layer1/Linked File
     ctx.save();
@@ -70,6 +82,19 @@ function NomadsMobileClientAnimation() {
     var background = document.getElementById('background');  
     ctx.drawImage(background, 0, 0);
     ctx.restore();
+  }
+
+  this.xyOn = function() {
+    drawPointer = true;
+  }
+
+  this.xyOff = function() {
+    drawPointer = false;
+  }
+
+  this.xyMove = function(x, y) {
+    pointerX = x;
+    pointerY = y;
   }
 
   init();

@@ -24,6 +24,8 @@ server.listen(port);
 var message = '';
 var main_socket;
 
+var auksalaq_mode = 'chatMode';
+
 //Setup Socket.IO
 
 io.on('connection', function(socket){
@@ -60,7 +62,7 @@ io.on('connection', function(socket){
       console.log('new user added! ' + data.username);
       console.log(data);
     }
-    
+    data.mode = auksalaq_mode;
     socket.emit('auksalaq_user_confirmed', data);
     socket.broadcast.emit('auksalaq_user_confirmed', data);
   });
@@ -78,6 +80,7 @@ io.on('connection', function(socket){
   //mode change from controller
   socket.on('auksalaq_mode', function(data){
     socket.broadcast.emit('auksalaq_mode', data);
+    auksalaq_mode = data;
     if(debug){
       console.log(data);
     }
