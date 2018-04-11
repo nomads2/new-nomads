@@ -196,7 +196,7 @@ loginComplete = function(){
   //}
   $("#namefield").blur();
   $('#login').fadeOut();
-  var time = Math.random()*6000+4000;
+  var time = Math.random()*10000+4000;
   playSound();
   soundTimer = setTimeout(playSound, time);
   
