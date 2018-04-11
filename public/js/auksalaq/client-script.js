@@ -22,6 +22,7 @@ var muted = false;
 var xyMoving = false;
 var debug = false;
 var soundLoaded;
+var first = true;
 
 $(document).ready(function(){
   if(debug){
@@ -242,6 +243,16 @@ submitPhrase = function(e){
   client.sendMessage(text, 'aukthought', x, y);
   
   $('#phrasefield').val('');
+  $("body, html").animate({ 
+    scrollTop: $("#mainui").offset().top 
+  }, 600, function() {
+    // Animation complete.
+    });
+
+  if(first){
+    playSoundLoaded();
+    first=false;
+  }
   
 }
 
@@ -301,6 +312,10 @@ submitChat = function(e){
   }, 600, function() {
     // Animation complete.
     });
+  if(first){
+    playSoundLoaded();
+    first=false;
+  }
 }
 
 cancelChat = function(e){
