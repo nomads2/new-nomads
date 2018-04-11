@@ -37,8 +37,8 @@ $(document).ready(function() {
   socket.on('auksalaq_client_update', function(data){
     log.push(data);
     //oscMessage.sendOSC('/object', data);
-   
-   $('#status').append("<li>"+data.timestamp + ": " + data.messageText + " from: " + data.username+"</li>");
+    if(data.type!='aukXY')
+      $('#status').append("<li>"+data.timestamp + ": " + data.messageText + " from: " + data.username+"</li>");
   });
 
   $('#chatMode').click(chatMode);
