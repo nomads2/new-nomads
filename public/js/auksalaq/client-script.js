@@ -18,7 +18,7 @@ var mode = "chatMode";
 var xyTimer;
 var soundTimer;
 
-var muted = true;
+var muted = false;
 var xyMoving = false;
 var debug = false;
 
