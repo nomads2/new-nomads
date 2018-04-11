@@ -47,6 +47,7 @@ $(document).ready(function(){
 
   $('#namefield').on('keypress', function(e){
     console.log('hey');
+    $('#namefield').blur();
     return e.keyCode != 13;
   });
 
