@@ -22,7 +22,7 @@ var muted = false;
 var xyMoving = false;
 var debug = false;
 var soundLoaded;
-var first = true;
+
 
 $(document).ready(function(){
   if(debug){
@@ -44,6 +44,11 @@ $(document).ready(function(){
   // sound hack - thanks iOS :(
 
   soundLoaded = Math.floor(Math.random()*10);
+
+  $('#namefield').on('keypress', function(e){
+    console.log('hey');
+    return e.keyCode != 13;
+  });
 
 
   /*
@@ -187,7 +192,7 @@ changeClientMode = function(mode){
 
 login = function(e){
   //cancel form submission
-  e.preventDefault();
+
 
   if($('#namefield').val()==""){
     //must submit phrase
@@ -197,6 +202,9 @@ login = function(e){
   var time = Math.random()*10000+4000;
   soundTimer = setTimeout(playSoundLoaded, time);
   client.login($('#namefield').val(), loginComplete);
+  //$('#namefield').blur();
+  e.preventDefault();
+  
 }
 
 loginComplete = function(){
@@ -219,6 +227,7 @@ initCallback = function(){
 submitPhrase = function(e){
   //cancel form submission
   e.preventDefault();
+
   var text = $('#phrasefield').val();
   if(text==""){
     //must submit phrase
@@ -248,11 +257,6 @@ submitPhrase = function(e){
   }, 600, function() {
     // Animation complete.
     });
-
-  if(first){
-    playSoundLoaded();
-    first=false;
-  }
   
 }
 
@@ -312,10 +316,7 @@ submitChat = function(e){
   }, 600, function() {
     // Animation complete.
     });
-  if(first){
-    playSoundLoaded();
-    first=false;
-  }
+  
 }
 
 cancelChat = function(e){
