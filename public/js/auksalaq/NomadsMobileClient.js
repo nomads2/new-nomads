@@ -34,15 +34,17 @@ function NomadsMobileClient(initCallback, changeClientMode) {
 		console.log("data received ", data);
 		if(data.type == 'aukthought'){
 			
-			var xLoc = 300 - (10*(data.messageText.length/2));
-			var yLoc = Math.random()*200+200;
+			//var xLoc = GRAPHICSW - data.messageText.length - (Math.random()*data);
+			//var yLoc = Math.random()*200+20;
     	allClientThoughts.push({
 	    	"thought":data.messageText, 
-		    "x":xLoc,
-		    "y":yLoc,
+		    "x":data.x,
+		    "y":data.y,
 		    "life":4000,
 		    "size":12,
-		    "alpha":1.0
+		    "alpha":1.0,
+		    "vectorX":data.rX,
+		    "vectorY":data.rY
 		  });
   	}
 
@@ -50,8 +52,10 @@ function NomadsMobileClient(initCallback, changeClientMode) {
   		console.log('got chat message '+data.messageText);
   		if($('chat-log')!=null){
   			$('#chat-log').append("<li>"+data.messageText + "</li>");
-  		
-  			//$('chat-log').y = $('chat-log').height - 600;
+  			var dy = $('#chat-log').height() - $('#mainui').height();
+  			if(dy>0){
+  				$('#chat-log').css('top',-dy-20+'px');
+  			}
   		}
   	}
   });
@@ -129,6 +133,21 @@ NomadsMobileClient.prototype = {
 			return;
 		}
 		var messageToSend = {};
+		rX = Math.floor(random()*2);
+	  rY = Math.floor(random()*2);
+
+	  if(rX==1){
+	    rX = .5;
+	  }else {
+	    rX= -.5;
+	  }
+
+	  if(rY==1){
+	    rY = .5;
+	  }else {
+	    rY = -.5;
+	  }
+
 		messageToSend.id = user.id;
 		messageToSend.username = user.username;
 		messageToSend.type = type;
@@ -136,6 +155,8 @@ NomadsMobileClient.prototype = {
 		
     messageToSend.x = x;
     messageToSend.y = y;
+    messageToSend.rX = rX;
+    messageToSend.rY = rY;
 		var date = new Date();
     d = date.getMonth()+1+"."+date.getDate()+"."+date.getFullYear()+ " at " + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
     messageToSend.timestamp = d;

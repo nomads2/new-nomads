@@ -15,6 +15,8 @@ function NomadsMobileClientAnimation() {
 
     // Set main canvas and context references
     canvas = document.getElementById('mainui');
+    
+    
     ctx = canvas.getContext('2d');
     // Set animation timer
     setInterval(drawFrame, (1000 / fps));

@@ -66,6 +66,7 @@ ul{
 	height:100%;
 	position:fixed;
 	top:0;
+	top:0;
 	
 	background-color:#efefef;
 	color:#000;
@@ -80,7 +81,7 @@ ul{
 }
 
 #description{
-	width:auto;
+	width:400px;
 	height:auto;
 	
 	margin:3em auto 3em auto;
@@ -88,12 +89,10 @@ ul{
 }
 
 #xy-instruction{
-	width:300px;
+	width:380px;
 	height:auto;
 	font-size: 1.5em;
-	margin-top:1em;
-	margin-left:auto;
-	margin-right:auto;
+	margin:0 auto auto auto;
 	position:relative;
 }
 
@@ -103,7 +102,7 @@ ul{
 
 #chat-log-container{
 	overflow: hidden;
-	height:90%;
+	height:98%;
 	width:90%;
 	top:0;
 	position:absolute;
@@ -111,12 +110,12 @@ ul{
 }
 
 #chat-log{
+	position:absolute;
 	width:100%;
 	height:auto;
 	overflow-y:scroll;
 	padding-right:17px;
-	margin-top:0px;
-	position:absolute;
+	top:0px;
 }
 
 #chat-entry{
@@ -129,9 +128,7 @@ ul{
 #chat-form{
 	width:300px;
 	height:auto;
-	margin-top:1em;
-	margin-left:auto;
-	margin-right:auto;
+	margin:1em auto 1em auto;
 	position:relative;
 	opacity:1.0;
 }
@@ -154,16 +151,15 @@ ul{
 #phrase-form{
 	width:320px;
 	height:auto;
-	margin-top:1em;
-	margin-left:auto;
-	margin-right:auto;
+	margin:1em auto 1em auto;
 	position:relative;
 	opacity:1.0;
 }
 
 input {
 		display:inline-block;
-		
+		margin-top:1em;
+		margin-bottom:1em;
 }
 
 label { 
@@ -189,13 +185,12 @@ button{
 /* Mobile device form formatting */
 @media only screen and (max-device-width: 480px) {
 
-
 	input[type="text"], input[type="password"], input[type="phone"],  textarea {
         
 	}
 
 	label{
-		font-size:1em;
+		
 	}
 
 	button{
@@ -203,26 +198,8 @@ button{
 
 	}
 
-	canvas{
-		width:320px;
-		height:320px;
-	}
-
 	#login-form{
-		width:300px;
-		
-	}
-
-	#login{
-		width:100%;
-	}
-
-	#xy-instruction{
-		font-size:1em;
-	}
-
-	#login-form button{
-		
+		width:130px;
 	}
 
 	#phrase-form{
