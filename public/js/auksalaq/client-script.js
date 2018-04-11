@@ -21,6 +21,7 @@ var soundTimer;
 var muted = false;
 var xyMoving = false;
 var debug = false;
+var soundLoaded;
 
 $(document).ready(function(){
   if(debug){
@@ -39,6 +40,11 @@ $(document).ready(function(){
   // setup animation
   clientAnimation = new NomadsMobileClientAnimation();
   
+  // sound hack - thanks iOS :(
+
+  soundLoaded = Math.floor(Math.random()*10);
+
+
   /*
     setup wordcloud
   */
@@ -186,7 +192,9 @@ login = function(e){
     //must submit phrase
     return;
   }
-
+  playSoundLoaded();
+  var time = Math.random()*10000+4000;
+  soundTimer = setTimeout(playSoundLoaded, time);
   client.login($('#namefield').val(), loginComplete);
 }
 
@@ -197,8 +205,8 @@ loginComplete = function(){
   $("#namefield").blur();
   $('#login').fadeOut();
   var time = Math.random()*10000+4000;
-  playSound();
-  soundTimer = setTimeout(playSound, time);
+  //playSound();
+  
   
 }
 
@@ -309,6 +317,27 @@ cancelChat = function(e){
     // Animation complete.
     $("#chat").hide();
   });
+}
+
+playSoundLoaded = function(){
+  clearTimeout(soundTimer);
+
+  if(muted){
+    return;
+  }
+  
+  console.log('stopping all sounds');
+  for(var s = 0; s<10; s++){
+    var sound = $('#sound'+s)[0];
+    sound.pause();
+    sound.currentTime = 0;
+  }
+  var i = Math.floor(Math.random()*10);
+  
+  console.log("playing sound "+i);
+  $('#sound'+soundLoaded)[0].play();
+  var time = Math.random()*10000+4000;
+  soundTimer = setTimeout(playSoundLoaded, time);
 }
 
 playSound = function(){
