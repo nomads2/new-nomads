@@ -36,16 +36,18 @@ function NomadsMobileClient(initCallback, changeClientMode) {
 			
 			//var xLoc = GRAPHICSW - data.messageText.length - (Math.random()*data);
 			//var yLoc = Math.random()*200+20;
-    	allClientThoughts.push({
-	    	"thought":data.messageText, 
-		    "x":data.x,
-		    "y":data.y,
-		    "life":4000,
-		    "size":12,
-		    "alpha":1.0,
-		    "vectorX":data.rX,
-		    "vectorY":data.rY
-		  });
+			if(allClientThoughts!=null){
+	    	allClientThoughts.push({
+		    	"thought":data.messageText, 
+			    "x":data.x,
+			    "y":data.y,
+			    "life":4000,
+			    "size":12,
+			    "alpha":1.0,
+			    "vectorX":data.rX,
+			    "vectorY":data.rY
+			  });
+	    }
   	}
 
   	if(data.type == 'aukchatmessage'){
