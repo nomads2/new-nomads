@@ -69,6 +69,11 @@ function NomadsMobileClient(initCallback, changeClientMode) {
   	//initCallback(data);
   });
 
+  this.socket.on('connect_failed', function() {
+  	console.log('connection failed, reconnecting');
+  	socket.socket.reconnect();
+	});
+
 	//Private functions
 	geo_success_callback = function(p){
 	  latitude = parseFloat(p.coords.latitude);
