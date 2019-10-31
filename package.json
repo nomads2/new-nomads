@@ -18,7 +18,7 @@
     "connect": "3.6.6",
     "express": "4.16.3",
     "keypress": "0.2.x",
-    "mongoose": "2.4.8",
+    "mongoose": "5.7.7",
     "npm": "^5.10.0",
     "osc-js": "1.2.2",
     "pug": "2.0.3",
