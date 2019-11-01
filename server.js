@@ -11,7 +11,9 @@ var keypress = require('keypress');
 
 var port = (process.env.PORT || 8081);
 
-const debug = false;
+var muted = false;
+
+const debug = true;
 
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
@@ -35,6 +37,9 @@ io.on('connection', function(socket){
 
   main_socket = socket;
   
+  //start time
+  setInterval(sendTime, 1000);
+
   //ceiling
   socket.on('ceiling_newuser', function (data) {
     if(debug){
@@ -63,6 +68,7 @@ io.on('connection', function(socket){
       console.log(data);
     }
     data.mode = auksalaq_mode;
+    data.muted = muted;
     socket.emit('auksalaq_user_confirmed', data);
     socket.broadcast.emit('auksalaq_user_confirmed', data);
   });
@@ -83,6 +89,37 @@ io.on('connection', function(socket){
     auksalaq_mode = data;
     if(debug){
       console.log(data);
+    }
+  });
+
+  socket.on('mute_state', function(data){
+    muted = data;
+    socket.broadcast.emit('mute_state', data);
+    console.log(data);
+  });
+
+  //clocky
+  socket.on('clock_start', function(data){
+    socket.broadcast.emit('clock_start', data);
+    
+    if(debug){
+      console.log(data);
+    }
+  });
+
+  socket.on('clock_stop', function(data){
+    socket.broadcast.emit('clock_stop', data);
+    
+    if(debug){
+      console.log(data);
+    }
+  });
+
+  socket.on('clock_reset', function(data){
+    socket.broadcast.emit('clock_reset', data);
+    
+    if(debug){
+      console.log("resettting clock");
     }
   });
 
@@ -203,6 +240,17 @@ app.get('/auksalaq_control', function(req,res){
   });
 });
 
+app.get('/auksalaq_clock', function(req,res){
+  res.render('auksalaq/auksalaq_clock.pug', {
+    locals : { 
+              title : 'Auksalaq Clock'
+             ,description: 'Auksalaq Nomads System Clock'
+             ,author: 'TThatcher'
+             ,analyticssiteid: 'XXXXXXX' 
+            }
+  });
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -260,6 +308,11 @@ sendChat = function(data, type){
   
 
      
+}
+
+sendTime = function(){
+  var d = new Date();
+  main_socket.broadcast.emit('clock_update', d.getTime());
 }
 
 

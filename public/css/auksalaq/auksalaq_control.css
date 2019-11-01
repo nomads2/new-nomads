@@ -23,10 +23,17 @@ body{
 	width:150px;
 }
 
+#clock-time-display{
+	font-size:25em;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+}
 
 button{
 	margin:1em;
 }
+
 
 /* Mobile device form formatting */
 @media only screen and (max-device-width: 480px) {

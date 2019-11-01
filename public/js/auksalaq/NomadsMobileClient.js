@@ -1,23 +1,26 @@
 
 //Constructor
-function NomadsMobileClient(initCallback, changeClientMode) {
+function NomadsMobileClient(initCallback, changeClientMode, changeClientMute='') {
 	//Public member variables
 	
 	user = {};
 	this.socket = io.connect();
 	this.initCallback = initCallback;
 	this.changeClientMode = changeClientMode;
+	this.chagneClientMute = changeClientMute;
 	loggedin = false;
 	latitude = 0;
 	longitude = 0;
+
 
 	//Socket Listeners
 	this.socket.on('connect', function(data){});
 	this.socket.on('auksalaq_user_confirmed', function(data){
 		if(data.id == user.id){
-			console.log("User Confirmed "+data + " " + data.mode);	
+			console.log("User Confirmed "+data + " " + data.mode + " "+data.muted);	
 			loggedin = true;
 			changeClientMode(data.mode);
+			changeClientMute(data.muted);
 		}
 
 	});
@@ -25,7 +28,7 @@ function NomadsMobileClient(initCallback, changeClientMode) {
   this.socket.on("disconnect", function() {
   	//https://github.com/LearnBoost/socket.io-client/issues/251
   	console.log("reconnecting");
-    socket.socket.reconnect();
+    this.socket.reconnect();
   });
 
   //add to global thought object when any user sends a message.
@@ -36,7 +39,7 @@ function NomadsMobileClient(initCallback, changeClientMode) {
 			
 			//var xLoc = GRAPHICSW - data.messageText.length - (Math.random()*data);
 			//var yLoc = Math.random()*200+20;
-			if(allClientThoughts!=null){
+			if(typeof allClientThoughts!=='undefined'){
 	    	allClientThoughts.push({
 		    	"thought":data.messageText, 
 			    "x":data.x,
@@ -67,6 +70,13 @@ function NomadsMobileClient(initCallback, changeClientMode) {
   	changeClientMode(data);
   	//change inteface to new mode
   	//initCallback(data);
+  });
+
+  this.socket.on('mute_state', function(data){
+  	console.log('mute change to '+data);
+  	if(changeClientMute!= ''){
+  		changeClientMute(data);
+  	}
   });
 
   this.socket.on('connect_failed', function() {
@@ -178,6 +188,24 @@ NomadsMobileClient.prototype = {
 
 	changeMode:function(mode){
 		this.socket.emit('auksalaq_mode', mode);	
+	},
+
+	muteClientAudio:function(mode){
+		this.socket.emit('mute_state', mode);	
+	},
+
+	startClock:function(data){
+		this.socket.emit('clock_start', data);
+		console.log("starting clock "+data);
+	},
+
+	stopClock:function(data){
+		this.socket.emit('clock_stop', data);
+		console.log("stopping clock "+data);
+	},
+
+	resetClock:function(){
+		this.socket.emit('clock_reset', '');
 	}
 }
 

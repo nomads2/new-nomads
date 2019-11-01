@@ -23,6 +23,12 @@ var xyMoving = false;
 var debug = false;
 var soundLoaded;
 
+//scroll lock
+
+const disableBodyScroll = bodyScrollLock.disableBodyScroll;
+const enableBodyScroll = bodyScrollLock.enableBodyScroll;
+const staticScrollElement = document.querySelector("#mainui");
+
 
 $(document).ready(function(){
   if(debug){
@@ -30,7 +36,7 @@ $(document).ready(function(){
     $('#debug').append('Debug text here<br/>');
   }
   //$('#control').width(window.innerWidth);
-  client = new NomadsMobileClient(initCallback, changeClientMode);
+  client = new NomadsMobileClient(initCallback, changeClientMode, changeClientMute);
 
   //client.geolocate();
   initCallback();
@@ -44,6 +50,7 @@ $(document).ready(function(){
   // sound hack - thanks iOS :(
 
   soundLoaded = Math.floor(Math.random()*10);
+  disableBodyScroll(staticScrollElement);
 
   $('#namefield').on('keypress', function(e){
     console.log('hey');
@@ -192,6 +199,15 @@ changeClientMode = function(mode){
    
     clearTimeout(xyTimer);
   }
+  
+}
+
+changeClientMute = function(mode){
+  if (mode=='mute'){
+    this.muted = true;
+  }else if (mode=='unmute'){
+    this.muted = false;
+  }
 }
 
 login = function(e){
@@ -202,9 +218,7 @@ login = function(e){
     //must submit phrase
     return;
   }
-  playSoundLoaded();
-  var time = Math.random()*10000+4000;
-  soundTimer = setTimeout(playSoundLoaded, time);
+
   client.login($('#namefield').val(), loginComplete);
   //$('#namefield').blur();
   e.preventDefault();
@@ -215,6 +229,12 @@ loginComplete = function(){
   //while(!client.loggedIn){
     
   //}
+  /*if(!this.muted){
+    console.log("mute state "+this.muted);
+    playSoundLoaded();
+  }*/
+  var time = Math.random()*10000+4000;
+  soundTimer = setTimeout(playSoundLoaded, time);
   $("#namefield").blur();
   $('#login').fadeOut();
   var time = Math.random()*10000+4000;
@@ -343,6 +363,8 @@ playSoundLoaded = function(){
   clearTimeout(soundTimer);
 
   if(muted){
+    soundTimer = setTimeout(playSoundLoaded, time);
+    console.log("i'm muted");
     return;
   }
   

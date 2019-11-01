@@ -3,6 +3,8 @@
  */
 
 var client;
+var startTime=0;
+var currentTime=0;
 
 $(document).ready(function() {   
 
@@ -42,9 +44,17 @@ $(document).ready(function() {
     }
   });
 
-  $('#chatMode').click(chatMode);
-  $('#xyMode').click(xyMode);
-  $('#thoughtMode').click(thoughtMode);
+  socket.on('clock_update', function(data){
+    currentTime = data;
+    updateClock();
+  });
+
+  $('#chat-mode').click(chatMode);
+  $('#xy-mode').click(xyMode);
+  $('#thought-mode').click(thoughtMode);
+  $('#mute-button').click(muteClientAudio);
+  $('#clock-start').click(startStopClock);
+  $('#clock-reset').click(resetClock);
 
 });
 
@@ -65,4 +75,57 @@ xyMode = function(e){
 thoughtMode = function(e){
   $('#status').append("<li>thoughtMode initiated</li>"); 
   client.changeMode('thoughtMode');
+}
+
+muteClientAudio = function(e){
+  if($('#mute-button').text()=="mute"){
+    $('#mute-button').text("unmute");
+    client.muteClientAudio("mute");
+  }
+  else{
+    $('#mute-button').text("mute");
+    client.muteClientAudio("unmute");
+  }
+
+}
+
+startStopClock = function(e){
+  if($('#clock-start').text()=="start clock"){
+    $('#clock-start').text("stop clock");
+    startTime = new Date().getTime();
+    client.startClock(startTime);
+  }else{
+    $('#clock-start').text("start clock");
+    startTime = 0;
+    client.stopClock('stop clock');
+  }
+}
+
+resetClock = function(e){
+  startTime = 0;
+  $('#clock-start').text("start clock");
+  $('#clock-time').text("0:00");
+  client.resetClock();
+}
+
+updateClock = function(e){
+  if($('#clock-start').text()=="stop clock"){
+    time = currentTime - startTime;
+    //console.log("current time = "+time);
+    s = time/1000;
+    m = Math.floor(s/60);
+    if(s>59){
+      s = Math.floor(s%60);  
+    }else{
+      s = Math.floor(s);
+    }
+    
+    
+
+    if(s<10){
+      $('#clock-time').text(m+":0"+s);
+    }else{
+      $('#clock-time').text(m+":"+s);
+    }
+  }
 }

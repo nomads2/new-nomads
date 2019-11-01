@@ -13,21 +13,14 @@ html(lang="en")
     script(defer, src='/socket.io/socket.io.js')
     script(defer, src='http://www.google.com/jsapi')
     script(defer, src='/js/auksalaq/NomadsMobileClient.js')
-    script(defer, src='/js/auksalaq/control.js')
+    script(defer, src='/js/auksalaq/clock-view.js')
 
   body
     block content
       div(id='content')
-        div(id='left')
-          div(id='status')
-        div(id='right')
-          button(id='chat-mode') chatMode
-          button(id='xy-mode') xyMode
-          button(id='thought-mode') thoughtMode
-          button(id='mute-button') mute
-          button(id='clock-start') start clock
-          button(id='clock-reset') reset
-          div(id='clock-time') 0:00
+        div(id='status')
+          button(id='ok') OK
+        div(id='clock-time-display') 0:00
 
 
   footer    
