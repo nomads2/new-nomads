@@ -234,6 +234,8 @@ loginComplete = function(){
     console.log("mute state "+this.muted);
     playSoundLoaded();
   }*/
+
+  $('#sound-silence')[0].play();
   var time = Math.random()*10000+4000;
   soundTimer = setTimeout(playSoundLoaded, time);
   $("#namefield").blur();
