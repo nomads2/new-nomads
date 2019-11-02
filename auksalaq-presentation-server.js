@@ -19,7 +19,7 @@ const options = { send: { port: outport_max }};
 const osc = new OSC({ plugin: new OSC.DatagramPlugin(options)});
 
 var port = (process.env.PORT || 80);
-var server_loc = 'http://nomads.music.virginia.edu:';
+var server_loc = 'http://nomads-auksalaq.com:';
 
 
 var userID = "Matthew_Max_Patch_"+Math.floor(Math.random()*1000);
