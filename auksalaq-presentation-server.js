@@ -19,14 +19,15 @@ const options = { send: { port: outport_max }};
 const osc = new OSC({ plugin: new OSC.DatagramPlugin(options)});
 
 var port = (process.env.PORT || 80);
-var server_loc = 'http://nomads-auksalaq.com:';
+//var server_loc = 'http://nomads-auksalaq.com:';
+//var server_loc = 'localhost:';
 
 
 var userID = "Matthew_Max_Patch_"+Math.floor(Math.random()*1000);
 var message = '';
 
-socket = ioc.connect('http://nomads.music.virginia.edu:80');
-
+socket = ioc.connect('http://nomads-auksalaq.com:80');
+//socket = ioc.connect('localhost:8081');
 socket.once("connection", function(socket){
   console.log('Client connected to port ' + port);
 

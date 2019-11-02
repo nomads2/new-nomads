@@ -43,6 +43,7 @@ $(document).ready(function() {
 
   socket.on('clock_start', function(data){
     startTime = new Date().getTime();
+    currentTime = startTime;
     console.log("start clock");
     started=true;
     updateClock();
