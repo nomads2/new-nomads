@@ -27,10 +27,11 @@ var soundLoaded;
 
 const disableBodyScroll = bodyScrollLock.disableBodyScroll;
 const enableBodyScroll = bodyScrollLock.enableBodyScroll;
-const staticScrollElement = document.querySelector("#mainui");
+var staticScrollElement;
 
 
 $(document).ready(function(){
+  staticScrollElement = document.querySelector("#mainui");
   if(debug){
     $('#debug').show();
     $('#debug').append('Debug text here<br/>');
