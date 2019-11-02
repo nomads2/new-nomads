@@ -93,6 +93,7 @@ startStopClock = function(e){
   if($('#clock-start').text()=="start clock"){
     $('#clock-start').text("stop clock");
     startTime = new Date().getTime();
+    currentTime = startTime;
     client.startClock(startTime);
   }else{
     $('#clock-start').text("start clock");
