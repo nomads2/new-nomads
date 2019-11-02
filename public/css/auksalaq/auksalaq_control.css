@@ -57,4 +57,11 @@ button{
 	#phrase-form{
 		width:400px;
 	}
+
+	#clock-time-display{
+		font-size:10em;
+		margin-left:auto;
+		margin-right:auto;
+		text-align:center;
+	}
 }
