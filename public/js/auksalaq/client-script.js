@@ -402,7 +402,13 @@ playSound = function(){
   var i = Math.floor(Math.random()*10);
   
   console.log("playing sound "+i);
-  $('#sound'+i)[0].play();
+  try {
+    await $('#sound'+i)[0].play();
+    console.log("playing");
+  } catch(err) {
+    console.log(err);
+  }
+  
   var time = Math.random()*6000+4000;
   soundTimer = setTimeout(playSound, time);
 }
