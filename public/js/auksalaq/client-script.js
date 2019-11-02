@@ -403,7 +403,7 @@ playSound = function(){
   
   console.log("playing sound "+i);
   try {
-    await $('#sound'+i)[0].play();
+    $('#sound'+i)[0].play();
     console.log("playing");
   } catch(err) {
     console.log(err);
