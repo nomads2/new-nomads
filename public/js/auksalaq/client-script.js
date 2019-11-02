@@ -381,7 +381,13 @@ playSoundLoaded = function(){
   var i = Math.floor(Math.random()*10);
   
   console.log("playing sound "+i);
-  $('#sound'+soundLoaded)[0].play();
+  try {
+    $('#sound'+i)[0].play();
+    console.log("playing");
+  } catch(err) {
+    console.log(err);
+  }
+  //$('#sound'+soundLoaded)[0].play();
   var time = Math.random()*10000+4000;
   soundTimer = setTimeout(playSoundLoaded, time);
 }
