@@ -28,6 +28,6 @@
     "mocha": "^5.0.5",
     "should": "*"
   },
-  "engine": "node >= 7.0 < 9.10.0",
+  "engine": "node >= 10.3",
   "license": "MIT"
 }
