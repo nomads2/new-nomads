@@ -37,14 +37,24 @@ socket.once("connection", function(socket){
 socket.on('auksalaq_user_confirmed', function (data) {
   console.log('new user added! ' + data.username);
   //console.log(data);
-  osc.send(new OSC.Message('/newuser', data.username, data.id, data.type));
+  try{
+    osc.send(new OSC.Message('/newuser', data.username, data.id, data.type));
+  }
+  catch(e){
+    console.log(e);
+  }
   
 });
 
 //see NomadsMobileClient.js for data var
 socket.on('auksalaq_client_update', function(data){
   console.log(data);
-  osc.send(new OSC.Message('/'+data.type, data.id, data.username, data.messageText, data.x, data.y));
+  try{
+    osc.send(new OSC.Message('/'+data.type, data.id, data.username, data.messageText, data.x, data.y));
+  }
+  catch(e){
+    console.log(e);
+  }
   // sendOSCText('/thought', data);
   // sendOSC('/geolocation', [ data.latitude, data.longitude ] );
   //socket.emit('server_message',data); // send data back to individual client?
@@ -88,7 +98,12 @@ process.stdin.setRawMode(true);
 process.stdin.resume();
 
 sendOSCMessage = function(type, data){
-  osc.send(new OSC.Message(type, data));
+  try{
+    osc.send(new OSC.Message(type, data));
+  }
+  catch(e){
+    console.log(e);
+  }
 
 }
 
@@ -110,8 +125,12 @@ sendChat = function(data, type){
   messageToSend.timestamp = d;
   
   //socket.emit('message', messageToSend);
-
-  osc.send(new OSC.Message('/aukchatmessage', messageToSend.id, messageToSend.username, messageToSend.messageText));
+  try{
+    osc.send(new OSC.Message('/aukchatmessage', messageToSend.id, messageToSend.username, messageToSend.messageText));
+  }
+  catch(e){
+    console.log(e);
+  }
 
      
 }
