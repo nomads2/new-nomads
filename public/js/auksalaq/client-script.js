@@ -236,9 +236,9 @@ loginComplete = function(){
   }*/
 
   //$('#sound-silence')[0].play();
-  $('#sound'+0)[0].play();
+  //$('#sound'+0)[0].play();
   var time = Math.random()*10000+4000;
-  soundTimer = setTimeout(playSoundLoaded, time);
+  //soundTimer = setTimeout(playSoundLoaded, time);
   $("#namefield").blur();
   $('#login').fadeOut();
   var time = Math.random()*10000+4000;
@@ -278,7 +278,7 @@ submitPhrase = function(e){
   x = random()*350+20;
   y = random()*350+20;
   client.sendMessage(text, 'aukthought', x, y);
-  
+  playSoundLoaded();
   $('#phrasefield').val('');
   $("body, html").animate({ 
     scrollTop: $("#mainui").offset().top 
@@ -327,7 +327,7 @@ submitChat = function(e){
     });
     return;
   }
-
+  playSoundLoaded();
   client.sendMessage(text, 'aukchatmessage', 0, 0);
   
   //error with this function. won't play anything else below. doesn't exist?
@@ -364,10 +364,10 @@ cancelChat = function(e){
 }
 
 playSoundLoaded = function(){
-  clearTimeout(soundTimer);
+  //clearTimeout(soundTimer);
 
   if(muted){
-    soundTimer = setTimeout(playSoundLoaded, time);
+    //soundTimer = setTimeout(playSoundLoaded, time);
     console.log("i'm muted");
     return;
   }
@@ -389,7 +389,7 @@ playSoundLoaded = function(){
   }
   //$('#sound'+soundLoaded)[0].play();
   var time = Math.random()*10000+4000;
-  soundTimer = setTimeout(playSoundLoaded, time);
+  //soundTimer = setTimeout(playSoundLoaded, time);
 }
 
 playSound = function(){
