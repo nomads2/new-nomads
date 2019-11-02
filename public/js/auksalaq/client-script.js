@@ -278,7 +278,7 @@ submitPhrase = function(e){
   x = random()*350+20;
   y = random()*350+20;
   client.sendMessage(text, 'aukthought', x, y);
-  playSoundLoaded();
+  //playSoundLoaded();
   $('#phrasefield').val('');
   $("body, html").animate({ 
     scrollTop: $("#mainui").offset().top 
