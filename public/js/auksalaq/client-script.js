@@ -235,7 +235,8 @@ loginComplete = function(){
     playSoundLoaded();
   }*/
 
-  $('#sound-silence')[0].play();
+  //$('#sound-silence')[0].play();
+  $('#sound'+0)[0].play();
   var time = Math.random()*10000+4000;
   soundTimer = setTimeout(playSoundLoaded, time);
   $("#namefield").blur();
