@@ -1,6 +1,6 @@
 
 //Constructor
-function NomadsMobileClient(initCallback, changeClientMode, changeClientMute) {
+function NomadsMobileClient(initCallback, changeClientMode, changeClientMute='') {
 	//Public member variables
 	
 	user = {};
